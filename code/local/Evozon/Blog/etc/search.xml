@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Search configuration file
+ *
+ * @package     Evozon_Blog
+ * @author      Szegedi Szilard <szilard.szegedi@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ */
+ -->
+<config>
+    <search>
+        <engines>
+            <mysql>
+                <engine>
+                    <label>Mysql</label>
+                    <model>evozon_blog/search_engine_mysql</model>
+                    <resource>evozon_blog/search_engine_mysql</resource>
+                </engine>
+                <collection>
+                    <resource>evozon_blog/search_collection_mysql</resource>
+                </collection>
+                <indexer>
+                    <model>evozon_blog/search_indexer_mysql</model>
+                    <resource>evozon_blog/search_indexer_mysql</resource>
+                </indexer>
+            </mysql>
+        </engines>
+    </search>
+</config>

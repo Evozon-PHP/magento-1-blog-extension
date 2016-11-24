@@ -1,0 +1,29 @@
+<?php
+/**
+ * Adds a checkbox next to the text field that will set its value
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Adminhtml_System_Config_Form_Limit
+ */
+?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    Event.observe(window, 'load', function () {
+        if ($('<?php echo $this->getElementId(); ?>').value == '0') {
+            $('all_<?php echo $this->getElementId(); ?>').checked = true;
+            $('<?php echo $this->getElementId(); ?>').readOnly = true;
+        }
+    });
+    //]]>
+</script>
+
+<span id="span_use_all">
+    <input type="checkbox" value="0" name="all" id="all_<?php echo $this->getElementId(); ?>" 
+           onclick="toggleAll('<?php echo $this->getElementId(); ?>')"
+    />
+        <?php echo $this->__('Show all'); ?>
+</span>

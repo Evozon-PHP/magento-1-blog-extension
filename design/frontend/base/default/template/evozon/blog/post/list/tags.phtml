@@ -1,0 +1,21 @@
+<?php
+/**
+ * Tags template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Dana Negrescu <dana.negrescu@evozon.com>
+ * @see        Evozon_Blog_Block_Post_List_Tags
+ */
+?>
+
+<?php $tags = $this->getTags();?>
+
+<?php if (count($tags) > 0): ?>
+    <div class="blog_post_tags">
+        <?php foreach ($tags as $tag):?> 
+            <a href="<?php echo $this->getTagUrl($tag->getUrlKey()); ?>" title="<?php echo $tag->getName() ?>"><span>#<?php echo $tag->getName() ?> </span></a>
+        <?php endforeach; ?>
+    </div>
+<?php endif;

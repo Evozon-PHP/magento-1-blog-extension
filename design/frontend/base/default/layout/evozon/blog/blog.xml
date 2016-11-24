@@ -1,0 +1,332 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Evozon_Blog layout update.
+ * 
+ * @category    Evozon
+ * @package     Evozon_Blog
+ * @copyright   Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @author      Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @author      Calin Florea <calin.florea@evozon.com>
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ */
+-->
+<layout>
+    <!--if category is of type block, some blocks have to be removed-->
+    <evozon_blog_removable_blocks>
+        <reference name="right">
+            <remove name="catalog.compare.sidebar"/>
+            <remove name="right.reports.product.viewed"/>
+        </reference>
+        <reference name="left">
+            <remove name="tags_popular"/>
+        </reference>
+    </evozon_blog_removable_blocks>
+    
+    <!--if the related blog posts are positioned center, left or right, create update handles-->
+    <evozon_blog_catalog_category_featured_center>
+        <reference name="content">
+            <block type="evozon_blog/catalog_category_posts" name="evozon_blog_post_category_articles" template="evozon/blog/catalog/category/posts/center.phtml"/>
+        </reference>
+    </evozon_blog_catalog_category_featured_center>
+    <evozon_blog_catalog_category_featured_left>
+        <reference name="left">
+            <block type="evozon_blog/catalog_category_posts" name="evozon_blog_post_category_articles_left" template="evozon/blog/catalog/category/posts/columns.phtml"/>
+        </reference>
+    </evozon_blog_catalog_category_featured_left>
+    <evozon_blog_catalog_category_featured_right>
+        <reference name="right">
+            <block type="evozon_blog/catalog_category_posts" name="evozon_blog_post_category_articles_right" template="evozon/blog/catalog/category/posts/columns.phtml"/>
+        </reference>
+    </evozon_blog_catalog_category_featured_right>
+    
+    <!-- if category is set as blog, load the blog design: 1 column, 2 columns left or right, 3 columns-->
+    <evozon_blog_category_view_one_column translate="label">
+        <label>Post Listing</label>
+        <reference name="head">
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/blog.css</stylesheet>
+            </action>
+            <!--add js file-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/gallery/thumbnails.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/blog.js</name>
+            </action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="evozon_blog/post_category" name="posts.category" template="evozon/blog/post/category.phtml"/>
+            <block type="evozon_blog/post_list" name="post_list" template="evozon/blog/post/list.phtml">
+                <block type="evozon_blog/post_image" name="evozon_blog_post_image" template="evozon/blog/post/image.phtml"/>
+                <block type="evozon_blog/post_list_toolbar" name="post_list_toolbar" template="evozon/blog/post/list/toolbar.phtml"/>
+                <block type="evozon_blog/post_metadata" name="evozon_blog_post_metadata" template="evozon/blog/post/metadata.phtml"/>
+                <block type="evozon_blog/post_list_tags" name="post_tag_list" template="evozon/blog/post/list/tags.phtml"/>
+                <block type="evozon_blog/post_list_categories" name="post_category_list" template="evozon/blog/post/list/categories.phtml"/>
+            </block>
+        </reference>
+    </evozon_blog_category_view_one_column>
+    
+    <!-- two columns left general layout -->
+    <evozon_blog_two_columns_left>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="evozon_blog/post_category_block"  name="posts.categories" template="evozon/blog/post/category/block.phtml"/>
+            <block type="evozon_blog/post_tag_block"  name="posts.tags"/>
+            <block type="evozon_blog/post_list_recent_posts" name="posts.recent"/>
+            <block type="evozon_blog/post_list_recent_comments"  name="posts.comments.recent"/>
+            <block type="evozon_blog/post_rss_block"  name="posts.rss" template="evozon/blog/post/rss/block.phtml" />   
+            <block type="evozon_blog/post_archive_block"  name="posts.archive" template="evozon/blog/post/archive/block.phtml">
+                <block type="evozon_blog/post_archive_block_view" name="evozon_blog_archive_months" template="evozon/blog/post/archive/view.phtml"/>
+            </block>
+        </reference>
+    </evozon_blog_two_columns_left>
+    
+    <!-- two columns right general layout -->
+    <evozon_blog_two_columns_right>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-right.phtml</template>
+            </action>
+        </reference>
+        <reference name="right">
+            <block type="evozon_blog/post_category_block" name="posts.categories" template="evozon/blog/post/category/block.phtml"/>
+            <block type="evozon_blog/post_tag_block"  name="posts.tags"/>
+            <block type="evozon_blog/post_list_recent_comments" name="posts.comments.recent"/>
+            <block type="evozon_blog/post_list_recent_posts"  name="posts.recent"/>
+            <block type="evozon_blog/post_rss_block" name="posts.rss" template="evozon/blog/post/rss/block.phtml" />   
+            <block type="evozon_blog/post_archive_block"  name="posts.archive" template="evozon/blog/post/archive/block.phtml">
+                <block type="evozon_blog/post_archive_block_view" name="evozon_blog_archive_months" template="evozon/blog/post/archive/view.phtml"/>
+            </block>   
+        </reference>
+    </evozon_blog_two_columns_right>
+    
+    <!-- three columns general layout -->
+    <evozon_blog_three_columns>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/3columns.phtml</template>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="evozon_blog/post_category_block" name="posts.categories" template="evozon/blog/post/category/block.phtml"></block>
+            <block type="evozon_blog/post_tag_block" name="posts.tags" />
+            <block type="evozon_blog/post_list_recent_posts" name="posts.recent"/>
+        </reference>
+        <reference name="right">
+            <block type="evozon_blog/post_list_recent_comments"  name="posts.comments.recent"/>
+            <block type="evozon_blog/post_rss_block" name="posts.rss" template="evozon/blog/post/rss/block.phtml"/>
+            <block type="evozon_blog/post_archive_block" name="posts.archive" template="evozon/blog/post/archive/block.phtml">
+                <block type="evozon_blog/post_archive_block_view" name="evozon_blog_archive_months" template="evozon/blog/post/archive/view.phtml"/>
+            </block>
+        </reference>
+    </evozon_blog_three_columns>
+    
+    <!-- post view -->
+    <evozon_blog_post_view translate="label">
+        <label>Post View</label>
+        <reference name="head">
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/blog.css</stylesheet>
+            </action>
+            <!--add JS files-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/blog.js</name>
+            </action>
+            <!--add js file-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/gallery/thumbnails.js</name>
+            </action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="evozon_blog/post_view" name="evozon_blog_post" template="evozon/blog/post/view.phtml">
+                <block type="evozon_blog/post_list_tags" name="evozon_blog_post_tags" template="evozon/blog/post/list/tags.phtml"/>
+                <block type="evozon_blog/post_list_categories" name="evozon_blog_post_categories" template="evozon/blog/post/list/categories.phtml"/>
+                <block type="evozon_blog/post_image" name="evozon_blog_post_image" template="evozon/blog/post/image.phtml"/>
+                <block type="evozon_blog/post_metadata" name="evozon_blog_post_metadata" template="evozon/blog/post/metadata.phtml"/>
+                <block type="evozon_blog/post_view_content" name="evozon_blog_post_content" template="evozon/blog/post/view/content.phtml"/>
+                <block type="evozon_blog/post_view_products" name="evozon_blog_post_products" template="catalog/product/list.phtml">
+                    <block type="core/text_list" name="product_list.name.after" as="name.after" />
+                    <block type="core/text_list" name="product_list.after" as="after" />
+                </block>
+                <block type="evozon_blog/post_view_posts" name="evozon_blog_post_related_posts" template="evozon/blog/post/view/posts.phtml"/>
+                <block type="evozon_blog/post_view_comments_list" name="evozon_blog_post_comments_list" template="evozon/blog/post/view/comments/list.phtml">
+                    <block type="evozon_blog/post_view_comments_reply" name="evozon_blog_post_comments_reply" template="evozon/blog/post/view/comments/reply.phtml"/>
+                </block>
+            </block>
+        </reference>
+        <reference name="right">
+            <remove name="catalog.compare.sidebar"/>
+        </reference>
+    </evozon_blog_post_view>
+    
+    <!--posts list filtered by tag-->
+    <evozon_blog_post_listbytag>
+        <update handle="evozon_blog_three_columns"/>
+        <update handle="evozon_blog_category_view_one_column"/>
+        <reference name="content">
+            <block name="posts_tag_header" type="evozon_blog/post_tag_header" template="evozon/blog/posts/tag/header.phtml" before="-"/>
+            <remove name="posts.category"/>
+        </reference>
+    </evozon_blog_post_listbytag>
+    
+    <!-- posts archive view -->
+    <evozon_blog_archive_view translate="label">
+        <!-- content block -->
+        <reference name="content">
+            <block type="evozon_blog/post_archive_header" name="evozon_blog_archive" template="evozon/blog/post/archive/header.phtml" before="-"/>
+            <remove name="posts.category"/>
+        </reference>
+    </evozon_blog_archive_view>
+    
+    <!-- posts tag view -->
+    <evozon_blog_tag_view translate="label">
+        <!-- content block -->
+        <reference name="content">
+            <block type="evozon_blog/post_tag_header" name="evozon_blog_tag" template="evozon/blog/post/tag/header.phtml" before="-"/>
+            <remove name="posts.category"/>
+        </reference>
+    </evozon_blog_tag_view>
+    
+    <!--this handle is called by the observer Evozon_Blog_Model_Post_Catalog_Observer-->
+    <evozon_blog_related_posts_on_product_page>
+        <reference name="head">
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/blog.css</stylesheet>
+            </action>
+            <!--add js file-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/gallery/thumbnails.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/blog.js</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="evozon_blog/catalog_product_view_posts" after="product.description" name="evozon_blog_post_product_articles" template="evozon/blog/catalog/product/view/posts.phtml"/>
+        </reference>
+    </evozon_blog_related_posts_on_product_page>
+    
+    <!--adds new tab under Customer_Account for displaying customer comments-->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <block type="evozon_blog/customer_link" as="evozon_blog_customer_comments_link" name="evozon_blog_customer_comments_link">
+                <action method="addLinkToParentBlock"/>
+            </block>
+        </reference>
+    </customer_account>
+    <evozon_blog_comment_index>
+        <label>Customer My Blog Comments</label>
+        <update handle="customer_account"/>
+        <!-- include existing customer account layout -->
+        <reference name="my.account.wrapper">
+            <!-- target parent block -->
+            <block type="evozon_blog/customer_account_comment_list" name="evozon_blog_customer_account_comments" template="evozon/blog/customer/account/comments/list.phtml">
+                <block type="evozon_blog/customer_account_comment_toolbar" name="evozon_blog_comment_toolbar" template="evozon/blog/customer/account/comments/toolbar.phtml">
+                    <block type="page/html_pager" name="evozon_blog_comment_pager"/>
+                </block>
+                <action method="setToolbarBlockName">
+                    <name>evozon_blog_comment_toolbar</name>
+                </action>
+                <block type="evozon_blog/customer_account_comment_list_view" name="evozon_blog_user_comments_thread" template="evozon/blog/customer/account/comments/list/view.phtml"/>
+            </block>
+            <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>
+            <!-- add a back link -->
+        </reference>
+    </evozon_blog_comment_index>
+            
+    <!-- RSS view -->
+    <evozon_blog_rss_index translate="label">
+        <!-- content block -->
+        <reference name="content">
+            <block type="evozon_blog/post_rss_recentPosts" name="evozon_blog_post_recent_rss" output="toHtml"/>                   
+        </reference>
+    </evozon_blog_rss_index>
+    
+    <rss_index_index>
+        <reference name="content">
+            <block type="evozon_blog/post_rss_list" name="evozon_blog_post_rss_list"  template="evozon/blog/post/rss/list.phtml"/>
+        </reference>
+    </rss_index_index>
+
+    <catalogsearch_result_index translate="label">
+        <reference name="catalogsearch.leftnav">
+            <action method="setTemplate">
+                <template>evozon/blog/search/layer.phtml</template>
+            </action>
+        </reference>
+        <reference name="enterprisesearch.leftnav">
+            <action method="setTemplate">
+                <template>evozon/blog/search/layer.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <evozon_blog_result_blog translate="label">
+        <reference name="head">
+            <action method="addItem"> 
+                <type>skin_css</type>
+                <name>css/evozon/blog/blog.css</name>
+            </action>
+        </reference>       
+        <reference name="left">
+            <block type="evozon_blog/search_layer_navigation" name="blogsearch.leftnav" before="-">
+                <action method="setSearchType">
+                    <name>posts</name>
+                </action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="evozon_blog/search_posts_result" name="evozon_blog_search_result"  template="evozon/blog/search/posts/result.phtml">
+                <block type="evozon_blog/search_posts_result_list" name="post_search_list" template="evozon/blog/search/posts/result/list.phtml">
+                    <block type="evozon_blog/search_posts_result_toolbar" name="evozon_blog_search_toolbar" template="catalog/product/list/toolbar.phtml">
+                        <block type="page/html_pager" name="evozon_blog_search_pager"/>
+                    </block>
+                    <action method="setToolbarBlockName">
+                        <name>evozon_blog_search_toolbar</name>
+                    </action>
+                </block>
+                <action method="setListOrders"/>
+                <action method="setListModes"/>
+                <action method="setPostListCollection"/>
+            </block>
+        </reference>
+    </evozon_blog_result_blog>
+    
+    <catalog_category_view>
+        <reference name="head">
+            <action method="addItem"> 
+                <type>skin_css</type>
+                <name>css/evozon/blog/blog.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/blog.js</name>
+            </action>
+        </reference>            
+    </catalog_category_view>
+</layout>

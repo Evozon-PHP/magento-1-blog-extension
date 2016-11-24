@@ -1,0 +1,96 @@
+<?php
+/**
+ * This template is for the extended version of the recent posts widget
+ * we won`t display this template if it is disabled or if it is a widget on a blog type category
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_List_Recent_Posts
+ */
+?>
+
+<?php if ($this->canShowBlock()) : ?>
+    <?php $recentPosts = $this->getRecentPosts();?>
+    <?php if ($recentPosts->count() > 0): ?>
+    <div class="block blog-post-recent-posts">
+        <div class="block-title recent-posts-title">
+            <strong><span><?php echo $this->__('Recent Blog Posts') ?></span></strong>
+        </div>
+        <div class="block-content recent-posts-content">
+            <ol class="" id="recent-posts">
+                <?php foreach ($recentPosts as $_article): ?>
+                    <li class="item">
+                        <div class="post <?php echo ($this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_IMAGE_STYLE)) ? 'small-image' : 'big-image' ?>">
+
+                            <!--Display Thumbnail/Big Image-->
+                            <a href="<?php echo $_article->getPostUrl(); ?>" title="<?php echo $this->escapeHtml($_article->getTitle()) ?>" class="recent-post-image">
+                                <img src="<?php echo (string) $this->getImageHelper()->init($_article, 'thumbnail'); ?>"
+                                    alt="<?php echo $this->escapeHtml($_article->getTitle()) ?>"
+                            </a>
+                            <!--Display Post details-->
+                            <div class="product-details recent-post-details">
+
+                                <!--Display Title-->
+                                <p class="product-name recent-post-name">
+                                    <a href="<?php echo $_article->getPostUrl();?>"><?php echo $this->escapeHtml($_article->getTitle()) ?></a>
+                                </p>
+
+                                <!--Display date-->
+                                <div class="recent-post-date">
+                                    <?php if ($this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_DISPLAY_DATE)) : ?>
+                                        <p  class="link-wishlist"><?php echo $_article->getPublishDate(); ?></p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!--Display comments-->
+                                <div class="recent-post-comments">
+                                    <?php if ($this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_DISPLAY_COMMENTS)) : ?>
+                                        <p class="link-wishlist">
+                                            <a href="<?php echo $this->getPostCommentsUrl($_article); ?>">
+                                                <?php echo ($_article->getCommentCount() ?  $_article->getCommentCount() :  'No') ;?> <?php echo $this->__('Comments');?>
+                                            </a>
+                                        </p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!--Display content-->
+                                <div class="recent-post-content">
+                                    <?php if ($this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_CONTENT_LENGTH)) : ?>
+                                    <?php $limit = (int) $this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_CONTENT_LENGTH);?>
+                                        <p class="std"><?php echo $this->_helper->truncateTextByWords(
+                                            $_article->generateShortContent(
+                                                $this->getConfigModel()->getPostListingConfig(Evozon_Blog_Model_Config_Post::LISTING_TEASER_WORDS_COUNT)
+                                            ), 
+                                            $limit
+                                        ); ?></p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!--Display tags & Read More-->
+                                <div class="post_additional">
+                                <div class ="post_tags">
+                                    <?php if ($this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_DISPLAY_TAGS)) :?>
+                                        <?php echo $this->getTagsListHtml($_article);?>
+                                    <?php endif; ?>
+                                </div>                        
+
+                                <div class="widget_read_more">
+                                    <div class="actions">
+                                       <a title="<?php echo $this->_helper->__('Read More'); ?>" class ="button" href="<?php echo $_article->getPostUrl(); ?>">
+                                           <?php echo $this->_helper->__('Read More'); ?>
+                                       </a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,358 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Evozon_Blog layout update.
+ * 
+ * @category    Evozon
+ * @package     Evozon_Blog
+ * @copyright   Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @author      Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ */
+-->
+<layout>
+    <!-- EAV POST handlers & layout updates -->
+    <adminhtml_blog_post_index>
+        <referense name="head">
+            <action method="setTitle" translate="title"><title>Blog</title></action>
+        </referense>
+        <reference name="menu">
+            <action method="setActive"><menupath>evozon_blog/post</menupath></action>
+        </reference>
+        
+        <reference name="content">                    
+            <block type="evozon_blog/adminhtml_post" name="post">
+                <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                    <action method="setUseConfirm">
+                        <params>0</params>
+                    </action>
+                </block>
+            </block>
+        </reference>         
+    </adminhtml_blog_post_index>
+    
+    <adminhtml_blog_post_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_post_grid" name="admin.post.grid"/>
+        </block>
+    </adminhtml_blog_post_grid>
+    
+    
+    <!-- POST new handler: load edit handler -->
+    <adminhtml_blog_post_new>
+        <update handle="adminhtml_blog_post_edit" />
+    </adminhtml_blog_post_new>
+    
+    <!-- POST edit handler: add tabs in the left side -->
+    <adminhtml_blog_post_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+
+            <!--add js file-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/evozon.js</name>
+            </action>
+
+            <action method="addItem">
+                <type>skin_js</type>
+                <name helper="evozon_blog/getFileGalleryJs" />
+            </action>
+
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/widget.js</name>
+            </action>
+
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/restrictions.js</name>
+            </action>
+
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/tag.js</name>
+            </action>
+            
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/tag/autocomplete.js</name>
+            </action>
+
+            <action method="addJs">
+                <file helper="evozon_blog/getFlowMin" />
+            </action>
+
+            <action method="addJs">
+                <file helper="evozon_blog/getFustyFlow" />
+            </action>
+
+            <action method="addJs">
+                <file helper="evozon_blog/getFustyFlowFactory" />
+            </action>
+
+            <action method="addJs">
+                <file helper="evozon_blog/getAdminhtmlUploaderInstance" />
+            </action>
+
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/evozon.css</stylesheet>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/tag/autocomplete.css</stylesheet>
+            </action>
+        </reference>    
+        
+        <update handle="editor"/>
+        
+        <reference name="content">
+            <block type="evozon_blog/adminhtml_post_edit" name="post_edit"/>
+        </reference>
+        
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher" before="-"/>
+            <block type="evozon_blog/adminhtml_post_edit_tabs" name="posts_tabs">
+                <block type="evozon_blog/adminhtml_post_edit_tab_restrictions" name="evozon.post.access.restrictions" />
+
+                <action method="addTab">
+                    <id>evozon_blog_access_restrictions</id>
+                    <block>evozon.post.access.restrictions</block>
+                </action>
+            </block>
+        </reference>
+
+    </adminhtml_blog_post_edit>
+    
+    <!-- POST category handler: Load category tree in post tab -->
+    <adminhtml_blog_post_categories>        
+        <!-- load ajax categories -->
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_post_edit_tab_categories" name="evozon_blog_post_tab_categories"/>
+        </block>        
+    </adminhtml_blog_post_categories>
+    
+    <!-- POST category handlers: Load products grid in post tab -->
+    <adminhtml_blog_post_products>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_post_edit_tab_products" name="post.edit.tab.product"/>
+            <block type="adminhtml/widget_grid_serializer" name="evozon_post_product_serializer">
+                <reference name="evozon_post_product_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>post.edit.tab.product</grid_block_name>
+                        <data_callback>getSelectedProductsFromGrid</data_callback>
+                        <hidden_input_name>products</hidden_input_name>
+                        <reload_param_name>related_products</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </adminhtml_blog_post_products>
+    <adminhtml_blog_post_productsgrid>
+        <update handle="adminhtml_blog_post_products" />
+        <remove name="evozon_post_product_serializer" />
+    </adminhtml_blog_post_productsgrid>
+    
+    <!-- POST related handler: Load related posts -->
+    <adminhtml_blog_post_related>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_post_edit_tab_related" name="evozon.blog.post.related" />
+            <block type="adminhtml/widget_grid_serializer" name="evozon_blog_post_serializer">
+                <reference name="evozon_blog_post_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>evozon.blog.post.related</grid_block_name>
+                        <data_callback>getSelectedRelatedPosts</data_callback>
+                        <hidden_input_name>related_posts</hidden_input_name>
+                        <reload_param_name>related</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>            
+    </adminhtml_blog_post_related>  
+    <adminhtml_blog_post_relatedgrid>     
+        <update handle="adminhtml_blog_post_related" />
+        <remove name="evozon_blog_post_serializer" />   
+    </adminhtml_blog_post_relatedgrid>
+    
+    <!-- CATEGORY post handlers: Load post tree in blog post tab from editing a category-->
+    <adminhtml_catalog_category_loadgrid>        
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_catalog_category_tab_post" name="category.edit.tab.post"/>
+            <block type="adminhtml/widget_grid_serializer" name="posts_grid_serializer">
+                <reference name="posts_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>category.edit.tab.post</grid_block_name>
+                        <data_callback>getSelectedPosts</data_callback>
+                        <hidden_input_name>post_relations</hidden_input_name>
+                        <reload_param_name>pcategory</reload_param_name>
+                    </action>                   
+                </reference>
+            </block>
+        </block>        
+    </adminhtml_catalog_category_loadgrid>
+    <adminhtml_catalog_category_posts>
+        <update handle="adminhtml_catalog_category_loadgrid" />
+        <remove name="posts_grid_serializer" />
+    </adminhtml_catalog_category_posts>
+    
+    <!--PRODUCT Loads blog posts grid in the Related Posts tab from Catalog module-->
+    <adminhtml_catalog_product_posts>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_catalog_product_edit_tab_post" name="product.edit.tab.posts"/>
+            <block type="adminhtml/widget_grid_serializer" name="post_product_grid_serializer">
+                <reference name="post_product_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>product.edit.tab.posts</grid_block_name>
+                        <data_callback>getSelectedPosts</data_callback>
+                        <hidden_input_name>posts</hidden_input_name>
+                        <reload_param_name>product_posts</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>    
+    </adminhtml_catalog_product_posts>    
+    <adminhtml_catalog_product_postsgrid>
+        <update handle="adminhtml_catalog_product_posts" />
+        <remove name="post_product_grid_serializer" /> 
+    </adminhtml_catalog_product_postsgrid>
+    
+    <!--GALLERY WIDGET BUTTON AND LOADING OF FIELD-->
+   <adminhtml_blog_widget_index>
+        <block name="gallery_widget" type="evozon_blog/adminhtml_post_edit_gallery_widget" output="toHtml"/>
+    </adminhtml_blog_widget_index>
+    
+    <adminhtml_blog_widget_loadfields>
+        <block name="gallery_widget.options" type="evozon_blog/adminhtml_post_edit_gallery_widget_options" output="toHtml" />
+    </adminhtml_blog_widget_loadfields>  
+    
+    <!-- COMMENT handlers & layout updates -->
+    <adminhtml_blog_comment_index>
+        <reference name="head">
+            <!--add js file-->            
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/evozon.js#notify</name>
+            </action>
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/evozon.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="content">            
+            <block type="evozon_blog/adminhtml_comment" name="evozon_blog_comment" />
+        </reference>
+    </adminhtml_blog_comment_index>    
+    
+    <adminhtml_blog_comment_edit>
+        <reference name="head">
+            <!--add js file-->            
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/evozon.js#notify</name>
+            </action>
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/evozon.css</stylesheet>
+            </action>
+        </reference>
+        
+        <!-- add tabs to the left -->
+        <reference name="left">
+            <block type="evozon_blog/adminhtml_comment_edit_tabs" name="evozon_blog_comment_tabs" />
+        </reference>   
+    </adminhtml_blog_comment_edit>
+       
+    
+    <!-- EAV TAG handlers & layout updates -->
+    <adminhtml_blog_tag_index>
+        <referense name="head">
+            <action method="setTitle" translate="title"><title>Tags</title></action>
+        </referense>
+        <reference name="menu">
+            <action method="setActive"><menupath>evozon_blog/tag</menupath></action>
+        </reference>
+        
+        <reference name="content">                    
+            <block type="evozon_blog/adminhtml_tag" name="tag">
+                <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                    <action method="setUseConfirm">
+                        <params>0</params>
+                    </action>
+                </block>
+            </block>
+        </reference>         
+    </adminhtml_blog_tag_index>
+    
+    <adminhtml_blog_tag_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="evozon_blog/adminhtml_tag_grid" name="admin.tag.grid"/>
+        </block>
+    </adminhtml_blog_tag_grid>
+    
+    <!-- TAG new handler: load edit handler -->
+    <adminhtml_blog_tag_new>
+        <update handle="adminhtml_blog_tag_edit" />
+    </adminhtml_blog_tag_new>
+    
+        <!-- TAG edit handler: add tabs in the left side -->
+    <adminhtml_blog_tag_edit>
+        <reference name="content">
+            <block type="evozon_blog/adminhtml_tag_edit" name="tag_edit"/>
+        </reference>
+        
+        <reference name="left">
+            <block type="evozon_blog/adminhtml_tag_edit_tabs" name="posts_tabs"/>
+        </reference>                                         
+    </adminhtml_blog_tag_edit>          
+                              
+    <!--Adding the Related Products tab in the Catalog module-->
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <action method="addTab">
+                <name>related_blog_posts</name>
+                <block>evozon_blog/adminhtml_catalog_product_tab</block>
+            </action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+    
+    <!-- add config.js on System -> Configuration page -->
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post_url.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/evozon.js</name>
+            </action>     
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/evozon.css</stylesheet>
+            </action>          
+        </reference>
+        <reference name="root">
+            <block type="core/template" name="evozon_blog_system" template="evozon/blog/system/config.phtml"/>
+        </reference>
+    </adminhtml_system_config_edit>
+    
+    <!--configurations manual that is rendered when the user clicks on the link-->
+    <adminhtml_blog_system_helper>
+        <reference name="head">
+            <action method="setTitle" translate="title">
+                <title>Blog Posts Configurations</title>
+            </action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>popup.phtml</template>
+            </action>
+        </reference>
+        
+        <reference name="content">
+            <block type="core/template" name="evozon_blog_system_config" template="evozon/blog/system/config/view.phtml"/>
+        </reference>
+    </adminhtml_blog_system_helper>
+</layout>

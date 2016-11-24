@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Blog category related posts shown in left or right content column.
+ *
+ * @package     Evozon_Blog
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ */
+?>
+<?php if ($this->getIsEnabled()) : ?>
+    <?php
+    /* @var $recentPosts Evozon_Blog_Model_Resource_Post_Collection */
+    $recentPosts = $this->getPostsCollection();
+    ?>
+    <?php if ($recentPosts->count() > 0): ?>
+    <div class="block block-related blog-post-recent-posts">
+        <div class="block-title recent-posts-title">
+            <strong><span><?php echo $this->__('Related Posts') ?></span></strong>
+        </div>
+        <div class="block-content recent-posts-title">
+            <ol class="mini-products-list mini-posts-list" id="recent-posts">
+                <?php foreach ($recentPosts as $_article): ?>
+                    <li class="">
+                        <div class="post">
+                            <a href="<?php echo $_article->getPostUrl(); ?>" title="<?php echo $this->escapeHtml($_article->getTitle()) ?>" 
+                               class="product-image recent-post-image">
+                                <img src="<?php echo (string)$this->getImageHelper()->init($_article, 'thumbnail')->keepFrame(false)->resize(70); ?>" 
+                                     alt="<?php echo $this->escapeHtml($_article->getTitle()) ?>" />
+                            </a>
+                            <div class="product-details recent-post-details">
+                                <p class="product-name recent-post-name">
+                                    <a href="<?php echo $_article->getPostUrl(); ?>"><?php echo $this->escapeHtml($_article->getTitle()) ?></a>
+                                </p>                           
+                                <p class="recent-post-date"><?php echo $_article->getPublishDate(); ?></p>                           
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+    </div>
+    <?php endif; ?>
+<?php endif; ?>

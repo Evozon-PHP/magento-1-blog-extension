@@ -1,0 +1,25 @@
+<?php
+/**
+ * This contains the window opener action for the system configurations "manual"
+ * $this->getAnchorUrl() contains anchor_url- the link to the needed information :)
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Adminhtml_System_Config_Form_Config
+ */
+?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var windowObjectReference;
+    var strWindowFeatures = "menubar=no,location=no,toolbar=no,resizable=yes,scrollbars=yes,status=yes,height=400px,width=800px";
+
+    function openRequestedPopup() {
+        windowObjectReference = window.open("<?php echo $this->getAnchorUrl(); ?>", "", strWindowFeatures);
+    }
+    //]]>
+</script>
+
+<br><a href="javascript:void(0);" onclick="openRequestedPopup();"><?php echo $this->__('More details and explanations on how to use it'); ?></a><br>

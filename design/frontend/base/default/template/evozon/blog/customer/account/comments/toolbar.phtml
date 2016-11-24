@@ -1,0 +1,38 @@
+<?php
+/**
+ * Comments toolbar
+ * It can be seen in post single page and in user account blog comments tab
+ *
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Comment_Customer_Account_List_Toolbar
+ */
+?>
+<div class="toolbar">
+    <div class ="sorter">
+        <div class="sort-by">
+            <label><?php echo $this->__('Show'); ?></label>
+            <select onchange="setLocation(this.value)">
+                <?php foreach ($this->getAvailableFilters() as $_key => $_filter): ?>
+                    <option value="<?php echo $this->getSortingUrl(strtolower($_filter)) ?>"<?php if ($this->isFilterCurrent($_key)): ?> selected="selected"<?php endif; ?>>
+                        <?php echo $this->__($_filter) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="pager">
+        <p class="amount">
+            <?php if ($this->getLastPageNumber() > 1): ?>
+                <?php echo $this->__('Comments %s to %s of %s total', $this->getFirstRangeCommentsNumber(), $this->getSecondRangeCommentsNumber(), $this->getTotalCommentsNumber()) ?>
+            <?php else: ?>
+                <strong><?php echo $this->__('%s Comment(s)', $this->getTotalCommentsNumber()) ?></strong>
+            <?php endif; ?>
+        </p>
+
+        <?php echo $this->getPagerHtml() ?>
+    </div>    
+</div>

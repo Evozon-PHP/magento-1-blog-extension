@@ -1,0 +1,95 @@
+<?php
+/**
+ * Tag name on different store control
+ *
+ * @see Evozon_Blog_Block_Adminhtml_Tag_Edit_Tab_Options
+ * @var $this Evozon_Blog_Block_Adminhtml_Tag_Edit_Tab_Options
+ */
+?>
+<?php 
+$_labels = $this->getTagValues();
+?>
+<div id="messages">
+    <ul class="messages">
+        <li class="notice-msg">
+            <ul>
+                <li><?php echo $this->__('If you do not specify a tag value for a specific store view then the default (Admin) value will be used.') ?></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+<div class="entity-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Default Tag') ?></h4>
+    </div>
+    <div class="box">
+            <div class="hor-scroll">
+            <table cellspacing="10" width="100%">
+                <tr>
+                    <td width="20%"><?php echo $this->__('Default Tag Name');?></td>
+                    <td width="50%">
+                        <input class="input-text required-option input-tag" type="text"
+                               name="name[default]"
+                               value="<?php echo $this->htmlEscape($_labels[0]['name']) ?>"
+                               width="300px" data-store="default"
+                               required
+                        />
+                    </td>
+                    <?php if(Mage::app()->isSingleStoreMode() && $this->getTagObject()->getId()):?>
+                        <td><?php echo $this->__('Count: %s', $_labels[0]['count']);?></td>
+                    <?php endif;?>
+                </tr>
+            </table>
+            </div>
+    </div>
+</div>
+
+<?php if (!Mage::app()->isSingleStoreMode()) :?>
+    <div class="entity-edit">
+        <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Manage Options (Tag Names)') ?></h4>
+        </div>
+        <div class="box">
+            <div class="hor-scroll">
+                <table width=100%" cellspacing="10"  cellpadding="10">
+                    <tr>
+                        <th width="30%"><?php echo $this->__('Store');?></th>
+                        <th width="50%"><?php echo $this->__('Tag Name');?></th>
+                        <?php if($this->getTagObject()->getId()):?>
+                            <th><?php echo $this->__('Count');?></th>
+                        <?php endif;?>
+                    </tr>
+
+                    <?php foreach ($this->getStores() as $_store): ?>
+                        <?php if($_store->getId()):?>
+                            <tr>
+                                <td><?php echo $_store->getName() ?></td>
+                                <td>
+                                    <input name="name[<?php echo $_store->getId();?>]"
+                                           value="<?php echo $this->htmlEscape($_labels[$_store->getId()]['name']) ?>"
+                                           class="input-text input-tag" data-store="<?php echo $_store->getId();?>"
+                                           type="text" width="300px"
+                                    />
+                                </td>
+                                <?php if($this->getTagObject()->getId()):?>
+                                    <td><?php echo $this->htmlEscape($_labels[$_store->getId()]['count']);?></td>
+                                <?php endif;?>
+                            </tr>
+                        <?php endif;?>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+
+<?php if ($this->addValidate()): ?>
+    <script type="text/javascript">
+        Validation.addAllThese([
+        ['required-option', '<?php echo $this->__('Default tag value can not be empty!') ?>', function(v) {
+            return !Validation.get('IsEmpty').test(v);
+    }]]);
+    </script>
+<?php endif;

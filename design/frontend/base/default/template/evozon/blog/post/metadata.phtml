@@ -1,0 +1,22 @@
+<?php
+/**
+ * Show post metadata: author, publish date, number of times viewed, no. comments
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @see        Evozon_Blog_Block_Post_Metadata
+ */
+?>
+<?php $commentsCount = $this->getPost()->getCommentCount(); ?>
+<div class="blog_post_info">
+    <ul>
+        <li><img src="<?php echo $this->getSkinUrl('images/evozon/blog/post/user_gray.png');?>"/></li>
+        <li><?php echo $this->getPost()->getAuthor()->getName(); ?></li>   
+        <li><img src="<?php echo $this->getSkinUrl('images/evozon/blog/post/calendar.png');?>"/></li>
+        <li><span><?php echo $this->getPost()->getPublishDate(); ?></li>
+        <li><img src="<?php echo $this->getSkinUrl('images/evozon/blog/post/comments.png');?>"/></li>
+        <li id="metadata_comments_number"><?php echo ($commentsCount > 0 ? $commentsCount . ' ' . $this->__('Comment(s)') : $this->__('No comments')) ?></li>
+    </ul><br>
+</div>

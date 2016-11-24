@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Evozon_Blog widget config
+ * 
+ * @category    Evozon
+ * @package     Evozon_Blog
+ * @copyright   Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author      Calin Florea <calin.florea@evozon.com>
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @author      Andreea Macicasan <andreea.macicasan@evozon.com>
+ */
+-->
+<widgets>  
+      
+    <!-- /*
+          * Recent Blog Posts widget
+          * @author Dana Negrescu <dana.negrescu@evozon.com>
+          */
+    -->
+    <evozon_blog_post_recent type="evozon_blog/post_list_recent_posts" translate="label description" module="evozon_blog">
+        <name>Recent Blog Posts</name>
+        <description>Custom widget that displays the list of recent published blog posts</description>
+        <parameters>
+            <is_widget translate="label">                
+                <visible>0</visible>
+                <required>1</required>
+                <label>Widget Instance</label>
+                <description>Checking if it is a widget instance.</description> 
+                <type>text</type>           
+                <value>1</value>    
+            </is_widget>
+            <use_custom translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Use custom configurations</label>
+                <description>Check global configurations under System->Configuration->Evozon Blog->Post Configurations->Recent Posts Widget.</description>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+            </use_custom>
+            <posts_in_widget translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Number of visible posts</label>
+                <description>If empty, the Global values will be used.</description>
+                <type>text</type>
+                <depends>
+                    <use_custom>
+                        <value>1</value>
+                    </use_custom>
+                </depends>
+            </posts_in_widget>
+            <display_date translate="label">
+                <visible>1</visible>
+                <label>Show published date</label>
+                <description>If empty, the Global values will be used.</description>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <depends>
+                    <use_custom>
+                        <value>1</value>
+                    </use_custom>
+                </depends>
+            </display_date>           
+            <content_length translate="label">
+                <visible>1</visible>
+                <label>Visible content length</label>
+                <description>If empty, the Global values will be used. Applied only for the extended template.</description>
+                <type>text</type>
+                <depends>
+                    <use_custom>
+                        <value>1</value>
+                    </use_custom>
+                </depends>
+            </content_length>
+            <image_style translate="label">
+                <visible>1</visible>
+                <label>Image style</label>
+                <description>If empty, the Global values will be used. Applied only for the extended template.</description>
+                <type>select</type>
+                <source_model>evozon_blog/adminhtml_system_config_source_recent_posts_image</source_model>
+                <depends>
+                    <use_custom>
+                        <value>1</value>
+                    </use_custom>
+                </depends>
+            </image_style>
+            <display_comments translate="label">
+                <visible>1</visible>
+                <label>Show number of comments</label>
+                <description>If empty, the Global values will be used. Applied only for the extended template.</description>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <depends>
+                    <use_custom>
+                        <value>1</value>
+                    </use_custom>
+                </depends>
+            </display_comments>
+            <display_tags translate="label">
+                <visible>1</visible>
+                <label>Show tags</label>
+                <description>If empty, the Global values will be used. Applied only for the extended template.</description>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <depends>
+                    <use_custom>
+                        <value>1</value>
+                    </use_custom>
+                </depends>
+            </display_tags>
+            
+            <!--choosing a template for our widget instance; it appears in FE Propoerties of the widget instance-->
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>evozon/blog/post/list/recent/posts/minimal.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>evozon/blog/post/list/recent/posts/minimal.phtml</value>
+                        <label>Minimal Template</label>
+                    </default>
+                    <extended translate="label">
+                        <value>evozon/blog/post/list/recent/posts/extended.phtml</value>
+                        <label>Extended Template</label>
+                    </extended>
+                </values>
+            </template>
+        </parameters>
+    </evozon_blog_post_recent>
+    
+    <!-- /*
+          * Recent comments widget
+          * @author Calin Florea <calin.florea@evozon.com>
+          */
+    -->
+    <blog_widget_recentcomments type="evozon_blog/post_list_recent_comments" translate="name description" module="evozon_blog">
+        <name>Recently Blog Comments</name>
+        <description>Show recently blog post comments</description>
+        <parameters>
+            <is_widget translate="label">                
+                <visible>0</visible>
+                <required>1</required>
+                <label>Widget Instance</label>
+                <description>Checking if it is a widget instance.</description> 
+                <type>text</type>           
+                <value>1</value>    
+            </is_widget>
+            <custom_config translate="label">
+                <label>Use custom configurations</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <description> If set to No, will use System -> Config -> Evozon Blog -> Comment Configurations -> Recent Comments.</description>
+            </custom_config>
+            <comments_number translate="label">
+                <label>No. of comments</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <depends>
+                    <custom_config>
+                        <value>1</value>
+                    </custom_config>
+                </depends>
+                <description>How many comments to show</description>
+            </comments_number>
+            <comment_max_words translate="label">
+                <label>No. of words per comment</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <depends>
+                    <custom_config>
+                        <value>1</value>
+                    </custom_config>
+                </depends>
+                <description>Show X words per comment.</description>
+            </comment_max_words>
+
+            <!--choosing a template for our widget instance; it appears in FE Propoerties of the widget instance-->
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>evozon/blog/post/list/recent/comments.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>evozon/blog/post/list/recent/comments.phtml</value>
+                        <label>Recent comments template</label>
+                    </default>
+                </values>
+            </template>
+        </parameters>
+        <!--choosing a template for our widget instance; it appears in FE Propoerties of the widget instance-->
+    </blog_widget_recentcomments>
+
+    <!-- 
+        /*
+          * Gallery widget
+          * @author Andreea Macicasan <andreea.macicasan@evozon.com>
+          */
+    -->
+    <evozon_blog_post_gallery type="evozon_blog/adminhtml_post_edit_gallery_images" translate="label description" module="evozon_blog">
+        <name>Post Gallery</name>
+        <description>Create a gallery widget by choosing the images from the current blog post gallery</description>
+        <parameters>
+            <post translate="label">
+                <label>Post</label>
+                <visible>0</visible>
+                <required>0</required>
+                <type>text</type>
+            </post>
+            <store translate="label">
+                <label>Store</label>
+                <visible>0</visible>
+                <required>0</required>
+                <type>text</type>
+            </store>
+            <!--set the template-->
+            <display translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>0</value>
+                <values>
+                    <slideshow translate="label">
+                        <value>evozon/blog/post/view/gallery/slideshow.phtml</value>
+                        <label>Slideshow</label>
+                    </slideshow>
+                    <thumbnails translate="label">
+                        <value>evozon/blog/post/view/gallery/thumbnails.phtml</value>
+                        <label>Thumbnails</label>
+                    </thumbnails>
+                </values>
+            </display>
+            <images translate="label">
+                <label>Images</label>
+                <visible>0</visible>
+                <required>0</required>
+                <type>hidden</type>
+                <helper_block>
+                    <type>evozon_blog/adminhtml_post_edit_gallery_widget_chooser</type>
+                </helper_block>
+            </images>         
+            <slideshow_autostart translate="label">
+                <label>Slideshow autostart</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <depends>
+                    <display>
+                        <value>evozon/blog/post/view/gallery/slideshow.phtml</value>
+                    </display>
+                </depends>
+            </slideshow_autostart>
+            <slideshow_interval translate="label">
+                <label>Slideshow interval</label>
+                <description>Set a numeric value in milliseconds for the slideshow interval, or else the default value will be automatically set(3000 ms).</description>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <depends>
+                    <display>
+                        <value>evozon/blog/post/view/gallery/slideshow.phtml</value>
+                    </display>
+                </depends>
+            </slideshow_interval>
+        </parameters>
+    </evozon_blog_post_gallery>
+</widgets> 

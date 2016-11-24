@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * Template for category details
+ * 
+ * @see         Evozon_Blog_Block_Post_Category
+ * @see         Mage_Catalog_Block_Category_View
+ * @package     Evozon_Blog
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ */
+?>
+
+<?php
+/* @var $_helper Mage_Catalog_Helper_Output */
+$_helper = $this->helper('catalog/output');
+
+/* @var $_category Mage_Catalog_Model_Category */
+$_category  = $this->getCurrentCategory();
+$_imgHtml   = '';    
+if ($_imgUrl = $_category->getImageUrl()) {
+    $_imgHtml = '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->escapeHtml($_category->getName()).'" title="'.$this->escapeHtml($_category->getName()).'" /></p>';
+    $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+}
+
+?>
+<div class="page-title category-title">   
+    <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+</div>
+
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+
+<?php if($_imgUrl): ?>
+    <?php echo $_imgHtml ?>
+<?php endif; ?>
+
+<?php if($_description=$this->getCurrentCategory()->getDescription()): ?>
+    <div class="category-description std">
+        <?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?>
+    </div>
+<?php endif; ?>

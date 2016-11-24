@@ -1,0 +1,27 @@
+<?php
+/**
+ * Create the block with categories that has posts attached. Categories must be
+ * of type Blog.
+ *
+ * @package     Evozon_Blog
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_Category_Block
+ */
+?>
+<?php if ($this->isEnabled()): ?>
+    <?php $_catCollection = $this->_getCategoryCollection();?>
+    <?php if ($_catCollection->count()): ?>
+        <div class="block-title post-categories-title">
+            <strong><span><?php echo $this->__('Categories') ?></span></strong>
+        </div>
+        <div class="categories_block">
+            <ul>
+            <?php foreach ($_catCollection as $category): ?>        
+                <li><a title="<?php echo $this->getCategoryName($category) ?>" href="<?php echo $category->getUrl() ?>"><?php echo $this->getCategoryName($category) ?></a></li>
+            <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+<?php endif; 

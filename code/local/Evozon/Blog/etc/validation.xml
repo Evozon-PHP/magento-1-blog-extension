@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Validation configuration file
+ *
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2016, Evozon
+ * @link        http://www.evozon.com  Evozon
+ */
+ -->
+<config>
+    <validation>
+        <tags>
+            <evozon>
+                <label>Default (Evozon)</label>
+                <model>evozon_blog/filter_tag</model>
+            </evozon>
+        </tags>
+        <comments>
+            <evozon>
+                <label>Default (Evozon)</label>
+                <model>evozon_blog/filter_comment</model>
+            </evozon>
+        </comments>
+    </validation>
+</config>

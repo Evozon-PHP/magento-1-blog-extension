@@ -1,0 +1,73 @@
+<?php
+/**
+ * Blog post interchangeable images template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Dana Negrescu <dana.negrescu@evozon.com>
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @see        Evozon_Blog_Block_Adminhtml_Post_Edit_Gallery_Images
+ */
+?>
+<?php
+// getting data
+$images = $this->getSelectedImages();
+$imagesWidth = $this->getImagesWidth();
+$id = $this->getGalleryId();
+?>
+
+<?php if (count($images) > 0): ?>
+    <div class="blog-post-image-main" id="<?php echo $id;?>">
+            <div class="blog-post-gallery">
+                <a id="image-link" href="<?php echo (empty($image['href']) ? 'javascript:void(0)' : $image['href']); ?>" target="_blank">
+                    <img class="blog-post-gallery-image visible"
+                         src="<?php echo $this->resizeImage($images[0]['value'], $imagesWidth, false); ?>"
+                         alt="<?php echo $images[0]['label']; ?>"
+                         title="<?php echo $this->escapeHtml($images[0]['label']); ?>" />
+                </a>
+                <?php foreach ($images as $image): ?>   
+                    <?php $imageUrl = $this->resizeImage($image['value'], $imagesWidth); ?>
+                    <a id="image-link" href="<?php echo $image['href']; ?>" target="_blank">
+                        <img id="gallery-image-<?php echo $id.'-'.$image['value_id']; ?>"
+                             class="blog-post-gallery-image"
+                             src="<?php echo $imageUrl; ?>" />   
+                    </a>
+                <?php endforeach; ?>
+            </div>
+    </div>
+
+    <?php
+    /*
+     * showing the gallery thumbnails, that on click are internchangeable with the upper preview image
+     */
+    ?>
+    <div class="more-views">
+        <ul class="blog-post-gallery-thumbs">            
+            <?php foreach ($images as $image): ?>
+                <?php
+                $_img = '<img src="' . $this->resizeImage($image['value'], 95) . '"'
+                    . '" alt="' . $image['label'] . '" '
+                    . 'title="' . $this->escapeHtml($image['label']) . '" />';
+                ?>
+                <li>                    
+                    <a class="gallery-thumb-link" href="javascript:void(0)" 
+                       data-gallery-image-index="<?php echo $id.'-'.$image['value_id'];?>" 
+                       title="<?php echo $this->escapeHtml($image['label']) ?>" >
+                        <?php echo $_img; ?>   
+                    </a>  
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+
+        document.observe('dom:loaded', function() {
+            BlogPostGalleryManager.init();
+        });
+
+        //]]>
+    </script>
+<?php endif;?>

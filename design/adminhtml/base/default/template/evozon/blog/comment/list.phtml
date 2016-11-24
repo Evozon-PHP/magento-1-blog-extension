@@ -1,0 +1,95 @@
+<?php
+/**
+ * Comments template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @see        Evozon_Blog_Block_Adminhtml_Comment_List
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ */
+?>
+
+<div class="comments_container">
+    <h3><?php if (!$this->getIsAjax()) { 
+                echo (($this->getPostId()) ? $this->__('Post Comments') : $this->__('Sub-comments')); 
+            } 
+        ?>
+    </h3>
+
+    <?php if ($this->showNoCommentsMessage()): ?>
+        <p><?php echo $this->__('There are no comments to current post.');?></p>
+    <?php else: ?>
+        <?php foreach ($this->getComments() as $comment): ?>
+            <div class="comment_container">
+                <?php $firstLevelCount = $comment->getFirstLevelCount(); ?>
+                <?php $subcommentsNr = $firstLevelCount . '/' . $comment->getAllLevelsCount(); ?>
+
+                <div class="comment_metadata">
+                    <!--author details-->
+                    <b><?php echo $comment->getAuthor()->getName(); ?></b> |
+
+                    <!--created at-->
+                    <?php echo $comment->getCreatedAt(); ?> |
+
+                    <!--status select-->
+                    <?php echo ($comment->getEnabled() ? $this->__('Enabled') : $this->__('Disabled')); ?> |
+                    <select id="comment_statuses-<?php echo $comment->getId() ?>">
+                        <?php foreach ($this->getCommentStatusOptions() as $key => $value): ?>
+                            <option value="<?php echo $key; ?>" <?php echo ($comment->getStatus() == $key ? 'selected' : ''); ?>><?php echo $value ?></option>    
+                        <?php endforeach; ?>
+                    </select>
+
+                    <!--change status button-->
+                    <button 
+                        id="comment_change_status-<?php echo $comment->getId(); ?>"
+                        type="button" 
+                        onclick="commentChangeStatus('<?php echo $comment->getId(); ?>', '<?php echo $this->getChangeStatusUrl(); ?>')">
+                        <?php echo $this->__('Change status') ?>
+                    </button>
+                    <span id="change_status_message-<?php echo $comment->getId(); ?>"></span>
+                </div><br>      
+
+                <!--subject-->
+                <?php if($this->hasSubject($comment)): ?>
+                    <div class="comment_subject"><h2><?php echo $comment->getSubject(); ?></h2></div> 
+                <?php endif; ?>
+
+                <!--content-->
+                <div class="comment_content"><i><?php echo $comment->getContent(); ?></i></div><br>
+
+                <!--actions-->
+                <div class="comment_actions">
+                    <div class="comment_left_container">                    
+                        <button class="scalable delete" id="comment_delete_button" type="button" onclick="deleteComment('<?php echo $this->getDeleteUrl($comment->getId()); ?>')"><span><?php echo $this->__('Delete'); ?></span></button>
+                        <button class="scalable save" id="comment_edit_button" type="button" onclick="editComment('<?php echo $this->getEditUrl($comment->getId()); ?>')"><span><?php echo $this->__('Edit'); ?></span></button>
+                    </div>
+                    <div class="comment_right_container">                    
+                         <?php if($firstLevelCount > 0): ?>
+                            <a 
+                                href="javascript:void(0);"
+                                class="subcomments_link"
+                                id="subcomments_button-<?php echo $comment->getId(); ?>"
+                                onclick="getSubcomments(<?php echo $comment->getId(); ?>, <?php echo $comment->getAllLevelsCount();?>, '<?php echo $this->getSubcommentsUrl(); ?>')">
+                                <img src="<?php echo $this->getSkinUrl('images/evozon/blog/comment/chevron_down.png');?>" /> <i>(<?php echo $subcommentsNr; ?>)</i>
+                            </a>
+                            <a 
+                                href="javascript:void(0);"
+                                class="subcomments_link"
+                                id="hide_subcomments_button-<?php echo $comment->getId(); ?>" 
+                                style="display: none;"
+                                onclick="hideSubcomments('<?php echo $comment->getId(); ?>')">
+                                <img src="<?php echo $this->getSkinUrl('images/evozon/blog/comment/chevron_up.png');?>" />
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div><br>
+            <div class="comment_children" id="children-<?php echo $comment->getId(); ?>"></div>
+        <?php endforeach; ?>   
+    <?php endif;?>
+</div>
+
+<script type="text/javascript"> 
+    var Translator = new Translate(<?php echo Zend_Json::encode(Mage::helper('evozon_blog/jsTranslations')->getJsTranslations()) ?>);
+</script>

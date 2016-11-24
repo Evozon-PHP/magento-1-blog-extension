@@ -1,0 +1,49 @@
+<?php
+/**
+ * this template is for the minimal version of the recent posts widget
+ * we won`t display this template if it is disabled or if it is a widget on a blog type category
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_List_RecentPosts
+ */
+?>
+
+<?php if ($this->canShowBlock()) : ?>
+    <?php
+    $recentPosts = $this->getRecentPosts();
+    ?>
+    <?php if ($recentPosts->count() > 0): ?>
+    <div class="block block-related blog-post-recent-posts">
+        <div class="block-title recent-posts-title">
+            <strong><span><?php echo $this->__('Recent Blog Posts') ?></span></strong>
+        </div>
+        <div class="block-content recent-posts-title">
+            <ol class="mini-products-list mini-posts-list" id="recent-posts">
+                <?php foreach ($recentPosts as $_article): ?>
+                    <li class="evozon_blog_recent_posts">
+                        <div class="post">
+                             <a href="<?php echo $_article->getPostUrl(); ?>" title="<?php echo $this->escapeHtml($_article->getTitle()) ?>" class="recent-post-image">
+                                <img src="<?php echo (string)$this->getImageHelper()->init($_article, 'thumbnail')->keepFrame(false)->resize(70); ?>" 
+                                     alt="<?php echo $this->escapeHtml($_article->getTitle()) ?>" 
+                                />
+                            </a>
+                            <div class="product-details recent-post-details">
+                                <p class="product-name recent-post-name">
+                                    <a href="<?php echo $_article->getPostUrl(); ?>"><?php echo $this->escapeHtml($_article->getTitle()) ?></a>
+                                </p>
+                                <?php if ($this->getConfigData(Evozon_Blog_Model_Config_Post::RECENT_POSTS_DISPLAY_DATE)) : ?>
+                                    <p  class="recent-post-date"><?php echo $_article->getPublishDate(); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <?php endif; ?>
+<?php endif; ?>

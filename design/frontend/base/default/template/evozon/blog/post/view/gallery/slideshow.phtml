@@ -1,0 +1,64 @@
+<?php
+/**
+ * Blog post slideshow gallery template
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @author      Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Adminhtml_Post_Edit_Gallery_Images
+ */
+?>
+ 
+<?php
+// getting data
+$images = $this->getSelectedImages();
+$imagesWidth = $this->getImagesWidth();
+$id = $this->getGalleryId();
+?>
+ 
+<div class="blog-post-image-main">
+    <div class="blog-post-gallery">
+        <div id="gallery-slideshow-<?php echo $id;?>" class="protoshow">
+            <ul class="show">
+                <?php foreach ($images as $image) : ?>
+                    <li class="slide">
+                        <a id="image-link" href="<?php echo (empty($image['href']) ? 'javascript:void(0)' : $image['href']); ?>" target="_blank">
+                            <img src="<?php echo $this->resizeImage($image['value'], $imagesWidth, true); ?>" class="small-image-preview v-middle"
+                                 id="gallery-image-<?php echo $image['value_id']; ?>" ref="<?php echo $image['value_id']; ?>"                 
+                                 title="<?php echo $image['label']; ?>" alt="<?php echo $image['label']; ?>" /> 
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>         
+    </div>
+</div>
+
+<script src="<?php echo Mage::getBaseUrl('js') ?>scriptaculous/scriptaculous.js" type="text/javascript"></script>
+<script src="<?php echo $this->getSkinUrl('js/evozon/blog/post/gallery/protoshow.js') ?>" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/evozon/blog/post/gallery/reset.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/evozon/blog/post/gallery/protoshow.css') ?>">
+
+<script type="text/javascript">
+    //<![CDATA[
+         Event.observe(window, "load", function() {
+            $$('div.protoshow').invoke('setStyle', { width: '<?php echo $imagesWidth . 'px' ?>'});
+            $$('div.protoshow').invoke('setStyle', { margin: '0 auto' });
+ 
+            $('gallery-slideshow-<?php echo $id;?>').protoShow({
+                interval        :   <?php echo $this->getSlideshowInterval();?>,
+                transitionTime  :   0.5,
+                autoPlay        :   <?php if ($this->getControlsAndNavigation()) {                   
+                                            echo $this->getSlideshowAutostart() ? 1 : 0; 
+                                        } else {
+                                            echo 0;
+                                        }
+                                    ?>,
+                controls        :   <?php echo $this->getControlsAndNavigation();?>,
+                navigation      :   <?php echo $this->getControlsAndNavigation();?>
+            });    
+        });
+    //]]>
+</script>

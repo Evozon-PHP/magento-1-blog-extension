@@ -1,0 +1,86 @@
+<?php
+/**
+ * Template to help user add tags to the specific post
+ * It has an autocomplete feature
+ * It displays error and succes messages
+ * It displays a search input field and a form to add a new tag to the database
+ * It displays duplicate error messages
+ * It displays existing tags in a selected-tags area
+ * 
+ * @author Dana Negrescu <dana.negrescu@evozon.com>
+ * @see Evozon_Blog_Block_Adminhtml_Post_Edit_Tab_Tags
+ */
+?>
+<?php
+//getting values
+$tags = $this->getSelectedTags();
+$store = ($this->getStoreId()) ? $this->getStoreId() : 'default';
+?>
+<div class="entity-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Tags') ?></h4>
+    </div>
+    <input type="hidden" id="selected-tags-ids" name="selected-tags-ids" value="<?php echo $this->getSelectedTagsIds(); ?>"/>
+    <div class="box">
+        <div class="hor-scroll">
+            <div class="manage-tags">
+                <div class="add-tag-container">
+                    <input type="text" id="add-tag" class="type-ahead-autocomplete input-text" name="selector-tag"
+                           maxlength="80"  autofocus placeholder="<?php echo $this->__('What tag is related to this post?'); ?>"
+                           autocomplete="on" data-tag-value="" data-tag-id="" data-tag-count="0" onchange="tag.resetSearchData()"/>
+                    <button type="button" class="scalable add-tag" id="add-tag-button" onclick="tag.validateTagContext('<?php echo $store; ?>')" disabled="disabled"><?php echo $this->__('Add Tag'); ?></button>
+                </div>
+                <div>
+                    <ul class="messages" id="succes-msg" style="display:none;">
+                        <li class="success-msg">
+                            <ul><?php echo $this->__('The new tag has been saved! You can add it in the selected tags list below!'); ?></ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="add-new-tag" id="add-new-tag" style="display:none;">
+                    <ul class="messages" id="ajax-error-msg"></ul>
+                    <?php echo $this->addNewTagBlockHtml(); ?>
+                    <button type="button" class="scalable delete cancel-tag" onclick="tag.cancelTag()"><?php echo $this->__('Cancel'); ?></button>
+                    <button type="button" class="scalable save-tag" onclick="tag.saveTag('<?php echo $store; ?>', '<?php echo $this->getSaveTagActionUrl(); ?>')"><?php echo $this->__('Save Tag'); ?></button>
+                </div>
+                <br/>
+                <div class="selected-tags-list" id="selected-tags">
+                    <div id="messages">
+                        <ul class="messages" id="selected-tags-error" style="display:none;">
+                            <li class="notice-msg">
+                                <?php echo $this->__('This tag is already attached to current post.') ?>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="all-tags-list">
+                        <ol class="tags-list" id="tag-list">
+                            <?php foreach ($tags as $tag): ?>
+                                <li class="tag-show-details" data-id="<?php echo $tag->getId(); ?>" 
+                                    id="selected-tag-<?php echo $tag->getId(); ?>">
+                                    <span class="tag-pill">
+                                        <span class="tag-count"><?php echo $tag->getCount(); ?></span>
+                                        <span class="tag-name"><?php echo $tag->getName(); ?></span>
+                                    </span>
+                                    <a onclick="tag.removeTagFromList(<?php echo $tag->getId(); ?>)" class="tag-remove"><?php echo "x"; ?></a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var tag = new Tag('<?php echo $this->getTagLoadActionUrl(); ?>',<?php echo $this->getStoreId(); ?>);
+    $('add-tag').observe('keyup', function() {
+        if($('add-tag').value !== '') {
+            $('add-tag-button').disabled = false;
+        } else {
+            $('add-tag-button').disabled = true;
+        }
+    });
+</script>
+

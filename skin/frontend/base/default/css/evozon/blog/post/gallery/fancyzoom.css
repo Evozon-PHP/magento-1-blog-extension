@@ -1,0 +1,84 @@
+#zoom {
+  position: relative;
+  z-index: 10000;
+}
+
+#fancy-zoom-table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 100%;
+}
+
+#fancy-zoom-table .tl {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .tm {
+  height: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .tr {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .ml {
+  width: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .mm {
+  background: #fff;
+  vertical-align: top;
+  padding: 10px;
+}
+
+#fancy-zoom-table .mr {
+  width: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .bl {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .bm {
+  height: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-table .br {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+#fancy-zoom-x {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#fancy-zoom-x img {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+#fancy-zoom-gallery {
+  display: none;
+}
+
+/*
+ * Fix for default theme
+ */
+.blog-post-media .more-views li a {
+  width: auto;
+  height: auto;
+}

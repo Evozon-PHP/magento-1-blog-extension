@@ -1,0 +1,28 @@
+<?php
+/**
+ * Blog Rss list template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Calin Florea <calin.florea@evozon.com>
+ * @see        Evozon_Blog_Block_Post_Rss_List
+ */
+?>
+<?php if ($this->isEnabled()): ?>
+    <table class="data-table rss-table posts-rss-table" id="rss-table-misc">
+        <col />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th colspan="2"><?php echo $this->__('Blog Feeds') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo $this->__('Recent Blog Posts') ?></td>
+                <td><a href="<?php echo $this->getRssUrlAction(); ?>" class="link-rss" target="_blank"><?php echo $this->__('Get Feeds'); ?></a></td>
+            </tr>
+        </tbody>
+    </table>
+<?php endif; ?>

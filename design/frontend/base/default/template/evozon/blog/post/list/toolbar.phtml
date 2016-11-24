@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Implement next&previous navigation block
+ *
+ * @see         Evozon_Blog_Block_Post_List_Toolbar
+ * @package     Evozon_Blog
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ */
+?>
+
+<?php 
+// set defaults
+$_helper = Mage::helper('evozon_blog');
+$count = $this->getPostCount();
+$newestUrl = $this->getNewestUrl();
+$oldestUrl = $this->getOldestUrl();
+?>
+
+<?php if ($count > 0): ?>
+<?php $itemLabel = ($count == 1) ? $_helper->__('Post') : $_helper->__('Posts'); ?>
+<div class="toolbar">
+    <div class="sorter" style="width:45%;">        
+        <div class="sort-by">
+            <?php if ($newestUrl):?>
+                <a href="<?php echo $newestUrl?>"><?php echo $_helper->__('Newest');?></a>            
+            <?php else: ?> 
+                <?php echo $_helper->__('Newest');?>
+            <?php endif; ?> 
+        </div>
+    </div>
+    <div class="middle" style="float:left;">
+        <p class="amount amount--no-pages">
+              <strong><?php echo $count.' '.$itemLabel; ?></strong>
+        </p>
+    </div>
+    <div class="pager">
+        <div class="count-container">          
+            <div class="limiter">
+                 <?php if ($oldestUrl):?>
+                    <a href="<?php echo $oldestUrl?>"><?php echo $_helper->__('Oldest');?></a>            
+                <?php else: ?> 
+                    <?php echo $_helper->__('Oldest');?>
+                <?php endif; ?>             
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

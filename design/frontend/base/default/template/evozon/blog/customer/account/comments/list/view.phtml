@@ -1,0 +1,40 @@
+<?php
+/**
+ * User comments view
+ * This block is rendered by an ajax call
+ * It will get the data on comment`s parent and replies (if there are any and have been requested for)
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Customer_Account_Comment_List_View
+ */
+?>
+<?php if (count($this->getContextComments()) > 0 ) : ?>
+    <?php foreach ((array)$this->getContextComments() as $_comment) : ?>
+        <?php if (isset($_comment['error'])) :?>
+            <div class="comment_content"><?php echo $_comment['error'] ?></div>
+        <?php else: ?>
+            <div class ="comment-metadata">
+                <span class="nobr"><?php echo $this->__('On');?> <?php echo $_comment['created_at']; ?>
+                    <?php echo $this->__('by');?> <b><?php echo $this->escapeHtml($this->getAuthorModel($_comment)->getName()); ?></b></a>
+                </span>                           
+            </div>
+
+            <?php if (!empty($_comment['subject'])): ?>
+                <div class="comment_subject"><b><?php echo $this->__("Subject:"); ?></b>
+                    <i> <?php echo  $this->escapeHtml($_comment['subject']); ?></i>
+                </div>
+            <?php endif; ?>
+
+            <div class="comment_content"><?php echo $this->escapeHtml($_comment['content']) ?></div>
+
+            <?php if ($this->getIsReply()) : ?>
+                <div class="comment_actions">
+                    <a href="<?php echo $_comment['post_id'] ?>" class="nobr"><?php echo $this->__('Go to Reply'); ?></a>
+                </div>
+            <?php endif;?>
+        <?php endif;?>
+    <?php endforeach; ?>
+<?php endif;

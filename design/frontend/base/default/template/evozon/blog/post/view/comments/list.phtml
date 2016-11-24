@@ -1,0 +1,77 @@
+<?php 
+/**
+ * Comments template for post single page
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @see        Evozon_Blog_Block_Post_View_Comments_List
+ */
+?>
+
+<?php 
+$_helper = Mage::helper('evozon_blog'); 
+$_comments = $this->getLoadedCommentsCollection(); 
+?>
+
+<div class="post_comments" <?php if (!$this->getAreChildren()) { echo 'id="post_comments"'; }?>>
+    <!--Display the comments number-->
+    <?php if (!$this->getAreChildren()): ?>
+        <?php $commentsCount = $this->getPostInstance()->getCommentCount(); ?>
+        <h3 id="header_comments_number"><?php echo ($commentsCount > 0 ? $commentsCount . ' ' . $this->__('Comment(s)') : $this->__('No comments')) ?></h3>
+    <?php endif; ?>    
+
+    <!--Display the form for adding a new comment-->
+    <?php if (!$this->getAreChildren()): ?>
+        <?php if ($this->haveAccessToAddComment() == 1) {
+            echo $this->getChild('evozon_blog_post_comments_reply')->setPostId($this->getPostInstance()->getId())->toHtml();
+        } else {
+            echo $this->getInfoMessage();
+        }
+        ?>
+    <?php endif; ?>
+
+    <!--Comment list-->
+    <ul class="<?php echo (!$this->getAreChildren() ? 'comments_list' : 'subcomments_list'); ?>">
+        <?php foreach ($_comments as $comment): ?>
+            <li class="post_comment" id="comment-<?php echo $comment['id']; ?>">  
+                <!--Display the author and the created at date-->
+                <div class="post_comment_author">
+                    <b><?php echo $this->getAuthorModel($comment)->getName(); ?></b> | <i><?php echo $comment['created_at']; ?></i>
+                </div>  
+
+                <!--Display the subject if is defined-->
+                <?php if ($comment['subject']): ?>
+                    <div class="post_comment_subject"><b><i><?php echo $comment['subject']; ?></i></b></div>
+                <?php endif; ?>
+
+                <!--Display the content-->
+                <div class="post_comment_content"><?php echo $comment['content']; ?></div>  
+
+                <!--Display the reply link-->
+                <?php  if($this->canReply((int)$comment['level'])): ?>
+                    <a href="javascript:void(0);" 
+                       onclick="comment.showAddCommentForm(<?php echo $comment['id']; ?>)" 
+                       class="post_comment_reply_link" 
+                       id="post_comment_reply_link-<?php echo $comment['id']; ?>">
+                           <?php echo $this->__('Reply'); ?>
+                    </a>
+
+                    <!--Display the reply form-->
+                    <div class="post_comment_reply" id="post_comment_reply-<?php echo $comment['id']; ?>"></div>
+                <?php endif; ?>
+
+                <!--Display the children comments-->
+                <?php if(!empty($comment['children'])):?>
+                    <?php echo $this->setComments($comment['children'])->setAreChildren(true)->toHtml(); ?>
+                <?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+
+<script type="text/javascript"> 
+    var Translator = new Translate(<?php echo Zend_Json::encode(Mage::helper('evozon_blog/jsTranslations')->getJsTranslations()) ?>);
+    var comment = new Comment();
+</script>

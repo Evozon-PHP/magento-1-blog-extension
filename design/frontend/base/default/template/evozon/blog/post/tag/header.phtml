@@ -1,0 +1,17 @@
+<?php
+/**
+ * Posts filtered by tag header template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Dana Negrescu <dana.negrescu@evozon.com>
+ * @see        Evozon_Blog_Block_Post_Tag_Header
+ */
+?>
+<?php $term = $this->getName(); ?>
+<?php if (!empty($term)): ?>
+    <div class="page-title">
+        <h1><?php echo $this->getHeaderTitle(); ?></h1>
+    </div>
+<?php endif;

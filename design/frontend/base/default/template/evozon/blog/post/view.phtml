@@ -1,0 +1,48 @@
+<?php
+/**
+ * Post single page template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @see        Evozon_Blog_Block_Post_View
+ */
+?>
+<?php
+// get the current post
+$_post = $this->getPost();
+?>
+<div class="post_single_page">
+    <h2><?php echo $this->escapeHtml($_post->getTitle()); ?></h2>
+
+    <!---IMAGE DISPLAY--->
+    <?php echo $this->getChildHtml('evozon_blog_post_image'); ?>
+
+    <!---DETAILS DISPLAY--->  
+    <?php echo $this->getChildHtml('evozon_blog_post_metadata'); ?>
+
+    <!---CONTENT DISPLAY--->
+    <?php echo $this->getChildHtml('evozon_blog_post_content'); ?>
+
+    <div class="blog_post_additional">
+        <!---TAGS DISPLAY--->
+        <?php echo $this->getChildHtml('evozon_blog_post_tags'); ?>
+
+        <!---CATEGORIES DISPLAY--->  
+        <?php echo $this->getChildHtml('evozon_blog_post_categories'); ?>
+    </div> 
+</div>
+
+<!---RELATED PRODUCTS DISPLAY--->
+<div>
+    <?php if ($this->getShowRelatedProducts()) : ?>
+        <?php echo $this->getChildHtml('evozon_blog_post_products'); ?>
+    <?php endif; ?>
+</div>
+
+<!---RELATED POSTS DISPLAY--->  
+<?php echo $this->getChildHtml('evozon_blog_post_related_posts'); ?>
+
+<!---COMMENTS DISPLAY---> 
+<?php echo $this->getChildHtml('evozon_blog_post_comments_list'); ?>

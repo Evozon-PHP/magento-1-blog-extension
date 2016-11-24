@@ -1,0 +1,25 @@
+<?php
+/**
+ * Create the block with tags that will allow the user to filter the posts by
+ * According to the preffered order, they can be displayed ASC,DESC (by the nr of posts) or random
+ *
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_Tag_Block
+ */
+?>
+<?php if ($this->isEnabled()): ?>
+    <?php $tagsCollection = $this->getTagsCollection();?>
+        <?php if ($tagsCollection->count()): ?>
+            <div class="block-title post-tags-title">
+                <strong><span><?php echo $this->__('Featured Topics') ?></span></strong>
+            </div>
+            <div class="tags-block">
+                <?php foreach ($tagsCollection as $tag): ?>
+                    <a class="tag-size-range-<?php echo $this->getSizeFromRange($tag->getCount()); ?>" href="<?php echo $this->getTagUrl($tag->getUrlKey()); ?>" title="<?php echo $tag->getName(); ?>"><span>#<?php echo $tag->getName(); ?> </span></a>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+<?php endif;

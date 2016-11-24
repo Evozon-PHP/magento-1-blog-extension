@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * Template for post listing
+ *
+ * @see         Evozon_Blog_Block_Post_List
+ * @package     Evozon_Blog
+ * @author      Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @author      Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ */
+?>
+<?php
+$_postCollection = $this->getPosts();
+
+/* @var $_helper Evozon_Blog_Helper_Data */
+$_helper = $this->helper('evozon_blog');
+?>
+<?php if (!$_postCollection->count()): ?>
+    <p class="note-msg"><?php echo $this->__('There are no posts matching the selection.') ?></p>
+<?php else: ?>
+    <div class="category-posts">
+        <ol class="post-list" id="post-list">
+            <?php $_iterator = 0; ?>
+            <?php foreach ($_postCollection as $_post): ?>
+                <li class="item<?php if (++$_iterator == sizeof($_postCollection)): ?> last<?php endif; ?>">
+                    <a href="<?php echo $_post->getPostUrl();?>"><h2 class="post-name"><?php echo $this->escapeHtml($_post->getTitle()); ?></h2></a>
+
+                    <!-- POST IMAGE -->
+                    <?php echo $this->getChild('evozon_blog_post_image')->setPost($_post)->toHtml(); ?>
+                    
+                    <!-- METADATA DISPLAY--->  
+                    <?php echo $this->getChild('evozon_blog_post_metadata')->setPost($_post)->toHtml(); ?>
+
+                    <!-- DESCRIPTION -->             
+                    <?php echo Mage::helper('evozon_blog/post')->getListingContent($_post); ?>
+
+                    <!-- CATEGORIES -->
+                    <br><?php echo $this->getChild('post_category_list')->setPost($_post)->toHtml(); ?>
+
+                    <!-- READ MORE & TAGS -->
+                    <div class="post-additional">
+                        <?php echo $this->getChild('post_tag_list')->setPost($_post)->toHtml(); ?>
+                        <div class="post-read-more">
+                            <button type="button" title="<?php echo $this->escapeHtml($_post->getTitle()); ?>" class="button" onclick="window.location.href = '<?php echo $_post->getPostUrl(); ?>'"><span><span><?php echo $_helper->__('Read more'); ?></span></span></button>
+                        </div>
+                    </div>
+                    <div class='clear'></div>
+                </li>        
+            <?php endforeach; ?>
+        </ol>
+
+        <?php echo $this->getChild('post_list_toolbar')->setPostCollection($this->getPosts())->setListType($this->getListType())->toHtml(); ?>
+    </div>
+<?php endif; ?>

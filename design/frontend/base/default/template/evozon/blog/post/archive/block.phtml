@@ -1,0 +1,60 @@
+<?php
+/**
+ * Posts archive widget, layout
+ * 
+ * @package     Evozon_Blog 
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_Archive_Block
+ */
+
+if ($this->getConfigData(Evozon_Blog_Model_Config_Post::ARCHIVE_ENABLED)):
+    $archiveRows = $this->getArchiveBlock();
+
+    if ((!empty($archiveRows)) && count($archiveRows) > 0):?>
+        <div class="post-archive">
+            <div class="post-archive-title">
+                <strong><span><?php echo $this->__('Archive'); ?></span></strong>
+            </div>
+            <div class="post-archive-content">
+                <ol class="post-archive-content" style="margin-left: 10px;">
+                    <?php foreach ($archiveRows as $archive): ?>
+                        <?php $label = substr($archive['label'],0,4);?>
+                        <li class="item">
+                            <p class="post-archive-year">
+                            <ol>
+                                <li> 
+                                    <?php if (is_numeric($label)):?>
+                                        <a href="javascript:void(0);" id="year_<?php echo $label;?>"
+                                            onclick="toggleMonths(<?php echo $label;?>)">
+                                                <?php echo $archive['label'] ?>
+                                        </a>
+                                        <div class="archive_months" id="months_of_<?php echo $label; ?>" style="display:none;margin-left:10px;">
+                                            <?php echo $this->getChild('evozon_blog_archive_months')
+                                                ->setCollection($this->getMonthsCollection($label))
+                                                ->toHtml();
+                                            ?>
+                                        </div>
+                                    <?php else: ?>
+                                        <a href="<?php echo $archive['url']; ?>">
+                                            <?php echo $archive['label'] ?>
+                                        </a>
+                                    <?php endif;?>
+                                </li>
+                            </ol>
+                            </p>
+                        </li>
+                <?php endforeach; ?>
+                </ol>
+            </div>
+        </div>
+        <script type="text/javascript">                        
+            // hide/show months of the year
+            function toggleMonths(year) {                
+                $('months_of_'+ year, 'year_' + year, 'year_' + year).invoke('toggle');
+            }
+        </script>
+    <?php endif; ?>
+<?php endif;
+

@@ -1,0 +1,1373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Backend sections for blog module
+
+@category   Evozon
+@package    Evozon_Blog
+@copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+@author     Tiberiu Contiu <tiberiu.contiu@evozon.com>
+@author     Andreea Macicasan <andreea.macicasan@evozon.com>
+@author     Dana Negrescu <dana.negrescu@evozon.com>
+@author     Calin Florea <calin.florea@evozon.com>
+-->
+
+<config>
+    <tabs>
+        <evozon_blog translate="label">
+            <label>Evozon Blog</label>
+            <sort_order>200</sort_order>
+        </evozon_blog>
+    </tabs>
+    <sections>        
+        <evozon_blog_general translate="label" module="evozon_blog">
+            <label>General Configurations</label>
+            <tab>evozon_blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <seo translate="label" module="evozon_blog">
+                    <label>Search Engine Optimization</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>                         
+                        <title translate="label" module="evozon_blog">
+                            <label>Title Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <keywords translate="label" module="evozon_blog">
+                            <label>Keywords</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </keywords>
+                        <description translate="label" module="evozon_blog">
+                            <label>Description</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </description>
+                    </fields>                
+                </seo>
+                <layout>
+                    <label>Layout Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>                        
+                        <default translate="label comment" module="evozon_blog">
+                            <label>Default Layout</label>
+                            <comment>
+                                It will be used for tag and archive actions. If not overriden by category settings, it will be set as blog default layout.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_layout</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </default>    
+                        <post_view translate="label comment" module="evozon_blog">
+                            <label>Layout for post single view</label>
+                            <comment>
+                                Choose the layout of the single post/article.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_layout</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </post_view>                     
+                    </fields>                
+                </layout>  
+                <datetime>
+                    <label>Datetime Settings</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>                        
+                        <default_datetime translate="label comment" module="evozon_blog">
+                            <label>Datetime Format</label>                         
+                            <frontend_type>text</frontend_type>   
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_config</frontend_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_datetime_dateTime</backend_model>                         
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </default_datetime>                                                     
+                    </fields> 
+                </datetime>
+                <toolbar_pagination>
+                    <label>Toolbar and Pagination</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <page_var_name>
+                            <label>Page parameter name</label>
+                            <comment>The page parameter that will appear in _query in address bar.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-alpha</validate>
+                        </page_var_name>
+                        <filter_var_name>
+                            <label>Filter parameter name</label>
+                            <comment>The filter parameter that will appear in _query in address bar.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-alpha</validate>
+                        </filter_var_name>
+                    </fields>     
+                </toolbar_pagination> 
+                <post_image_placeholders> 
+                    <label>Post Image Placeholders</label>
+                    <clone_fields>1</clone_fields>
+                    <clone_model>evozon_blog/adminhtml_system_config_clone_media_image</clone_model>
+                    <sort_order>300</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <placeholder>
+                            <label></label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">evozon/blog/post/placeholder</upload_dir>
+                            <base_url type="media" scope_info="1">evozon/blog/post/placeholder</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </placeholder>
+                    </fields>         
+                </post_image_placeholders>                                                 
+            </groups>
+        </evozon_blog_general>
+        <evozon_blog_post translate="label" module="evozon_blog">
+            <label>Post Configurations</label>
+            <tab>evozon_blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <listing translate="label" module="evozon_blog">
+                    <label>Post listing</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <max_posts_perpage>
+                            <label>Number of posts listed</label>
+                            <comment>Number of posts shown in listing page.</comment>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>                           
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-not-negative-number</validate>
+                        </max_posts_perpage> 
+                        <teaser_words_count>
+                            <label>Teaser words number</label>
+                            <comment>Teaser is short content that will be shown in post listing and single page. If admin does not add the teaser, it will be taken from post content. Specify the number of words to take from content, if short content is empty.</comment>
+                            <frontend_type>text</frontend_type>                           
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                        </teaser_words_count>
+                        <listing_display_content>
+                            <label>Available content</label>
+                            <comment>Select the content to be displayed during posts listing.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_post_components</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </listing_display_content>
+                    </fields>
+                </listing>
+                <recent translate="label" module="evozon_blog">
+                    <label>Recent Posts</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields>                          
+                        <disable_widget>
+                            <label>Status</label>
+                            <required>1</required>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>                          
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </disable_widget>
+                        <template>
+                            <label>Display template</label>
+                            <comment>
+                                Choose a template for your widget display the posts: -Minimal: Displays the image thumbnail, title and, optional, the date ; -Extended: Displays a chosen type of image, title and, optional, date, content, number of comments.
+                            </comment>
+                            <required>1</required>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_recent_posts_template</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                            </depends>
+                        </template>                        
+                        <posts_in_widget>
+                            <label>Number of posts visible</label>
+                            <comment>
+                                There is a minimum of 1 to be shown.
+                            </comment>
+                            <required>1</required>
+                            <frontend_type>text</frontend_type>                           
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                            </depends>
+                        </posts_in_widget>
+                        <display_date>
+                            <label>Show published date</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                          
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                            </depends>
+                        </display_date>                        
+                        <image_style>
+                            <label>Image style</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_recent_posts_image</source_model>                          
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                                <template>evozon/blog/post/list/recent/posts/extended.phtml</template>
+                            </depends>
+                        </image_style>
+                        <content_length>
+                            <label>Post content limit</label>
+                            <comment>
+                                Number of words from the short content to be displayed in the widget.
+                            </comment>
+                            <frontend_type>text</frontend_type>                           
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                                <template>evozon/blog/post/list/recent/posts/extended.phtml</template>
+                            </depends>
+                            <validate>validate-greater-than-zero</validate>
+                        </content_length>                        
+                        <display_comments>
+                            <label>Show number of comments</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                          
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                                <template>evozon/blog/post/list/recent/posts/extended.phtml</template>
+                            </depends>
+                        </display_comments>
+                        <display_tags>
+                            <label>Show tags</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                          
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable_widget>1</disable_widget>
+                                <template>evozon/blog/post/list/recent/posts/extended.phtml</template>
+                            </depends>
+                        </display_tags>    
+                    </fields>
+                </recent>
+                <related translate="label" module="evozon_blog">
+                    <label>Related Posts</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields>                                              
+                        <enabled>
+                            <label>Enable block</label>
+                            <comment>
+                                <![CDATA[Yes: block will be visible.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <posts_number>
+                            <label>Number of posts visible</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[There is a minimum of 1 post to be shown.]]>
+                            </comment>
+                            <validate>validate-greater-than-zero</validate>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </posts_number>
+                    </fields>
+                </related>
+                <archive translate="label" module="evozon_blog">
+                    <label>Post archive</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields>                                              
+                        <widget_enable>
+                            <label>Enable block</label>
+                            <comment>
+                                <![CDATA[Disabled: block will not be displayed.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </widget_enable>
+                        <header>
+                            <label>Archive header and breadcrumb</label>
+                            <comment>
+                                This will be set as header and as breadcrumb to the action page. Use %s in order to have period value inserted.
+                            </comment>
+                            <frontend_type>text</frontend_type>                                       
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends>
+                                <widget_enable>1</widget_enable>
+                            </depends>                                            
+                        </header>
+                        <url_segment>
+                            <label>Archive first segment</label>
+                            <comment>
+                                This is the first segment before archive unique path. Example: /archive/2015/02 or /arch/2015/02.
+                            </comment>
+                            <frontend_type>text</frontend_type>                                       
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends>
+                                <widget_enable>1</widget_enable>
+                            </depends>                                            
+                        </url_segment>
+                        <date_format>
+                            <label>Date format</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_config</frontend_model> 
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_datetime_date</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <widget_enable>1</widget_enable>
+                            </depends>
+                        </date_format>
+                        <show_count>
+                            <label>Show posts count</label>
+                            <comment>
+                                <![CDATA[Yes: will display posts count in parenthesis.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <widget_enable>1</widget_enable>
+                            </depends>
+                        </show_count>
+                        <history_length>
+                            <label>History length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Number of years before the current year. 0 will display the current year only.]]>
+                            </comment>
+                            <validate>validate-zero-or-greater</validate> 
+                            <validate>validate-digits</validate>
+                            <depends>
+                                <widget_enable>1</widget_enable>
+                            </depends>
+                        </history_length>
+                    </fields>
+                </archive>
+                <post_url translate="label" module="evozon_blog">
+                    <label>Post Url Format</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <posturl_month_name>
+                            <label>Month and title</label>
+                            <comment>
+                                Example: /2015/06/unique-title-of-the-post/ or /2015/06/unique-title-of-the-post.html
+                            </comment>
+                            <frontend_type>checkbox</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_postUrl</frontend_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_postUrl</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </posturl_month_name>
+                        <posturl_day_name>
+                            <label>Date and title</label>
+                            <comment>
+                                Example: /2015/06/01/unique-title-of-the-post/ or /2015/06/01/unique-title-of-the-post.html
+                            </comment>
+                            <frontend_type>checkbox</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_postUrl</frontend_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_postUrl</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </posturl_day_name>
+                        <posturl_name>
+                            <label>Only title</label>
+                            <comment>
+                                Example: /unique-title-of-the-post/ or /unique-title-of-the-post.html
+                            </comment>
+                            <frontend_type>checkbox</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_postUrl</frontend_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_postUrl</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </posturl_name>
+                        <posturl_numeric>
+                            <label>Numeric</label>
+                            <comment>
+                                Example: /segment/1234/ or /segment/1234.html
+                            </comment>
+                            <frontend_type>checkbox</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_postUrl</frontend_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_postUrl</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </posturl_numeric>
+                        <url_custom>
+                            <label>Custom structure</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_config</frontend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <required>1</required>
+                        </url_custom>
+                        <keep_url_structure>
+                            <label>Keep old url structure</label>
+                            <required>1</required>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>
+                                Keep the old url structure for existent posts.
+                            </comment>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </keep_url_structure>
+                    </fields>
+                </post_url>
+                <tags translate="label comment" module="evozon_blog">
+                    <label>Tags</label>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields>                                            
+                        <enabled>
+                            <label>Enable block</label>
+                            <comment>
+                                <![CDATA[Disabled: block will not be displayed.]]>
+                            </comment>
+                            <required>1</required>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>   
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                             
+                        </enabled>
+                        <header>
+                            <label>Tags header and breadcrumb</label>
+                            <comment>
+                                This will be set as header and as breadcrumb to the action page. Use %s in order to have tag`s value inserted.
+                            </comment>
+                            <frontend_type>text</frontend_type>                                       
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>                                            
+                        </header>
+                        <url_segment>
+                            <label>Tag first url segment</label>
+                            <comment>
+                                This is the first segment before tag unique path. Example: /tag/unique-tag-url-10/ or /tag/unique-tag-url-10.html
+                            </comment>
+                            <frontend_type>text</frontend_type>                                       
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>                                             
+                        </url_segment> 
+                        <limit>
+                            <label>Number of tags displayed</label>
+                            <depends>
+                                <enable_widget>1</enable_widget>
+                            </depends>
+                            <frontend_type>text</frontend_type>                           
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <required>1</required>
+                            <validate>validate-greater-than-zero</validate>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </limit>
+                        <order>
+                            <label>Tags order</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_post_tags_order</source_model> 
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </order>
+                    </fields>                    
+                </tags>
+                <catalog translate="label comment" module="evozon_blog">
+                    <label>Related Posts on Product Page</label>
+                    <sort_order>90</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields> 
+                        <enabled>
+                            <label>Show block on product view page</label>
+                            <frontend_type>select</frontend_type> 
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                                      
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                             
+                        </enabled>
+                        <limit>
+                            <label>Number of posts to display</label>
+                            <comment>
+                                Write a number to limit the number of related articles in the block.
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
+                            <value>3</value>                                     
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                            <validate>validate-not-negative-number</validate>
+                        </limit>
+                    </fields>                    
+                </catalog>
+                <products translate="label" module="evozon_blog">
+                    <label>Related Products on Post Page</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields>
+                        <enabled>
+                            <label>Show related products block</label>
+                            <comment>
+                                Yes: the block will be visible on post single page. No: the block will be disabled.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <limit>
+                            <label>Number of products to display</label>
+                            <comment>Write a number to limit the number of related products to be displayed.</comment>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
+                            <value>6</value>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-not-negative-number</validate>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </limit>
+                    </fields>                    
+                </products>
+                <catalog_categories translate="label comment" module="evozon_blog">                    
+                    <label>Categories block</label>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields> 
+                        <enabled>
+                            <label>Show categories block</label>
+                            <frontend_type>select</frontend_type> 
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                                      
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                             
+                        </enabled>
+                        <limit>
+                            <label>Number of blog categories to display</label>                            
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>                                                          
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-not-negative-number</validate>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </limit>
+                        <category_name>
+                            <label>Show category parents name</label>                            
+                            <frontend_type>select</frontend_type>     
+                            <source_model>evozon_blog/adminhtml_system_config_source_post_category_block_showCategoryNames</source_model>                                                     
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </category_name>
+                        <category_name_separator>
+                            <label>Category name separator</label>                            
+                            <frontend_type>text</frontend_type>                                                          
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </category_name_separator>
+                    </fields>                    
+                </catalog_categories> 
+                <featured_posts_category translate="label comment" module="evozon_blog">
+                    <label>Featured Posts on Category Page</label>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields> 
+                        <enabled>
+                            <label>Show block on category view page</label>
+                            <comment>If you select "No", it won`t be rendered on any of the categories.</comment>
+                            <frontend_type>select</frontend_type> 
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                                      
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                             
+                        </enabled>
+                        <limit>
+                            <label>Number of posts to display</label>
+                            <comment>
+                                Write a number to limit the related posts in the block. 
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
+                            <value>3</value>                                     
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-not-negative-number</validate>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </limit>
+                    </fields>                    
+                </featured_posts_category>
+                <post_rss translate="label" module="evozon_blog">
+                    <label>Posts RSS feed</label>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>  
+                    <fields>
+                        <enabled>
+                            <label>Enable</label>
+                            <comment>
+                                Yes: the RSS feed will be enabled.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <limit>
+                            <label>Number of posts to display</label>
+                            <comment>
+                                Write a number to limit the posts.
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
+                            <value>6</value>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-not-negative-number</validate>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </limit>
+                    </fields>                    
+                </post_rss>                
+            </groups>
+        </evozon_blog_post>
+        <evozon_blog_comment translate="label" module="evozon_blog">
+            <label>Comment Configurations</label>
+            <tab>evozon_blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>30</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="evozon_blog">
+                    <label>General</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <allowed_reply_level>
+                            <label>Reply level</label>
+                            <comment>Set the maximum level for making a reply by typing a number between 1 and 10. Default is level 10.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number-range number-range-1-10</validate>
+                        </allowed_reply_level>
+                        <auto_approve>
+                            <label>Automatic approval</label>
+                            <comment>
+                                <![CDATA[Yes: the comments will be automatically published. <br /> No: the comments will be set as pending until the admin will publish them.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </auto_approve>
+                        <allow_guest_comments>
+                            <label>Allow guest comments</label>
+                            <comment>
+                                <![CDATA[Yes: not logged in users (guests) will be able to add comments. <br /> No: only logged in customers will be able to add comments.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_guest_comments>
+                        <content_words_number>
+                            <label>Content words number</label>
+                            <comment>Specify the number of words to take from content for the comments grid.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                        </content_words_number>
+                    </fields>
+                </general>
+                <spam_service translate="label" module="evozon_blog">
+                    <label>Spam Service</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label comment" module="evozon_blog">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <http_client>
+                            <label>Client</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_comment_spamClients</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </http_client>
+                        <http_client_adapter>
+                            <label>Client Adapter</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_comment_spamAdapters</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </http_client_adapter>
+                        <type>
+                            <label>Spam Service</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_comment_spamServices</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </type>
+                        <akismet_api_key translate="label comment" module="evozon_blog">
+                            <label>API Key</label>
+                             <comment>
+                                <![CDATA[ 
+                                    Provided API Key. Visit <a href="https://akismet.com/" target="_blank">Akismet website</a> to create an account. For details about generating the key check this <a href="http://docs.akismet.com/getting-started/activate/" target="_blank">tutorial</a>.
+                                ]]>
+                            </comment>
+                            <validate>required-entry</validate>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                                <type>evozon_blog/spam_service_akismet</type>
+                            </depends>
+                        </akismet_api_key>
+                    </fields>
+                </spam_service>
+                <recent_comments_widget translate="label" module="evozon_blog">
+                    <label>Recent comments</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_comments_widget translate="label comment" module="evozon_blog">
+                            <label>Show recent comments block</label>
+                            <comment>
+                                <![CDATA[No: will disable comment block on the selected pages.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable_comments_widget>
+                        <comments_number translate="label comment" module="evozon_blog">
+                            <label>No. of comments in the block</label>
+                            <comment>Insert a number bigger than zero (0).</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <depends>
+                                <enable_comments_widget>1</enable_comments_widget>
+                            </depends>
+                        </comments_number>
+                        <comment_max_words translate="label comment" module="evozon_blog">
+                            <label>No. of words per comment</label>
+                            <comment>Show X words per comment.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <depends>
+                                <enable_comments_widget>1</enable_comments_widget>
+                            </depends>
+                        </comment_max_words>
+                    </fields>
+                </recent_comments_widget>
+                <customer_account_tab translate="label" module="evozon_blog">
+                    <label>Customer Account Comments Tab</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enabled</label>
+                            <comment>
+                                Enable the tab in customer account view.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                    </fields>
+                </customer_account_tab>
+            </groups>
+        </evozon_blog_comment>          
+        <evozon_blog_cron translate="label" module="evozon_blog">
+            <label>Cron Configurations</label>
+            <tab>evozon_blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>40</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <comment_cron_spam translate="label" module="evozon_blog">
+                    <label>Spam Comments Cron job</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="evozon_blog">
+                            <label>Enabled</label>
+                            <comment>Enable cronjob for deleting spam comments.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_cron_commentSpam</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <hourly translate="label" module="evozon_blog">
+                            <label>Hourly</label>
+                            <comment>Yes for hourly cronjob or No for fixed date.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </hourly>
+                        <hour_number translate="label" module="evozon_blog">
+                            <label>Every X hours</label>
+                            <comment>Check for spam comments every X hours.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-number</validate>
+                            <depends>
+                                <hourly>1</hourly>
+                                <enabled>1</enabled>
+                            </depends>
+                        </hour_number>
+                        <time translate="label" module="evozon_blog">
+                            <label>Start Time</label>
+                            <comment>Start at Hour:Minute:Second.</comment>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <hourly>0</hourly>
+                                <enabled>1</enabled>
+                            </depends>
+                        </time>
+                        <frequency translate="label" module="evozon_blog">
+                            <label>Frequency</label>
+                            <comment>Repeat frequency.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_cron_frequency</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <hourly>0</hourly>
+                                <enabled>1</enabled>
+                            </depends>
+                        </frequency>
+                    </fields>
+                </comment_cron_spam>
+                <post_cron_status translate="label">
+                    <label>Post Change Status Cron job</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enabled</label>
+                            <comment>Enable cronjob for publish post at the scheduled date</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_cron_postStatus</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <custom>
+                            <label>Use custom settings</label>
+                            <comment>No - cron job will be executed at every hour.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </custom>
+                        <hourly>
+                            <label>Hourly</label>
+                            <comment>Yes for hourly cronjob or No for fixed date (daily).</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <custom>1</custom>
+                                <enabled>1</enabled>
+                            </depends>
+                        </hourly>
+                        <hour_number>
+                            <label>Every X hours</label>
+                            <comment>Check for posts every X hours.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <depends>
+                                <hourly>1</hourly>
+                                <custom>1</custom>
+                                <enabled>1</enabled>
+                            </depends>
+                        </hour_number>
+                        <time>
+                            <label>Start Time</label>
+                            <comment>Start at Hour:Minute:Second.</comment>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <hourly>0</hourly>
+                                <custom>1</custom>
+                                <enabled>1</enabled>
+                            </depends>
+                        </time>
+                    </fields>
+                </post_cron_status>
+            </groups>
+        </evozon_blog_cron>
+        <evozon_blog_search translate="label" module="evozon_blog">
+            <label>Search Configurations</label>
+            <tab>evozon_blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>40</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <post_search>
+                    <label>Blog Post Search</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <search_status>
+                            <label>Status</label>
+                            <required>1</required>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </search_status>
+                        <engine translate="label">
+                            <label>Search Engine</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_search_engine</backend_model>
+                            <source_model>evozon_blog/adminhtml_system_config_source_search_engine</source_model>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <search_status>1</search_status>
+                            </depends>
+                        </engine>
+                        <search_type translate="label">
+                            <label>Search Type</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_catalog_search_type</backend_model>
+                            <source_model>adminhtml/system_config_source_catalog_search_type</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <search_status>1</search_status>
+                            </depends>
+                        </search_type>
+                    </fields>
+                </post_search>
+            </groups>
+        </evozon_blog_search>
+        <evozon_blog_validation translate="label" module="evozon_blog">
+            <label>Validations</label>
+            <tab>evozon_blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>60</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <tags translate="label" module="evozon_blog">
+                    <label>Tags</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <model translate="label">
+                            <label>Validation rules</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_validation_tag</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </model>                         
+                        <maxlength translate="label" module="evozon_blog">
+                            <label>Maximum Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <validate>required-entry</validate>
+                        </maxlength>
+                        <minlength translate="label" module="evozon_blog">
+                            <label>Minimum Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <validate>required-entry</validate>
+                        </minlength>
+                        <encoding translate="label" module="evozon_blog">
+                            <label>Encoding</label>
+                            <comment>
+                                <![CDATA[ 
+                                    If the inserted value will not be found in the <a href="http://php.net/manual/en/mbstring.supported-encodings.php" target="_blank">encodings list</a>, the default "UTF-8" type will be used.
+                                ]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </encoding>
+                    </fields>                
+                </tags>
+                <comments>
+                    <label>Comments</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <model translate="label">
+                            <label>Validation rules</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_validation_comment</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </model>
+                        <author_maxlength translate="label" module="evozon_blog">
+                            <label>Author name maximum length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <validate>required-entry</validate>
+                        </author_maxlength>                        
+                        <subject translate="label comment" module="evozon_blog">
+                            <label>Required Subject</label>
+                            <comment>
+                                If "Yes":When the user submits a comment, the subject field will be required. If "No": the field will be optional.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </subject>
+                        <subject_maxlength translate="label" module="evozon_blog">
+                            <label>Subject maximum length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <validate>required-entry</validate>
+                        </subject_maxlength>
+                        <content_maxlength translate="label" module="evozon_blog">
+                            <label>Content maximum length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-greater-than-zero</validate>
+                            <validate>required-entry</validate>
+                        </content_maxlength>                     
+                    </fields>                
+                </comments>  
+            </groups>
+        </evozon_blog_validation>
+    </sections>
+</config>

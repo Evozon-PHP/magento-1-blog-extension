@@ -1,0 +1,29 @@
+<?php
+/**
+ * Posts archive months layout
+ * 
+ * @package     Evozon_Blog 
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_Archive_Filter
+ */
+
+/* @var $archiveRows Evozon_Blog_Model_Resource_Post_Archive */
+$monthArchive= $this->getCollection();
+?>
+<ol class="post-archive-content">
+    <?php foreach ($monthArchive as $month): ?>
+        <li class="item">
+                <ol>
+                    <li> 
+                        <a href="<?php echo $month['url']; ?>">
+                            <?php echo $month['label'] ?>
+                        </a>
+                    </li>
+                </ol>
+        </li>
+    <?php endforeach; ?>
+</ol>
+                                  
+

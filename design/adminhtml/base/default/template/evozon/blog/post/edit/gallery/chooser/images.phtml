@@ -1,0 +1,40 @@
+<?php
+/**
+ * It will show all images for the current post
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @author     Dana Negrescu <dana.negrescu@evozon.com>
+ * @see        Evozon_Blog_Block_Adminhtml_Post_Edit_Gallery_Widget_Chooser_Images
+ */
+?>
+
+<?php
+//getting values
+$images = $this->getGalleryImages();
+$postId = $this->getPost()->getId();
+$selectedImages = $this->getSelected();
+?>
+<?php if (isset($postId)): ?>
+    <?php if (count($images) > 0) : ?>
+        <div id="gallery-widget-images" style="width: 80%; margin: 0 auto;">
+            <p align="center"><?php echo $this->__('Please select the images you want to appear in this gallery');?></p>
+            <?php foreach ($images as $image): ?>
+                <?php $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'evozon/blog/post/' . $image['value']; ?>
+                <img src="<?php echo $url; ?>" class="small-image-preview v-middle"
+                     id="gallery-image-<?php echo $image['value_id']; ?>" ref="<?php echo $image['value_id']; ?>"                 
+                     title="<?php echo $image['value']; ?>" alt="<?php echo $image['value']; ?>"
+                     width="90px" height="auto"
+                     style="margin-top:7px;border:1px solid grey;<?php if (in_array($image['value_id'], $selectedImages)): echo 'border:solid; border-color:orange;'; endif; ?>"
+                     onclick="galleryImages.updateList(this)" <?php if (in_array($image['value_id'], $selectedImages)) : echo 'checked="checked"'; endif;?>
+                     /> 
+        <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p style="color:red"><?php echo $this->__('There are no images to be used in the gallery for the current post!'); ?></p>
+    <?php endif; ?>
+<?php else: ?>
+    <p style="color:red" align="center"><?php echo $this->__('We are sorry, a gallery can only be added from the content editor of a post by using the "Insert Gallery" button!'); ?></p>
+<?php endif;

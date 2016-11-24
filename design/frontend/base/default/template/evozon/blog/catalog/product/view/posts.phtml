@@ -1,0 +1,37 @@
+<?php
+/**
+ * this template is for showing related articles on the product view page
+ * we won`t display this template if it is disabled from system configurations
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Catalog_Product_View_Posts
+ */
+?>
+<?php if ($this->getIsEnabled()) : ?>
+<?php $_articlesCollection = $this->getRelatedPosts();?>
+     <?php if ($_articlesCollection->count()): ?>  
+        <div class="block block-related block-related-articles">
+            <div class="block-title">
+                <h2><?php echo $this->__('Articles that talk about it..'); ?></h2>
+            </div>
+        </div>        
+        <div class="category-products related-articles">
+            <ul class="products-grid related-articles-grid products-grid--max-6-col">
+                <?php foreach ($_articlesCollection->getItems() as $_article): ?>
+                    <?php $imageUrl = (string)Mage::helper('evozon_blog/post_image')->init($_article, 'small_image')->keepFrame(true)->resize(210);?>
+                    <li class="item">
+                        <a href="<?php echo $_article->getPostUrl() ?>" title="<?php echo $this->stripTags($_article->getTitle(), null, true) ?>" class="product-image article-image"><img src="<?php echo $imageUrl; ?>" /></a>
+                        <h2 class="product-name article-name"><a href="<?php echo $_article->getPostUrl() ?>" title="<?php echo $this->stripTags($_article->getTitle(), null, true) ?>"><?php echo $_article->getTitle(); ?></a></h2>
+
+                        <div class="price-box actions" style="position:relative;">
+                            <button type="button" title="<?php echo $this->__('Read More') ?>" class="button" onclick="setLocation('<?php echo $_article->getPostUrl() ?>')"><span><span><?php echo $this->__('Read more') ?></span></span></button>
+                        </div>
+                    </li>                
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

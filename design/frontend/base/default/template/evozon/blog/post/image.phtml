@@ -1,0 +1,24 @@
+<?php
+/**
+ * Image template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @see        Evozon_Blog_Block_Post_Image
+ */
+?>
+
+<?php 
+// getting data
+$post = $this->getPost();
+?>
+
+<div class="blog-post-image">
+    <a href="<?php echo $post->getPostUrl(); ?>" title="<?php echo $this->escapeHtml($post->getTitle()) ?>">
+        <img src="<?php echo $this->getPostImage(); ?>" class="blog-post-main-image"
+             alt="<?php echo $this->escapeHtml($this->getPost()->getTitle()); ?>"
+             title="<?php echo $this->escapeHtml($this->getPost()->getTitle()); ?>"/>
+    </a>
+</div>

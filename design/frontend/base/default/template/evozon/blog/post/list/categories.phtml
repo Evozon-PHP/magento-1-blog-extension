@@ -1,0 +1,30 @@
+<?php
+/**
+ * Categories template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ */
+?>
+
+<?php 
+$categories = $this->getCategories();
+$catCount = count($categories);
+?>
+
+<?php if ($catCount > 0): ?>
+    <?php $counter = 0; ?>
+
+    <div class="blog_post_categories">
+        <?php echo $this->__('Posted in'); ?>: 
+        <?php foreach ($categories as $category): ?>
+                <a title="<?php echo $category->getName(); ?>" href="<?php echo $category->getUrl(); ?>"><?php echo $category->getName(); ?></a>
+                <?php if ($counter+1 < $catCount):?>
+                    <?php echo ', '; ?> 
+                <?php endif; ?>
+                <?php $counter++; ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,98 @@
+/* Comments and subcomments list */
+.comment_container {
+    border-radius: 5px;
+    border: 1px solid #A5A5AB;
+    padding: 20px;
+    width: 500px;
+    word-wrap: break-word;
+}
+
+.comment_left_container {
+    width: 400px;
+    float: left;
+}
+
+.comment_right_container {
+    width: auto;
+    float: right;
+}
+
+.comment_actions {
+    padding-bottom: 10px;
+}
+
+.comment_children {
+    padding-left: 50px
+}
+
+.comments-grid-content-links {
+    width: 800px;
+    word-wrap: break-word;
+}
+
+/* Remove underline from subcomments link */
+.comment_container a:hover {
+    text-decoration: none;
+}
+
+.subcomments_link {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Post restrictions */
+.hide_specific_groups {
+    display: none; 
+}
+
+button .form-button .add-widget .gallery .plugin
+{
+    color: #00aeef;
+}
+
+#gallery-widget-images {
+    width: 80%; 
+    margin: 0 auto;
+}
+
+#images-wrapper {
+    height: 100px;
+    width: 100px;
+}
+
+#images-wrapper img {
+    min-height: 100%;
+    min-width: 100%;
+    margin-top:7px; 
+    border:1px solid grey;
+}
+
+#images-wrapper img:checked {
+    min-height: 100%;
+    min-width: 100%;
+    border:solid; 
+    border-color:orange;
+}
+
+.input-show-all input:read-only {
+    background-color: #dddddd;
+}
+input#add-tag {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #aaa #c8c8c8 #c8c8c8 #aaa;
+    background: #fff;
+    font: 12px arial, helvetica, sans-serif;
+    padding: 2px;
+    box-shadow: none;
+    max-width: 300px;
+}
+button.add-tag {
+    height: 20px;
+}
+button.add-tag[disabled] {
+    border: 1px solid #ccc!important;
+    background: url(../../../../../default/default/images/btn_back_bg.gif)!important;
+    color: #555!important;
+    cursor: default;
+}

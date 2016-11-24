@@ -1,0 +1,34 @@
+<?php
+/**
+ * Layer navigation
+ * Offers the possiblity to search in posts or products only
+ * 
+ * @author Dana Negrescu <dana.negrescu@evozon.com>
+ * @see Evozon_Blog_Block_Search_Layer
+ */
+?>
+<?php if ($this->canShowBlock()): ?>
+    <?php $searchCollection = $this->getSearchCollection();?>
+    <div class="block block-layered-nav">
+        <div class="block-title" style="border-top: 0px;">
+            <strong><span><?php echo $this->__('Search In') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <dl id="narrow-by-list">
+                <dt><?php echo $this->__('Result') ?></dt>
+                <?php foreach ($searchCollection as $type=>$collection):?>
+                    <dd>
+                        <?php if ($this->getSearchType()==$type):?>
+                            <b><?php echo $this->getLabel($type, $collection->count());?></b>
+                        <?php else:?>
+                            <a href="<?php echo $this->getSearchUrl($type);?>">
+                                <?php echo $this->getLabel($type, $collection->count());?>
+                            </a>
+                        <?php endif;?>
+                    </dd>
+                <?php endforeach;?>
+            </dl>
+            <script type="text/javascript">decorateDataList('narrow-by-list');</script>
+        </div>
+    </div>
+<?php endif;

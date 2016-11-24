@@ -1,0 +1,30 @@
+<?php
+/**
+ * This template is used to render the blog post restriction rules container's admin UI
+ *
+ * @package     Evozon_Blog
+ * @author      Denis Rendler <denis.rendler@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Adminhtml_Post_Edit_Tab_Restrictions_Renderer_Abstract_Container
+ */
+?>
+<input
+    type="hidden"
+    id="<?php echo $this->getTypeInputId(); ?>"
+    name="<?php echo $this->getTypeInputName(); ?>"
+    value="<?php echo $this->getTypeInputValue(); ?>"
+    class="hidden"
+    />
+<span id="rule-comment"><?php echo $this->getRuleComment() . $this->getRemoveChildElement(); ?></span>
+<ul id="<?php echo $this->getChildrenListId(); ?>" class="rule-param-children">
+    <?php foreach ($this->getChildElements() as $child): ?>
+    <li>
+        <?php echo $this->_getRenderer($child)->renderView(); ?>
+    </li>
+    <?php endforeach; ?>
+
+    <li>
+        <?php echo $this->getAddNewChildElement(); ?>
+    </li>
+</ul>

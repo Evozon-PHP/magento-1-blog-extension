@@ -1,0 +1,311 @@
+/* ####################################### */
+/* ########### STANDARD SETUP ############ */
+/* ####################################### */
+
+.protoshow
+{
+    position: relative;
+	margin: 0;
+	padding: 10;
+	list-style: none;
+/*	max-width: 900px;*/
+	/*max-height: 300px;*/
+}
+
+.protoshow .show {
+	position: relative;
+	margin: 0;
+	padding: 10;
+	list-style: none;
+}
+
+.slide {
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 90;
+	height: 100%;
+}
+
+.active-slide {
+	z-index: 100;
+}
+
+.protoshow .slide-caption {
+	position: relative;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 100;
+	padding: 1em 10px;
+	background-color: #000;
+	background-color: rgba(0,0,0,.4);
+	color:#fff;
+}
+
+.proto-progress-timer {
+	position: absolute;
+	top: 7px;
+	right: 7px;
+	z-index: 9999;
+}
+
+
+/* TRANSITION SLIDE
+------------------------------------------------*/
+
+.transition-slide .show-window {
+	overflow: hidden;
+}
+
+.transition-slide .show {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 999999px;
+}
+
+.transition-slide .slide {
+	position: static; /*overide*/
+	float: left;
+	display: block;
+}
+
+
+/* PROTO CONTROLS
+------------------------------------------------*/
+
+.proto-controls,
+.proto-navigation {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.proto-controls a:link,
+.proto-controls a:visited,
+.proto-navigation a:link,
+.proto-navigation a:visited {
+	display: block;
+	text-indent: -9999px;
+	/*overflow: hidden;*/
+}
+
+.proto-controls li {
+	position: absolute;
+	top: 50%;
+	margin-top: -36px;
+	left: 10px;
+	width: 10%;
+	height: 100%;
+	z-index: 110;
+}
+
+.proto-controls .forward {
+	right: 10px;
+	left: auto;
+}
+
+.proto-controls a {
+	width: 100%;
+	height: 61px;
+	background: url(/skin/frontend/base/default/images/evozon/blog/post/gallery/protoshow/proto_controls_bg.png) no-repeat 0 0;
+	opacity: 0.2;
+	-moz-opacity: 0.2;
+	filter:alpha(opacity=20);
+}
+
+.proto-controls a:hover,
+.proto-controls a:focus {
+	opacity: 1;
+	-moz-opacity: 1;
+	filter:alpha(opacity=100);
+}
+
+.proto-controls .forward a {
+	background-position: 100% -90px;
+}
+
+
+/* PROTO NAVIGATION
+------------------------------------------------*/
+
+.proto-navigation {
+	position: absolute;
+  	top: 0;
+    right: 50%;
+    float: right;
+    z-index: 120;
+}
+
+.proto-navigation li {
+    float: left;
+    left: 50%;
+    padding: 12px 6px;
+    position: relative;
+
+}
+
+.proto-navigation a {
+	background-color: #fff;
+  	background-color: rgba(0,0,0,.2);
+    height: 8px;
+    text-decoration: none;
+  	 width: 8px;
+	-moz-border-radius:30px;
+	-webkit-border-radius:30px;
+	border-radius:30px;
+	-moz-box-shadow:    inset 0 1px 0 1px rgba(0,0,0,.1);
+	-webkit-box-shadow:    inset 0 1px 0 1px rgba(0,0,0,.1);
+	box-shadow:    inset 0 1px 0 1px rgba(0,0,0,.1);
+}
+
+.proto-navigation a:hover,
+.proto-navigation a:focus {
+	background-color: #999;
+}
+
+.proto-navigation .current-slide a {
+	background-color: #363F4E;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.proto-navigation {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: absolute;
+	right: 5px;
+	bottom: -25px;
+	z-index: 200;
+}
+
+.proto-navigation li {
+	float: left;
+	margin-right: 10px;
+}
+
+.proto-navigation li a:link,
+.proto-navigation li a:visited {
+	display: block;
+	width: 8px;
+	height: 8px;
+	text-decoration: none;
+	background-color: rgba(255,255,255,0.5);    
+	border: 1px solid #090809;
+	color: #666;
+	text-indent: -9999px;
+	overflow: hidden;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;
+}
+
+.proto-navigation li a:hover,
+.proto-navigation li a:focus {
+	background-color: #fff;
+	border-color: #000;
+}
+
+
+.proto-navigation li.current-slide a:link,
+.proto-navigation li.current-slide a:visited {
+	background-color: rgba(30,30,30,0.9);
+
+}
+
+
+
+
+
+
+.proto-controls  {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+}
+
+.proto-controls .forward,
+.proto-controls .backward,
+.proto-controls .start-stop {
+	z-index: 200;
+	float: left;
+	margin: 10px 10px 0 0;
+}
+
+.proto-controls .start-stop {
+	margin-top: 10px;
+
+}
+
+
+
+
+
+.proto-controls a:link,
+.proto-controls a:visited {
+	display: inline-block;
+	background-color: #090809;
+	background-image: -moz-linear-gradient(
+		center top,
+		rgb(123,125,130) 2%,
+		rgb(75,80,88) 3%,
+		rgb(42,45,50) 100%
+	);
+	color: #fff;
+	padding: 5px 10px;
+	border: 1px solid #090809;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	text-decoration: none;
+	text-align: center;
+	width: 60px;
+}
+
+.proto-controls a:hover,
+.proto-controls a:focus { 
+	background-image: -moz-linear-gradient(
+		center bottom,
+		rgb(42,45,50) 100%,
+		rgb(75,80,88) 90%,
+		rgb(123,125,130) 20%
+	);
+	color: #e1e1e1;
+}
+
+
+.slide-caption {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 880px;
+	background-color: rgba(0,0,0,.5);
+	color: #fff;
+	z-index: 200;
+	padding: 10px;
+}
+
+
+.proto-timer {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 9999;
+}*/

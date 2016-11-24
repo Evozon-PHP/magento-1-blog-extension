@@ -1,0 +1,47 @@
+<?php
+/**
+ * related posts block layout
+ * 
+ * @package     Evozon_Blog 
+ * @author      Calin Florea <calin.florea@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_View_Posts
+ */
+?>
+<?php if ($this->getIsEnabled()): ?>
+    <?php $relatedPosts = $this->getRelatedPostsCollection(); ?>
+    <?php if (($relatedPosts !== NULL) && $relatedPosts->count() > 0): ?>
+        <div class="blog-post-related-posts">
+            <div class="block block-related block-related-articles">
+                <div class="block-title">
+                    <h2><?php echo $this->__('Related Posts'); ?></h2>
+                </div>
+            </div> 
+            <div class="category-products post-archive">
+                <ul class="products-grid post-archive-grid">
+                    <?php foreach ($relatedPosts as $relatedPost): ?>
+                        <?php $imageUrl = (string)$this->getImageHelper()->init($relatedPost, 'small_image')->keepFrame(true)->resize(210); ?>
+                        <li class="item">
+                            <a href="<?php echo $relatedPost->getPostUrl() ?>" 
+                               title="<?php echo $this->stripTags($relatedPost->getTitle(), null, true) ?>" 
+                               class="product-image article-image">
+                                <img src="<?php echo $imageUrl; ?>"/>
+                            </a>
+                            <h2 class="product-name article-name">
+                                <a href="<?php echo $relatedPost->getPostUrl(); ?>" 
+                                   title="<?php echo $this->stripTags($relatedPost->getTitle(), null, true) ?>">
+                                       <?php echo $relatedPost->getTitle() ?>
+                                </a>
+                            </h2>
+                            <div class="actions">
+                                <button type="button" title="<?php echo $this->__('Read More') ?>" class="button" onclick="setLocation('<?php echo $relatedPost->getPostUrl() ?>')"><span><span><?php echo $this->__('Read more') ?></span></span></button>
+                            </div>
+
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,25 @@
+<?php
+/**
+ * Rss block template
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ * @see        Evozon_Blog_Block_Post_Rss_Block
+ */
+?>
+
+<?php if ($this->isEnabled()): ?>
+    <div class="post-rss-block">
+        <div class="block-title recent-comments-title">
+            <strong><span><?php echo $this->__('Recent Posts RSS') ?></span></strong>
+        </div>
+        <div class="post-rss-link">
+            <a href="<?php echo $this->getRssUrl(); ?>" target="_blank">
+                <img class="rss-post-icon" src="<?php echo $this->getSkinUrl('images/evozon/blog/post/rss_icon.png');?>"/>
+                <p><?php echo $this->__('Get Feeds'); ?></p>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

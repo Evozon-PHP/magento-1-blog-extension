@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Evozon_Blog module adminhtml configuration
+ * 
+ * @category    Evozon
+ * @package     Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ */
+-->
+
+<config>
+    <!-- add main menu BLOG after CMS, having submenus: Posts, Comments and Configurations -->
+    <menu>
+        <evozon_blog translate="title" module="evozon_blog">
+            <title>Blog</title>
+            <sort_order>75</sort_order>
+            <children>
+                <evozon_blog_posts module="evozon_blog" translate="title">
+                    <title>Posts</title>
+                    <sort_order>10</sort_order>
+                    <action>adminhtml/blog_post</action>
+                </evozon_blog_posts>               
+                <evozon_blog_comments module="evozon_blog" translate="title">
+                    <title>Comments</title>
+                    <sort_order>50</sort_order>
+                    <action>adminhtml/blog_comment</action>
+                </evozon_blog_comments>
+                 <evozon_blog_tags module="evozon_blog" translate="title">
+                    <title>Tags</title>
+                    <sort_order>60</sort_order>
+                    <action>adminhtml/blog_tag</action>
+                </evozon_blog_tags>               
+                <evozon_blog_config module="evozon_blog" translate="title">
+                    <title>Configurations</title>
+                    <sort_order>100</sort_order>
+                    <action>adminhtml/system_config/edit/section/evozon_blog_general</action>
+                </evozon_blog_config>
+            </children>
+        </evozon_blog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <evozon_blog translate="title" module="evozon_blog">
+                        <title>Blog Controller</title>
+                        <sort_order>-100</sort_order>
+                        <children>
+                            <evozon_blog_posts translate="title">
+                                <title>Post Action</title>
+                                <sort_order>10</sort_order>                               
+                            </evozon_blog_posts>
+                            <evozon_blog_comments translate="title">
+                                <title>Comments Action</title>
+                                <sort_order>20</sort_order>                               
+                            </evozon_blog_comments>   
+                            <evozon_blog_tags translate="title">
+                                <title>Tags Action</title>
+                                <sort_order>25</sort_order>                               
+                            </evozon_blog_tags>                                                                         
+                        </children>                        
+                    </evozon_blog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

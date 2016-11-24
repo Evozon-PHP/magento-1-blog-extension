@@ -1,0 +1,119 @@
+<?php
+/**
+ * User comments list
+ * It contains the toolbar with pager, that allows the user to filter displayed comments
+ * It displays the parent comment [to which the user replyed to] and the children comments [other users` replys to his comment]
+ *
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Customer_Account_Comment_List
+ */
+?>
+
+<?php
+$_helper = Mage::helper('evozon_blog');
+$_userComments = $this->getLoadedCommentsCollection();
+?>
+
+<div class="page-title">
+    <h1><?php echo $this->__('My Blog Comments') ?></h1>
+</div>
+
+<?php echo $this->getToolbarHtml(); ?>
+<?php if ($_userComments->getSize()): ?>
+    <table class="data-table" id="my-comments-table">
+        <tbody>
+            <?php foreach ($_userComments as $_comment):?>
+                <?php $_childrenCount = $_comment->getFirstLevelCount();?>
+                 <tr>
+                    <td>
+                        <?php if ($_comment->getParentId()): ?>
+                            <div class="comment_parent" id="parent-<?php echo $_comment->getId(); ?>" style="display:none">
+                                <?php echo $this->getChild('evozon_blog_user_comments_thread')->setContextComments($this->getParentComment($_comment->getId()))->setIsReply(false)->toHtml();?>
+                            </div>
+                            <div class="comment_actions">
+                                <a  href="javascript:void(0);" class="parent_link"
+                                    id="parent_button-<?php echo $_comment->getId(); ?>"
+                                    onclick="toggleParent(<?php  echo $_comment->getId(); ?>)">
+                                    <img src="<?php echo $this->getSkinUrl('images/evozon/blog/comment/chevron_up.png');?>" style="display:inherit;" />
+                                    <i><?php echo $this->__('Show Parent'); ?></i>
+                                </a>
+                                <a  href="javascript:void(0);" class="parent_link"
+                                    id="hide_parent_button-<?php echo $_comment->getId(); ?>"
+                                    style="display: none;"
+                                    onclick="toggleParent('<?php echo $_comment->getId(); ?>')">
+                                    <img src="<?php echo $this->getSkinUrl('images/evozon/blog/comment/chevron_down.png');?>" style="display:inherit;" />
+                                    <i><?php echo $this->__('Hide Parent'); ?></i>
+                                </a>
+                            </div>
+                        <?php endif;?>
+
+                        <div class ="comment-container" <?php if ($_comment->getParentId()): echo 'style="margin-left: 40px;"'; endif;?>>
+                            <div class ="comment_metadata">
+                                <span class="nobr"><?php echo $this->__('At');?> <?php echo $_comment->getCreatedAt(); ?>
+                                    <?php echo $this->__('on');?> <a href="<?php echo $_comment->getPostUrl() ?>"><?php echo $this->escapeHtml($_comment->getPostTitle()) ?></a>
+                                </span>
+                            </div>
+
+                            <?php if($_comment->getSubject()): ?>
+                                <div class="comment_subject"><b><?php echo $this->__("Subject:");?></b>
+                                    <i> <?php echo  $this->escapeHtml($_comment->getSubject());?></i>
+
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="comment_status">
+                                <b><?php echo $this->__("Status:");?></b> <i><?php echo $this->getCommentFilters()[$_comment->getStatus()];?></i>
+                            </div>
+
+                            <div class="comment_content"><?php echo  $this->escapeHtml($_comment->getContent()); ?></div>
+
+                            <div class="comment_actions">
+                                <a href="<?php echo $_comment->getCommentUrl() ?>" class="nobr"><?php echo $this->__('View Comment'); ?></a>
+                            </div>
+                        </div>
+
+                        <?php if ($_childrenCount > 0 && !is_null($_childrenCount)) :?>
+                            <div class="comment_actions" style="float:right;">
+                                <a  href="javascript:void(0);" class="replies_link"
+                                    id="replies_button-<?php echo $_comment->getId(); ?>"
+                                    onclick="toggleReplies(<?php  echo $_comment->getId(); ?>)">
+                                    <img src="<?php echo $this->getSkinUrl('images/evozon/blog/comment/chevron_down.png');?>" style="display:inherit;"/>
+                                    <i><?php echo $this->__('Show replies'); ?> </i>
+                                </a>
+                                <a  href="javascript:void(0);" class="replies_link"
+                                    id="hide_replies_button-<?php echo $_comment->getId(); ?>"
+                                    style="display: none;"
+                                    onclick="toggleReplies('<?php echo $_comment->getId(); ?>')">
+                                    <img src="<?php echo $this->getSkinUrl('images/evozon/blog/comment/chevron_up.png');?>" style="display:inherit;" />
+                                    <i><?php echo $this->__('Hide replies'); ?> </i>
+                                </a>
+                            </div>
+                            <div class="comment_replies" id="replies-<?php echo $_comment->getId(); ?>" style="display:none;margin-left:80px;">
+                                <?php echo $this->getChild('evozon_blog_user_comments_thread')
+                                    ->setContextComments($this->getRepliesComments($_comment->getId()))
+                                    ->setIsReply(true)->toHtml();
+                                ?>
+                            </div>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php echo $this->getToolbarHtml(); ?>
+
+    <script type="text/javascript">
+        decorateTable('my-comments-table');
+        function toggleReplies(commentId) {
+            $('replies-'+ commentId, 'hide_replies_button-' + commentId, 'replies_button-' + commentId).invoke('toggle');
+        }
+        function toggleParent(commentId) {
+            $('parent-' + commentId,'hide_parent_button-' + commentId, 'parent_button-' + commentId).invoke('toggle');
+        }
+    </script>
+<?php else: ?>
+    <p><?php echo $this->__('There are no comments to display.') ?></p>
+<?php endif; ?>

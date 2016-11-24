@@ -1,0 +1,36 @@
+<?php
+/**
+ * recent comments widget, layout
+ * 
+ * @package     Evozon_Blog 
+ * @author      Calin Florea <calin.florea@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Post_List_Recent_Comments
+ */
+?>
+
+<?php if ($this->canShowBlock()):
+    // comments collection
+    $comments = $this->getComments();
+    if ($comments !== NULL && $comments->count() > 0): ?>
+        <div class="recent-comments">
+            <div class="block-title recent-comments-title">
+                <strong><span><?php echo $this->__('Recent Comments') ?></span></strong>
+            </div>
+            <div class="recent-comments-content">
+                <ol class="recent-comments-content">
+                    <?php foreach ($comments as $comment): ?>
+                        <li class="item">
+                            <p class="recent-comments-name">
+                                <?php echo $this->escapeHtml(Mage::helper('evozon_blog')->truncateTextByWords($comment->getContent(), (int) $this->getConfigValues('words_no'))); ?>
+                            </p>
+                            <a href="<?php echo $comment->getCommentUrl(); ?>" 
+                               title="<?php echo $this->escapeHtml($comment->getTitle()) ?>"><?php echo $this->__('Read more') ?></a>
+                        </li>
+                    <?php endforeach ?>
+                </ol>
+            </div>
+        </div>
+    <?php endif;
+endif;

@@ -1,0 +1,208 @@
+<?php
+/**
+ * This is the template used to render the configurations "manual"
+ * It is the content for magento`s default popup.phtml template
+ * 
+ * @package     Evozon_Blog
+ * @author      Dana Negrescu <dana.negrescu@evozon.com>
+ * @copyright   Copyright (c) 2015, Evozon
+ * @link        http://www.evozon.com  Evozon
+ * @see         Evozon_Blog_Block_Adminhtml_System_Config_Form_Config
+ */
+?>
+
+<div class="header">
+    <div class="header-top">
+        <img src="<?php echo $this->getSkinUrl('images/logo.gif') ?>" alt="<?php echo $this->__('Magento Logo') ?>" class="logo"/>
+    </div>
+</div>
+<br>
+<div class="evozon_blog_system_helper" id="content" style="width:600px;margin:0 auto;">
+    <div class="datetime_helper">
+        <a name="evozon_blog_general_datetime_default_datetime"><h2><?php echo $this->__('Customizing the Time and Date'); ?></h2></a>
+        <p><?php echo $this->__('The format string is a template in which various parts of the date are combined to generate a date in the format specified.'); ?><br>
+            <?php echo $this->__('For example, the format'); ?> <span><b><u> l, F j, y </u></b></span> <?php echo $this->__('creates a date that looks like this:'); ?> 
+            <span><i><u><?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'l, F j, y'); ?></u></i></span><br>
+            <?php echo $this->__('Here is what each format character in the string represents:'); ?>
+        <ol>
+            <li><i>l</i> - <?php echo $this->__('Full name for day of the week. Eg. Sunday through Saturday'); ?></li>
+            <li><i>F</i> - <?php echo $this->__('Full name of a month, such as January or March'); ?></li>
+            <li><i>j</i> - <?php echo $this->__('The day of the month'); ?></li>
+            <li><i>Y</i> - <?php echo $this->__('The year in 4 digits'); ?></li>
+        </ol>
+        <br><?php echo $this->__('(Commas are read literally)'); ?><br>
+        </p>
+        <p>
+            <?php echo $this->__('You can use') ?> <a href="http://php.net/manual/en/function.date.php" target="_blank"><?php echo $this->__('the table of date format characters on the PHP website'); ?></a> 
+            <?php echo $this->__('as a reference for building date format strings for use in the blog extension. Here is a table of some of the more useful items found there:'); ?><br>
+        </p>
+        <table width="70%" style="margin: 0 auto;">
+
+            <tr><th style="background:#C9650E" colspan="3"><?php echo $this->__('Day of Month'); ?></th></tr>
+            <tr>
+                <td width="15%"> d </td>
+                <td width="55%"> <?php echo $this->__('Day of the month, 2 digits with leading zeros'); ?> </td>
+                <td> 01-31</td>
+            </tr>
+            <tr>
+                <td> j  </td>
+                <td> <?php echo $this->__('Day of the month without leading zeros'); ?> </td>
+                <td> 1-31 </td>
+            </tr>
+            <tr>
+                <td> S </td>
+                <td> <?php echo $this->__('The English suffix for the day of the month'); ?> </td>
+                <td> st, nd or th in the 1st, 2nd or 15th. </td>
+            </tr>
+
+            <tr><th style="background:#C9650E" colspan="3"> <?php echo $this->__('Weekday'); ?> </th></tr>
+            <tr>
+                <td> l </td>
+                <td> <?php echo $this->__('A full name of the day of the week.'); ?> </td>
+                <td> <?php echo $this->__('Sunday through Saturday'); ?> </td>
+            </tr>
+            <tr>
+                <td> D </td>
+                <td> <?php echo $this->__('A textual representation of a day, three letters.'); ?> </td>
+                <td> <?php echo $this->__('Mon through Sun') ?></td>
+            </tr>
+
+            <tr><th style="background:#C9650E" colspan="3"> <?php echo $this->__('Month'); ?> </th></tr>
+            <tr>
+                <td> m </td>
+                <td> <?php echo $this->__('Numeric representation of a month, with leading zeros.'); ?> </td>
+                <td> 01-12 </td>
+            </tr>
+            <tr>
+                <td> n </td>
+                <td> <?php echo $this->__('Numeric representation of a month, without leading zeros.'); ?> </td>
+                <td> 1-12 </td>
+            </tr>
+            <tr>
+                <td> F </td>
+                <td> <?php echo $this->__('Full name of the month'); ?> </td>
+                <td> <?php echo $this->__('January to December'); ?> </td>
+            </tr>
+            <tr>
+                <td> M </td>
+                <td> <?php echo $this->__('Three letter abbreviation of the month.'); ?> </td>
+                <td> <?php echo $this->__('Jan to Dec'); ?> </td>
+            </tr>
+
+            <tr><th style="background:#C9650E" colspan="3"> <?php echo $this->__('Year'); ?> </th></tr>
+            <tr>
+                <td> Y </td>
+                <td> <?php echo $this->__('Numeric representation, 4 digits'); ?> </td>
+                <td> <?php echo $this->__('1999 or 2015'); ?> </td>
+            </tr>
+            <tr>
+                <td> y </td>
+                <td><?php echo $this->__('2 digits representation'); ?></td>
+                <td> <?php echo $this->__('99 or 15'); ?></td>
+            </tr>
+
+            <tr><th style="background:#C9650E" colspan="3"> <?php echo $this->__('Time'); ?> </th></tr>
+            <tr>
+                <td> a </td>
+                <td> <?php echo $this->__('Lowercase Ante meridiem and Post meridiem.'); ?> </td>
+                <td> am, pm </td>
+            </tr>
+            <tr>
+                <td> A </td>
+                <td> <?php echo $this->__('Uppercase Ante meridiem and Post meridiem'); ?> </td>
+                <td> AM, PM </td>
+            </tr>
+            <tr>
+                <td> g </td>
+                <td> <?php echo $this->__('Hour representation, 12-hour format, without leading zeros'); ?></td>
+                <td> 1-12 </td>
+            </tr>
+            <tr>
+                <td> h </td>
+                <td> <?php echo $this->__('Hour representation, 12-hour format, with leading zeros'); ?> </td>
+                <td> 01-12 </td>
+            </tr>
+            <tr>
+                <td> G </td>
+                <td> <?php echo $this->__('24-hour format for hour, without leading zeros'); ?></td>
+                <td> 0-23 </td>
+            </tr>
+            <tr>
+                <td> H </td>
+                <td> <?php echo $this->__('24-hour format for hour, with leading zeros'); ?></td>
+                <td> 00-23 </td>
+            </tr>
+            <tr>
+                <td> i </td>
+                <td> <?php echo $this->__('Minutes, with leading zeros'); ?></td>
+                <td> 00-59 </td>
+            </tr>
+            <tr>
+                <td> s </td>
+                <td> <?php echo $this->__('Seconds, with leading zeros'); ?> </td>
+                <td> 00-59 </td>
+            </tr>
+            <tr>
+                <th style="background:#C9650E" colspan="3"> <?php echo $this->__('Full Date/Time'); ?> </th></tr>
+            <tr>
+                <td> c </td>
+                <td> ISO 8601 </td>
+                <td> <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'c'); ?> </td></tr>
+            <tr>
+                <td> r </td>
+                <td> RFC 2822 </td>
+                <td> <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'r'); ?> </td>
+            </tr>
+        </table>
+
+        <p><?php echo $this->__('Here are some examples of using them:'); ?></p>
+        <br>
+        <ol>
+            <li><i>d.m.Y H:i:s</i> - <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'd.m.Y H:i:s'); ?></li>
+            <li><i>D, j M Y</i> - <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'D, j M Y'); ?></li>
+            <li><i>F j, Y </i> - <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'F j, Y '); ?></li>
+            <li><i>l, F jS, Y</i> - <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'l, F jS, Y'); ?></li>
+            <li><i>Y/m/d \a\t g:i A </i> - <?php echo Mage::helper('evozon_blog')->getTimeByFormatAndLocale(time(), 'Y/m/d \a\t g:i A s'); ?></li>
+        </ol>
+        <br>
+    </div>
+
+    <div class="archive_helper">
+        <a name="evozon_blog_post_archive_date_format"><h2><?php echo $this->__('Customize Archive Display'); ?></h2></a>
+        <b><?php echo $this->__('Example of use:'); ?></b>
+        <br/><b>1.</b><?php echo $this->__('When'); ?> <i><?php echo $this->__('Layout type = Years'); ?></i>, <?php echo $this->__('use only'); ?> <b>F</b>, <b>M</b> or <b>m</b>.
+        <br/><b>2.</b><?php echo $this->__('When'); ?> <i><?php echo $this->__('Layout type = Month'); ?></i>, <?php echo $this->__('use combination of years'); ?> (<b>Y</b> or <b>y</b>) <?php echo $this->__('and month'); ?> (<b>F</b>, <b>M</b>, <b>m</b>).
+        <?php echo $this->__('<i>Example:</i> "F Y" - will generate strings like January 2015, February 2015; "m.y" will generate date like: 01.15, 02.15 ...'); ?> 
+        <br/>
+
+        <br/><b><?php echo $this->__('Legend:'); ?></b>
+        <br/><b>F</b> - <?php echo $this->__('A full textual representation of a month, such as January or March'); ?>
+        <br/><b>M</b> - <?php echo $this->__('A short textual representation of a month, three letters: Jan through Dec'); ?>
+        <br/><b>m</b> - <?php echo $this->__('Numeric representation of a month, with leading zeros: 01 through 12'); ?>
+        <br/><b>Y</b> - <?php echo $this->__('A full numeric representation of a year, 4 digits. Examples: 1999 or 2003.'); ?>
+        <br/><b>y</b> - <?php echo $this->__('A two digit representation of a year Examples: 99 or 03'); ?>
+        <br>
+    </div>
+
+    <div class="posturl_helper">
+        <a name="evozon_blog_post_post_url_url_custom"><h2><?php echo $this->__('Choosing the permalink structure'); ?></h2></a>
+        <p><?php echo $this->__('In System Configurations panel, you can choose one of the more common permalink structures, or you can create your own in the "Custom structure" field, using the <i>structure tags</i>.'); ?></p>
+        <p><?php echo $this->__('<b>Please note:</b> You do not put your site url in the permalinks fields. You only use one of the structure tags, or a combination of tags.') ?></p>
+
+        <h3><?php echo $this->__('Structure Tags'); ?></h3>
+        <p><?php echo $this->__('You can use these tags to customize your "Pretty" or "Almost Pretty" permalinks. A few hints:'); ?></p>
+        <p><?php echo $this->__('<b>!!</b> Make sure to end your structure with either %id% or %title% (e.g. /%year%/%month%/%day%/%title%/) so that each permalink points to an individual post.'); ?></p>
+
+        <ol>
+            <li><b>%year%</b> - <?php echo $this->__('The year of the post, four digits, for example 2015'); ?></li>
+            <li><b>%month%</b> - <?php echo $this->__('Month of the year, for example 05'); ?></li>
+            <li><b>%day%</b> - <?php echo $this->__('Day of the month, for example 28'); ?></li>
+            <li><b>%title%</b> - <?php echo $this->__('A sanitized version of the title of the post. So “Magento Is Great!” becomes magento-is-great in the URI.'); ?></li>
+            <li><b>%id%</b> - <?php echo $this->__('The unique ID # of the post, for example 423'); ?></li>
+            <li><b>%category%</b> - <?php echo $this->__('A sanitized version of the category name. Nested sub-categories appear as nested directories in the URI.'); ?></li>
+        </ol>
+
+        <h3><?php echo $this->__('Using <b>%category%</b> with multiple categories on a post'); ?> </h3>
+        <p><?php echo $this->__('When you assign multiple categories to a post, only one can show up in the permalink.'); ?></p>
+    </div>
+</div>

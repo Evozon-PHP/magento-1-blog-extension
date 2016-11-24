@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Evozon_Blog module configuration
+ * 
+ * @category   Evozon
+ * @package    Evozon_Blog
+ * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
+ * @author     Tiberiu Contiu <tiberiu.contiu@evozon.com>
+ * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
+ */
+-->
+<config>
+    <modules>
+        <Evozon_Blog>
+            <name>Evozon Blog Extension</name>
+            <version>1.1.2</version>
+            <descr>
+                <en_US>
+                    <![CDATA[Evozon Blog Extension is here to help you transform any category in a blog, by displaying multi-store EAV post entities with blog-like features (archive, tags, restrictions, user-friendly SEO, etc)]]>
+                </en_US>
+            </descr>
+            <permanentlink>
+                <en_US>http://www.magento.evozon.com/blog-extension.html</en_US>
+            </permanentlink>
+            <ourserviceslink>
+                <en_US>http://www.magento.evozon.com/services.html</en_US>
+            </ourserviceslink>
+        </Evozon_Blog>
+    </modules>
+    
+    <global>
+        <blocks>
+            <evozon_blog>
+                <class>Evozon_Blog_Block</class>
+            </evozon_blog>
+            <catalogsearch>
+                <rewrite>
+                    <layer>Evozon_Blog_Block_Search_Community_Layer</layer>
+                </rewrite>
+            </catalogsearch>
+            <enterprise_search>
+                <rewrite>
+                    <catalogsearch_layer>Evozon_Blog_Block_Search_Enterprise_Layer</catalogsearch_layer>
+                </rewrite>
+            </enterprise_search>
+        </blocks>
+        
+        <helpers>
+            <evozon_blog>
+                <class>Evozon_Blog_Helper</class>
+            </evozon_blog>
+        </helpers>
+        
+        <models>            
+            <evozon_blog>
+                <class>Evozon_Blog_Model</class>
+                <resourceModel>evozon_blog_resource</resourceModel>
+            </evozon_blog>
+            <evozon_blog_resource>
+                <class>Evozon_Blog_Model_Resource</class>
+                <entities>
+                    <!-- EAV entities -->                    
+                    <post>
+                        <table>evozon_blog_post_entity</table>
+                    </post>
+                    <tag>
+                        <table>evozon_blog_tags_entity</table>
+                    </tag>
+                    <eav_attribute>
+                        <table>evozon_blog_eav_attribute</table>
+                    </eav_attribute>
+                    
+                    <!-- additional tables to websites, categories, products, tags and other posts-->
+                    <post_tag>
+                        <table>evozon_blog_post_tags</table>
+                    </post_tag>
+                    <post_website>
+                        <table>evozon_blog_post_website</table>
+                    </post_website>
+                    <post_category>
+                        <table>evozon_blog_post_category</table>
+                    </post_category>
+                    <post_product>
+                        <table>evozon_blog_post_product</table>
+                    </post_product>
+                    <post_related>
+                        <table>evozon_blog_post_related</table>
+                    </post_related>
+                    <post_image>
+                        <table>evozon_blog_post_image</table>
+                    </post_image>
+                    <post_image_value>
+                        <table>evozon_blog_post_image_value</table>
+                    </post_image_value>
+                                   
+                    <!-- comments -->
+                    <comment>
+                        <table>evozon_blog_comments</table>
+                    </comment>
+                    
+                    <!-- main table for post status cron (contains posts with pending status) -->
+                    <scheduler>
+                        <table>evozon_blog_schedule_data</table>
+                    </scheduler>
+                    
+                    <!-- main table for search fulltext -->
+                    <search_fulltext>
+                        <table>evozon_blog_search_fulltext</table>
+                    </search_fulltext>
+
+                    <!--main table for restricions-->
+                    <restriction>
+                        <table>evozon_blog_post_restriction</table>
+                    </restriction>
+                    
+                </entities>
+            </evozon_blog_resource>
+            <catalogsearch>
+                <rewrite>
+                    <layer>Evozon_Blog_Model_Search_Layer</layer>
+                </rewrite>
+            </catalogsearch>
+        </models>
+        
+        <resources>
+            <evozon_blog_setup>
+                <setup>
+                    <module>Evozon_Blog</module>
+                    <class>Evozon_Blog_Model_Resource_Setup</class>
+                </setup>
+            </evozon_blog_setup>                       
+        </resources>
+        <evozon_blog>
+            <post>
+                <url>
+                    <model>evozon_blog/post_url</model>
+                </url>
+            </post>
+        </evozon_blog>
+        <index>
+            <indexer>
+                <evozon_blog_post_url>
+                    <model>evozon_blog/indexer_url</model>
+                </evozon_blog_post_url>
+                <evozon_blog_search_mysql>
+                    <model>evozon_blog/search_indexer_mysql</model>
+                </evozon_blog_search_mysql>
+            </indexer>
+        </index>
+    </global>
+        
+    <admin>         
+        <routers>
+            <adminhtml>
+                <args>                   
+                    <modules>
+                        <Evozon_Blog after="Mage_Adminhtml">Evozon_Blog_Adminhtml</Evozon_Blog>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>                
+    </admin>
+         
+    <adminhtml>        
+        <layout>
+            <updates>
+                <evozon_blog>                   
+                    <file>evozon/blog/blog.xml</file>
+                </evozon_blog>
+            </updates>
+        </layout>
+        
+        <translate>
+            <modules>
+                <Evozon_Blog>
+                    <files>
+                        <default>Evozon_Blog.csv</default>
+                    </files>
+                </Evozon_Blog>
+            </modules>
+        </translate>   
+        
+        <events>
+            <widget_widget_instance_save_before>
+                <observers>
+                    <evozon_blog_widget_widget_instance_save_before_observer>
+                        <class>Evozon_Blog_Model_Adminhtml_Observer</class>
+                        <method>widgetDateSaveBefore</method>
+                    </evozon_blog_widget_widget_instance_save_before_observer>
+                </observers>
+            </widget_widget_instance_save_before>
+            
+            <!--save the relation between product and blog post-->
+            <catalog_product_save_after>
+                <observers>
+                    <evozon_blog_product>
+                        <class>Evozon_Blog_Model_Adminhtml_Observer</class>
+                        <method>saveProductPostRelation</method>
+                    </evozon_blog_product>
+                </observers>
+            </catalog_product_save_after>
+            
+            <!-- add new tab in category edit with articles link -->
+            <adminhtml_catalog_category_tabs>
+                <observers>
+                    <evozon_blog_category_articles>
+                        <type>singleton</type>
+                        <class>evozon_blog/adminhtml_observer</class>
+                        <method>addCategoryBlogTabs</method>
+                    </evozon_blog_category_articles>
+                </observers>
+            </adminhtml_catalog_category_tabs>
+            
+            <!-- save posts-catalog category relations at category save -->
+            <catalog_category_save_after>
+                <observers>
+                    <evozon_post_category_relation_save>
+                        <type>singleton</type>
+                        <class>evozon_blog/adminhtml_observer</class>
+                        <method>savePostCategoryRelation</method>
+                    </evozon_post_category_relation_save>
+                </observers>
+            </catalog_category_save_after>
+            
+            <!-- locking catalog category attributes responsible for the blog features -->
+            <adminhtml_catalog_category_edit_prepare_form>
+                <observers>
+                    <evozon_post_catalog_lock_attributes>
+                        <class>evozon_blog/catalog_observer</class>
+                        <method>lockCustomAddedAttributes</method>
+                    </evozon_post_catalog_lock_attributes>
+                </observers>
+            </adminhtml_catalog_category_edit_prepare_form>
+            
+            <admin_system_config_changed_section_evozon_blog_comment>
+                <observers>
+                    <evozon_blog_comment_verify_spam_checker_key>
+                        <type>singleton</type>
+                        <class>evozon_blog/adminhtml_observer</class>
+                        <method>verifySpamCheckerKey</method>
+                    </evozon_blog_comment_verify_spam_checker_key>
+                </observers>
+            </admin_system_config_changed_section_evozon_blog_comment>
+        </events> 
+  
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>                        
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <evozon_blog_general>
+                                            <title>General Configuration</title>
+                                        </evozon_blog_general>  
+                                        <evozon_blog_post>
+                                            <title>Post Configuration</title>
+                                        </evozon_blog_post> 
+                                        <evozon_blog_comment>
+                                            <title>Comment Configuration</title>
+                                        </evozon_blog_comment>   
+                                        <evozon_blog_cron>
+                                            <title>Cron Configuration</title>
+                                        </evozon_blog_cron>
+                                        <evozon_blog_search>
+                                            <title>Search Configuration</title>
+                                        </evozon_blog_search>
+                                        <evozon_blog_validation>
+                                            <title>Validations</title>
+                                        </evozon_blog_validation>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    
+    <frontend>
+        <layout>
+            <updates>
+                <evozon_blog>                   
+                    <file>evozon/blog/blog.xml</file>
+                </evozon_blog>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <evozon_blog>
+                    <files>
+                        <default>Evozon_Blog.csv</default>
+                    </files>
+                </evozon_blog>
+            </modules>
+        </translate>
+
+        <routers>
+            <evozon_blog>
+                <use>standard</use>
+                <args>
+                    <module>Evozon_Blog</module>
+                    <frontName>blog</frontName>
+                    <modules>
+                        <Evozon_Blog before="Mage_CatalogSearch">Evozon_Blog</Evozon_Blog>
+                    </modules>
+                </args>
+            </evozon_blog>
+        </routers>
+        
+        <events>            
+            <!-- Event observers for changing the theme based on the device -->
+            <controller_action_layout_load_before>
+                <observers>
+                    <evozon_category_change_layout>
+                        <class>evozon_blog/observer</class>
+                        <method>onControllerActionLayoutLoadBefore</method>
+                    </evozon_category_change_layout>
+                    
+                    <!--Adding a block with related articles to the product view page-->
+                    <evozon_blog_related_posts_on_product_page>
+                        <type>model</type>
+                        <class>evozon_blog/catalog_observer</class>
+                        <method>insertBlock</method>
+                    </evozon_blog_related_posts_on_product_page>
+                    
+                    <!--Adding the specific xml nodes for the post single page view-->
+                    <evozon_post_view_gallery_style>
+                        <class>evozon_blog/post_observer</class>
+                        <method>onControllerActionLayoutGetPostLayout</method>
+                    </evozon_post_view_gallery_style>
+                </observers>
+            </controller_action_layout_load_before>   
+            
+            <!-- Event observer for checking if submitted comment is SPAM-->
+            <evozon_blog_comment_save_before>
+                <observers>
+                    <evozon_blog_comment_spam_check_observer>
+                        <type>singleton</type>
+                        <class>evozon_blog/comment_observer</class>
+                        <method>spamCheckService</method>
+                    </evozon_blog_comment_spam_check_observer>   
+                </observers>
+            </evozon_blog_comment_save_before>
+        </events>
+    </frontend>
+    
+    <default>
+        <evozon_blog_general>
+            <seo>
+                <route>blog</route>
+                <title>Evozon Blog</title>     
+                <keywords>blog, evozon, articles, posts</keywords> 
+                <description>blog description</description>          
+            </seo>
+            <layout>
+                <default>three_columns</default>
+                <post_view>two_columns_left</post_view>                
+            </layout>
+            <datetime>
+                <default_datetime>D, d M Y</default_datetime>
+            </datetime>
+            <toolbar_pagination>
+                <page_var_name>page</page_var_name>
+                <filter_var_name>show</filter_var_name>
+            </toolbar_pagination>
+        </evozon_blog_general>        
+        <evozon_blog_comment>
+            <general>
+                <allowed_reply_level>10</allowed_reply_level>
+                <max_allowed_reply_level>10</max_allowed_reply_level>
+                <auto_approve>0</auto_approve>
+                <content_words_number>20</content_words_number>
+                <allow_guest_comments>1</allow_guest_comments>
+            </general>
+            <spam_service>
+                <enabled>0</enabled>
+            </spam_service>
+            <recent_comments_widget>
+                <enable_comments_widget>0</enable_comments_widget>
+                <comments_number>10</comments_number>
+                <comment_max_words>10</comment_max_words>
+                <comment_author>0</comment_author>
+            </recent_comments_widget>
+            <customer_account_tab>
+                <enabled>1</enabled>
+                <limit>10</limit>
+            </customer_account_tab>
+        </evozon_blog_comment>
+        <evozon_blog_post>
+            <listing>
+                <max_posts_perpage>3</max_posts_perpage>
+                <teaser_words_count>30</teaser_words_count>
+                <listing_display_content>short_content</listing_display_content>
+            </listing>
+            <recent>
+                <disable_widget>0</disable_widget>
+                <template>0</template>
+                <posts_in_widget>3</posts_in_widget>
+                <display_date>0</display_date>                
+                <image_style>1</image_style>
+                <content_length>20</content_length>
+                <display_comments>0</display_comments>
+                <display_tags>0</display_tags>
+                <display_date_style>F dS, Y</display_date_style>
+            </recent>
+            <related>
+                <enabled>1</enabled>
+                <posts_number>5</posts_number>
+            </related>
+            <post_url>
+                <use_html_sufix>1</use_html_sufix>
+                <posturl_name>1</posturl_name>
+                <url_custom>/%title%/</url_custom>
+                <keep_url_structure>0</keep_url_structure>
+            </post_url>
+            <tags>
+                <enabled>1</enabled>
+                <header>Posts filtered by tag: '%s'</header>
+                <url_segment>tag</url_segment>
+                <order>0</order>
+                <limit>10</limit>              
+            </tags>
+            <catalog>
+                <enabled>1</enabled>
+                <limit>3</limit>
+            </catalog>
+            <products>
+                <enabled>1</enabled>
+                <limit>6</limit>
+            </products>            
+            <archive>
+                <enabled>1</enabled>
+                <header>Archive from %s</header>
+                <history_length>1</history_length>
+                <url_segment>archive</url_segment>
+                <widget_layout>YEAR</widget_layout>
+                <date_format>F</date_format>
+                <widget_enable>1</widget_enable>
+                <show_count>1</show_count>
+            </archive>
+            <catalog_categories>
+                <enabled>1</enabled>
+                <limit>20</limit>
+                <category_name>2</category_name>
+                <category_name_separator>/</category_name_separator>
+            </catalog_categories>
+            <featured_posts_category>
+                <enabled>1</enabled>
+                <limit>3</limit>
+            </featured_posts_category>
+            <post_rss>
+                <enabled>1</enabled>
+                <limit>5</limit>
+            </post_rss>
+            <gallery_widget>
+                <slideshow_autostart>3000</slideshow_autostart>
+            </gallery_widget>
+        </evozon_blog_post>
+        <evozon_blog_cron>
+            <comment_cron_spam>
+                <enabled>0</enabled>
+                <hourly>1</hourly>
+                <hour_number>1</hour_number>
+                <time>00,00,00</time>
+                <frequency>D</frequency>
+            </comment_cron_spam>
+            <post_cron_status>
+                <enabled>0</enabled>
+                <custom>0</custom>
+                <hourly>1</hourly>
+                <hour_number>1</hour_number>
+                <time>00,00,00</time>
+            </post_cron_status>
+        </evozon_blog_cron>
+        <evozon_blog_search>
+            <post_search>
+                <search_status>1</search_status>
+                <engine>evozon_blog/search_engine_mysql</engine>
+                <search_type>1</search_type>
+            </post_search>
+        </evozon_blog_search>
+        <evozon_blog_validation>
+            <tags>
+                <model>evozon_blog/filter_tag</model>
+                <maxlength>32</maxlength>
+                <minlength>2</minlength>
+                <encoding>UTF-8</encoding>
+            </tags>
+            <comments>
+                <model>evozon_blog/filter_comment</model>
+                <author_maxlength>32</author_maxlength>
+                <subject>1</subject>
+                <subject_maxlength>56</subject_maxlength>
+                <content_maxlength>1500</content_maxlength>
+            </comments>
+        </evozon_blog_validation>
+               
+        <web>
+            <routers>
+                <evozon_blog_tag>
+                    <area>frontend</area>
+                    <class>Evozon_Blog_Controller_TagRouter</class>
+                </evozon_blog_tag>
+                <evozon_blog_archive>
+                    <area>frontend</area>
+                    <class>Evozon_Blog_Controller_ArchiveRouter</class>
+                </evozon_blog_archive>               
+            </routers>
+        </web>
+
+       <rewrite_matchers>
+            <blog translate="title" module="evozon_blog">
+                <title>Evozon Blog</title>
+                <model>evozon_blog/indexer_urlRewrite_matcher_post</model>
+                <priority>40</priority>
+            </blog>
+        </rewrite_matchers>
+    </default>
+    
+    <crontab>
+        <jobs>
+            <evozon_spam_flush>
+                <run>
+                    <model>evozon_blog/comment_observer::flushCommentStatusSpam</model>
+                </run>
+            </evozon_spam_flush>
+            <evozon_post_status>
+                <run>
+                    <model>evozon_blog/post_observer::changePostStatus</model>
+                </run>
+            </evozon_post_status>
+        </jobs>
+    </crontab>
+</config>
