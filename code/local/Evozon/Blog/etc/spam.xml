@@ -16,27 +16,27 @@
         <clients>
             <zend_http_client>
                 <label>Zend</label>
-                <model>evozon_blog/spam_client_zend_http_client</model>
+                <model>evozon_blog/service_spam_client_zend_http_client</model>
             </zend_http_client>
         </clients>
         <adapters>
             <curl>
                 <label>Curl</label>
-                <model>evozon_blog/spam_client_zend_http_client_adapter_curl</model>
+                <model>evozon_blog/service_spam_client_zend_http_client_adapter_curl</model>
             </curl>
             <socket>
                 <label>Socket</label>
-                <model>evozon_blog/spam_client_zend_http_client_adapter_socket</model>
+                <model>evozon_blog/service_spam_client_zend_http_client_adapter_socket</model>
             </socket>
             <proxy>
                 <label>Proxy</label>
-                <model>evozon_blog/spam_client_zend_http_client_adapter_proxy</model>
+                <model>evozon_blog/service_spam_client_zend_http_client_adapter_proxy</model>
             </proxy>
         </adapters>
         <services>
             <akismet>
                 <label>Akismet</label>
-                <model>evozon_blog/spam_service_akismet</model>
+                <model>evozon_blog/service_spam_service_akismet</model>
             </akismet>
         </services>
     </crawler>

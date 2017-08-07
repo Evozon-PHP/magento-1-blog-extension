@@ -11,3 +11,4 @@ design/frontend/base/default/layout/evozon app/design/frontend/base/default/layo
 design/frontend/base/default/template/evozon app/design/frontend/base/default/template/evozon
 skin/frontend/base/default/images/evozon skin/frontend/base/default/images/evozon
 locale/en_US/Evozon_Blog.csv app/locale/en_US/Evozon_Blog.csv
+locale/en_US/template/email/comment_notifications.html app/locale/en_US/template/email/comment_notifications.html

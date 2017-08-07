@@ -531,7 +531,7 @@
 "If post`s visibility is 'Enabled', it will be displayed on the selected store view.","If post`s visibility is 'Enabled', it will be displayed on the selected store view."
 "Enter tag name, max. 255 characters long.","Enter tag name, max. 255 characters long."
 "Custom url key. It will be auto-generated from Tag name. Url-key must be unique overall.","Custom url key. It will be auto-generated from Tag name. Url-key must be unique overall."
-"",""
+"The content should have maximum %d characters.","The content should have maximum %d characters."
 "",""
 "",""
 "",""

@@ -133,7 +133,7 @@ class Evozon_Blog_Model_Adminhtml_Observer extends Evozon_Blog_Model_Abstract
             return $this;
         }
         
-        $serviceFactory = Mage::getModel('evozon_blog/spam_factory');
+        $serviceFactory = Mage::getModel('evozon_blog/service_spam_factory');
         /** @var Evozon_Blog_Model_Spam_Service_Interface_IChecker $spamService */
         $spamService = $serviceFactory->getSpamService();
 

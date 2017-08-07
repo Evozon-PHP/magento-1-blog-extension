@@ -74,9 +74,9 @@ $store = ($this->getStoreId()) ? $this->getStoreId() : 'default';
 </div>
 
 <script type="text/javascript">
-    var tag = new Tag('<?php echo $this->getTagLoadActionUrl(); ?>',<?php echo $this->getStoreId(); ?>);
+    var tag = new Tag('<?php echo $this->getTagLoadActionUrl(); ?>',<?php echo $this->getStoreId(); ?>, '<?php echo $this->getSelectedTagsJson() ?>');
     $('add-tag').observe('keyup', function() {
-        if($('add-tag').value !== '') {
+        if($('add-tag').value !== '' && !tag.isTagNameAddedOnPost($('add-tag').value)) {
             $('add-tag-button').disabled = false;
         } else {
             $('add-tag-button').disabled = true;

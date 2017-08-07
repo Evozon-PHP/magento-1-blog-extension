@@ -8,31 +8,44 @@
  * @copyright   Copyright (c) 2015, Evozon
  * @link        http://www.evozon.com  Evozon
  */
-class Evozon_Blog_Block_Adminhtml_Post_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Evozon_Blog_Block_Adminhtml_Post_Edit
+    extends Mage_Adminhtml_Block_Widget_Form_Container
 {
-
     /**
-     * Init class & set defaults & define buttons
+     * Main constructor
      * 
      * @author      Dana Negrescu <dana.negrescu@evozon.com>
      */
     public function __construct()
     {
         parent::__construct();
-        
+        $this->preparePostButtons();
+    }
+
+    /**
+     * Set defaults and add or remove post grid buttons depending on conditions
+     */
+    public function preparePostButtons()
+    {
         $this->_blockGroup = 'evozon_blog';
-        $this->_controller = 'adminhtml_post';       
+        $this->_controller = 'adminhtml_post';
 
         // buttons: 'delete','duplicate', 'save' and 'save and continue edit'.
         $this->_updateButton('delete', 'label', $this->__('Delete Post'));
         $this->_updateButton('save', 'label', $this->__('Save Post'));
         $this->_addButton(
-            'save_and_edit_button',
-            array(
-                'label' => $this->__('Save Post and Continue Edit'),
-                'onclick' => 'saveAndContinueEdit()',
-                'class' => 'save'
-            ), 
+            'post_prev', array(
+                'label' => $this->__('Preview'),
+                'class' => 'save',
+                'onclick' => "window.open('{$this->createPreviewUrl()}', '_blank')",
+            )
+        );
+        $this->_addButton(
+            'save_and_edit_button', array(
+            'label' => $this->__('Save Post and Continue Edit'),
+            'onclick' => 'saveAndContinueEdit()',
+            'class' => 'save'
+        ),
             100
         );
 
@@ -41,6 +54,30 @@ class Evozon_Blog_Block_Adminhtml_Post_Edit extends Mage_Adminhtml_Block_Widget_
             var activeTab = $$('a.tab-item-link.active')[0];
             editForm.submit($('edit_form').action+'back/edit/active_tab/'+activeTab.name+'/');                
         }";
+
+        if (!Mage::registry('evozon_blog')->getId()) {
+            $this->removeButton('post_prev');
+        }
+    }
+
+    /**
+     * Generate url for preview post
+     * 
+     * @return string
+     */
+    public function createPreviewUrl()
+    {
+        if (Mage::registry('evozon_blog')->getId()) {
+            $post = Mage::registry('evozon_blog');
+            $postPreviewKey =
+                Mage::getModel('evozon_blog/post_preview',$post->getId())
+                    ->getPreviewKey();
+
+            return $this->getUrl(
+                'blog/post/preview',
+                array('id' => $post->getId(), 'previewKey' => $postPreviewKey)
+            );
+        }
     }
 
     /**

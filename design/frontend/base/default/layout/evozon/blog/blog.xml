@@ -181,6 +181,52 @@
         </reference>
     </evozon_blog_post_view>
     
+    <!-- post preview -->
+    <evozon_blog_post_preview translate="label">
+        <label>Post View</label>
+        <reference name="head">
+            <!--add css file-->
+            <action method="addCss">
+                <stylesheet>css/evozon/blog/blog.css</stylesheet>
+            </action>
+            <!--add JS files-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/blog.js</name>
+            </action>
+            <!--add js file-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/evozon/blog/post/gallery/thumbnails.js</name>
+            </action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="evozon_blog/post_view" name="evozon_blog_post" template="evozon/blog/post/view.phtml">
+                <block type="evozon_blog/post_list_tags" name="evozon_blog_post_tags" template="evozon/blog/post/list/tags.phtml"/>
+                <block type="evozon_blog/post_list_categories" name="evozon_blog_post_categories" template="evozon/blog/post/list/categories.phtml"/>
+                <block type="evozon_blog/post_image" name="evozon_blog_post_image" template="evozon/blog/post/image.phtml"/>
+                <block type="evozon_blog/post_metadata" name="evozon_blog_post_metadata" template="evozon/blog/post/metadata.phtml"/>
+                <block type="evozon_blog/post_view_content" name="evozon_blog_post_content" template="evozon/blog/post/view/content.phtml"/>
+                <block type="evozon_blog/post_view_products" name="evozon_blog_post_products" template="catalog/product/list.phtml">
+                    <block type="core/text_list" name="product_list.name.after" as="name.after" />
+                    <block type="core/text_list" name="product_list.after" as="after" />
+                </block>
+                <block type="evozon_blog/post_view_posts" name="evozon_blog_post_related_posts" template="evozon/blog/post/view/posts.phtml"/>
+                <block type="evozon_blog/post_view_comments_list" name="evozon_blog_post_comments_list" template="evozon/blog/post/view/comments/list.phtml">
+                    <block type="evozon_blog/post_view_comments_reply" name="evozon_blog_post_comments_reply" template="evozon/blog/post/view/comments/reply.phtml"/>
+                </block>
+            </block>
+        </reference>
+        <reference name="right">
+            <remove name="catalog.compare.sidebar"/>
+        </reference>
+    </evozon_blog_post_preview>
+
     <!--posts list filtered by tag-->
     <evozon_blog_post_listbytag>
         <update handle="evozon_blog_three_columns"/>

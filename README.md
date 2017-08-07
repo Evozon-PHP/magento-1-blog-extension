@@ -26,6 +26,8 @@ customer groups you intend to target. Helps your customer to filter your article
 - Multistores Support (multi language)
 - SEO friendly (pretty permalinks, meta-tags)
 - Post Access Restrictions
+- Set a different publishing date for a blog post
+- Preview the blog post before publishing it by Admin
 - Related products and Related Posts (as widgets or blocks)
 - Multistore Tags
 - Supports full text search
@@ -36,6 +38,7 @@ customer groups you intend to target. Helps your customer to filter your article
 - Content Management (WYSIWYG editor in admin)
 - Comments Management
 - Comments SPAM checking
+- Receive notifications via email when someone replies on their comment
 - Author information and posts by author
 - Sitemap XML
 - Blog RSS Feed

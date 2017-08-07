@@ -69,7 +69,8 @@ class Evozon_Blog_Model_Search extends Mage_Core_Model_Abstract
         $collection
             ->addAttributeToSelect('*')
             ->addSearchFilter(Mage::helper('catalogsearch')->getQuery()->getQueryText())
-            ->setStore(Mage::app()->getStore());
+            ->setStore(Mage::app()->getStore())
+            ->addAttributeToFilter('store_visibility', Evozon_Blog_Model_Post::EVOZON_BLOG_POST_VISIBILITY_ENABLED);
 
         return $collection;
     }

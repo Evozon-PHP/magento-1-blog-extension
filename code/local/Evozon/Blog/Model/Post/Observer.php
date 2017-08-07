@@ -14,7 +14,8 @@ class Evozon_Blog_Model_Post_Observer extends Evozon_Blog_Model_Abstract
 
     /**
      * Before load layout, check which one of the galleries needs to be uploaded
-     * if the action name contains post_view add the update handle for post single page
+     * if the action name contains post_view or post_preview add the update
+     * handle for post single page
      * 
      * @author Dana Negrescu <dana.negrescu@evozon.com>
      * @event controller_action_layout_load_before
@@ -25,10 +26,13 @@ class Evozon_Blog_Model_Post_Observer extends Evozon_Blog_Model_Abstract
     {
         $fullActionName = $observer->getEvent()->getAction()->getFullActionName();
 
-        if (strpos($fullActionName, 'post_view') !== false) {
+        if (strpos($fullActionName, 'post_view') !== false
+                || strpos($fullActionName, 'post_preview') !== false) {
             $layoutUpdate = $observer->getEvent()->getLayout()->getUpdate();
             $layoutUpdate->addHandle('evozon_blog_removable_blocks');
-            $singleViewLayout = $this->getConfigModel()->getGeneralConfig(Evozon_Blog_Model_Config_General::LAYOUT_POST_SINGLE_PAGE);
+            $singleViewLayout = $this->getConfigModel()->getGeneralConfig(
+                Evozon_Blog_Model_Config_General::LAYOUT_POST_SINGLE_PAGE
+            );
             $layoutUpdate->addHandle('evozon_blog_' . $singleViewLayout);
         }
 

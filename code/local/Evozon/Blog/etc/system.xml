@@ -18,7 +18,7 @@ Backend sections for blog module
             <sort_order>200</sort_order>
         </evozon_blog>
     </tabs>
-    <sections>        
+    <sections>
         <evozon_blog_general translate="label" module="evozon_blog">
             <label>General Configurations</label>
             <tab>evozon_blog</tab>
@@ -34,7 +34,7 @@ Backend sections for blog module
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <fields>                         
+                    <fields>
                         <title translate="label" module="evozon_blog">
                             <label>Title Prefix</label>
                             <frontend_type>text</frontend_type>
@@ -59,7 +59,7 @@ Backend sections for blog module
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </description>
-                    </fields>                
+                    </fields>
                 </seo>
                 <layout>
                     <label>Layout Settings</label>
@@ -67,7 +67,7 @@ Backend sections for blog module
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <fields>                        
+                    <fields>
                         <default translate="label comment" module="evozon_blog">
                             <label>Default Layout</label>
                             <comment>
@@ -79,7 +79,7 @@ Backend sections for blog module
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </default>    
+                        </default>
                         <post_view translate="label comment" module="evozon_blog">
                             <label>Layout for post single view</label>
                             <comment>
@@ -91,27 +91,27 @@ Backend sections for blog module
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </post_view>                     
-                    </fields>                
-                </layout>  
+                        </post_view>
+                    </fields>
+                </layout>
                 <datetime>
                     <label>Datetime Settings</label>
                     <sort_order>30</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <fields>                        
+                    <fields>
                         <default_datetime translate="label comment" module="evozon_blog">
-                            <label>Datetime Format</label>                         
-                            <frontend_type>text</frontend_type>   
+                            <label>Datetime Format</label>
+                            <frontend_type>text</frontend_type>
                             <frontend_model>evozon_blog/adminhtml_system_config_form_config</frontend_model>
-                            <backend_model>evozon_blog/adminhtml_system_config_backend_datetime_dateTime</backend_model>                         
+                            <backend_model>evozon_blog/adminhtml_system_config_backend_datetime_dateTime</backend_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </default_datetime>                                                     
-                    </fields> 
+                        </default_datetime>
+                    </fields>
                 </datetime>
                 <toolbar_pagination>
                     <label>Toolbar and Pagination</label>
@@ -140,9 +140,9 @@ Backend sections for blog module
                             <show_in_store>0</show_in_store>
                             <validate>validate-alpha</validate>
                         </filter_var_name>
-                    </fields>     
-                </toolbar_pagination> 
-                <post_image_placeholders> 
+                    </fields>
+                </toolbar_pagination>
+                <post_image_placeholders>
                     <label>Post Image Placeholders</label>
                     <clone_fields>1</clone_fields>
                     <clone_model>evozon_blog/adminhtml_system_config_clone_media_image</clone_model>
@@ -162,8 +162,8 @@ Backend sections for blog module
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </placeholder>
-                    </fields>         
-                </post_image_placeholders>                                                 
+                    </fields>
+                </post_image_placeholders>
             </groups>
         </evozon_blog_general>
         <evozon_blog_post translate="label" module="evozon_blog">
@@ -186,17 +186,17 @@ Backend sections for blog module
                             <label>Number of posts listed</label>
                             <comment>Number of posts shown in listing page.</comment>
                             <frontend_type>text</frontend_type>
-                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>                           
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <validate>validate-not-negative-number</validate>
-                        </max_posts_perpage> 
+                        </max_posts_perpage>
                         <teaser_words_count>
                             <label>Teaser words number</label>
                             <comment>Teaser is short content that will be shown in post listing and single page. If admin does not add the teaser, it will be taken from post content. Specify the number of words to take from content, if short content is empty.</comment>
-                            <frontend_type>text</frontend_type>                           
+                            <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -220,13 +220,13 @@ Backend sections for blog module
                     <sort_order>40</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields>                          
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <disable_widget>
                             <label>Status</label>
                             <required>1</required>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_enabledisable</source_model>                          
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -247,14 +247,14 @@ Backend sections for blog module
                             <depends>
                                 <disable_widget>1</disable_widget>
                             </depends>
-                        </template>                        
+                        </template>
                         <posts_in_widget>
                             <label>Number of posts visible</label>
                             <comment>
                                 There is a minimum of 1 to be shown.
                             </comment>
                             <required>1</required>
-                            <frontend_type>text</frontend_type>                           
+                            <frontend_type>text</frontend_type>
                             <sort_order>7</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -267,7 +267,7 @@ Backend sections for blog module
                         <display_date>
                             <label>Show published date</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>                          
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -275,11 +275,11 @@ Backend sections for blog module
                             <depends>
                                 <disable_widget>1</disable_widget>
                             </depends>
-                        </display_date>                        
+                        </display_date>
                         <image_style>
                             <label>Image style</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>evozon_blog/adminhtml_system_config_source_recent_posts_image</source_model>                          
+                            <source_model>evozon_blog/adminhtml_system_config_source_recent_posts_image</source_model>
                             <sort_order>13</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -294,7 +294,7 @@ Backend sections for blog module
                             <comment>
                                 Number of words from the short content to be displayed in the widget.
                             </comment>
-                            <frontend_type>text</frontend_type>                           
+                            <frontend_type>text</frontend_type>
                             <sort_order>12</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -304,11 +304,11 @@ Backend sections for blog module
                                 <template>evozon/blog/post/list/recent/posts/extended.phtml</template>
                             </depends>
                             <validate>validate-greater-than-zero</validate>
-                        </content_length>                        
+                        </content_length>
                         <display_comments>
                             <label>Show number of comments</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>                          
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>15</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -321,7 +321,7 @@ Backend sections for blog module
                         <display_tags>
                             <label>Show tags</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>                          
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>17</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -330,7 +330,7 @@ Backend sections for blog module
                                 <disable_widget>1</disable_widget>
                                 <template>evozon/blog/post/list/recent/posts/extended.phtml</template>
                             </depends>
-                        </display_tags>    
+                        </display_tags>
                     </fields>
                 </recent>
                 <related translate="label" module="evozon_blog">
@@ -338,8 +338,8 @@ Backend sections for blog module
                     <sort_order>50</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields>                                              
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <enabled>
                             <label>Enable block</label>
                             <comment>
@@ -374,8 +374,8 @@ Backend sections for blog module
                     <sort_order>60</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields>                                              
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <widget_enable>
                             <label>Enable block</label>
                             <comment>
@@ -393,33 +393,33 @@ Backend sections for blog module
                             <comment>
                                 This will be set as header and as breadcrumb to the action page. Use %s in order to have period value inserted.
                             </comment>
-                            <frontend_type>text</frontend_type>                                       
+                            <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store> 
+                            <show_in_store>1</show_in_store>
                             <depends>
                                 <widget_enable>1</widget_enable>
-                            </depends>                                            
+                            </depends>
                         </header>
                         <url_segment>
                             <label>Archive first segment</label>
                             <comment>
                                 This is the first segment before archive unique path. Example: /archive/2015/02 or /arch/2015/02.
                             </comment>
-                            <frontend_type>text</frontend_type>                                       
+                            <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store> 
+                            <show_in_store>1</show_in_store>
                             <depends>
                                 <widget_enable>1</widget_enable>
-                            </depends>                                            
+                            </depends>
                         </url_segment>
                         <date_format>
                             <label>Date format</label>
                             <frontend_type>text</frontend_type>
-                            <frontend_model>evozon_blog/adminhtml_system_config_form_config</frontend_model> 
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_config</frontend_model>
                             <backend_model>evozon_blog/adminhtml_system_config_backend_datetime_date</backend_model>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
@@ -454,7 +454,7 @@ Backend sections for blog module
                             <comment>
                                 <![CDATA[Number of years before the current year. 0 will display the current year only.]]>
                             </comment>
-                            <validate>validate-zero-or-greater</validate> 
+                            <validate>validate-zero-or-greater</validate>
                             <validate>validate-digits</validate>
                             <depends>
                                 <widget_enable>1</widget_enable>
@@ -551,8 +551,8 @@ Backend sections for blog module
                     <sort_order>70</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields>                                            
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <enabled>
                             <label>Enable block</label>
                             <comment>
@@ -560,46 +560,46 @@ Backend sections for blog module
                             </comment>
                             <required>1</required>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_enabledisable</source_model>   
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                                             
+                            <show_in_store>1</show_in_store>
                         </enabled>
                         <header>
                             <label>Tags header and breadcrumb</label>
                             <comment>
                                 This will be set as header and as breadcrumb to the action page. Use %s in order to have tag`s value inserted.
                             </comment>
-                            <frontend_type>text</frontend_type>                                       
+                            <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store> 
+                            <show_in_store>1</show_in_store>
                             <depends>
                                 <enabled>1</enabled>
-                            </depends>                                            
+                            </depends>
                         </header>
                         <url_segment>
                             <label>Tag first url segment</label>
                             <comment>
                                 This is the first segment before tag unique path. Example: /tag/unique-tag-url-10/ or /tag/unique-tag-url-10.html
                             </comment>
-                            <frontend_type>text</frontend_type>                                       
+                            <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <depends>
                                 <enabled>1</enabled>
-                            </depends>                                             
-                        </url_segment> 
+                            </depends>
+                        </url_segment>
                         <limit>
                             <label>Number of tags displayed</label>
                             <depends>
                                 <enable_widget>1</enable_widget>
                             </depends>
-                            <frontend_type>text</frontend_type>                           
+                            <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -613,7 +613,7 @@ Backend sections for blog module
                         <order>
                             <label>Tags order</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>evozon_blog/adminhtml_system_config_source_post_tags_order</source_model> 
+                            <source_model>evozon_blog/adminhtml_system_config_source_post_tags_order</source_model>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -622,23 +622,23 @@ Backend sections for blog module
                                 <enabled>1</enabled>
                             </depends>
                         </order>
-                    </fields>                    
+                    </fields>
                 </tags>
                 <catalog translate="label comment" module="evozon_blog">
                     <label>Related Posts on Product Page</label>
                     <sort_order>90</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields> 
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <enabled>
                             <label>Show block on product view page</label>
-                            <frontend_type>select</frontend_type> 
-                            <source_model>adminhtml/system_config_source_yesno</source_model>                                      
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                                             
+                            <show_in_store>1</show_in_store>
                         </enabled>
                         <limit>
                             <label>Number of posts to display</label>
@@ -647,7 +647,7 @@ Backend sections for blog module
                             </comment>
                             <frontend_type>text</frontend_type>
                             <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
-                            <value>3</value>                                     
+                            <value>3</value>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -657,14 +657,14 @@ Backend sections for blog module
                             </depends>
                             <validate>validate-not-negative-number</validate>
                         </limit>
-                    </fields>                    
+                    </fields>
                 </catalog>
                 <products translate="label" module="evozon_blog">
                     <label>Related Products on Post Page</label>
                     <sort_order>100</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <enabled>
                             <label>Show related products block</label>
@@ -693,28 +693,28 @@ Backend sections for blog module
                                 <enabled>1</enabled>
                             </depends>
                         </limit>
-                    </fields>                    
+                    </fields>
                 </products>
-                <catalog_categories translate="label comment" module="evozon_blog">                    
+                <catalog_categories translate="label comment" module="evozon_blog">
                     <label>Categories block</label>
                     <sort_order>110</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields> 
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <enabled>
                             <label>Show categories block</label>
-                            <frontend_type>select</frontend_type> 
-                            <source_model>adminhtml/system_config_source_yesno</source_model>                                      
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                                             
+                            <show_in_store>1</show_in_store>
                         </enabled>
                         <limit>
-                            <label>Number of blog categories to display</label>                            
+                            <label>Number of blog categories to display</label>
                             <frontend_type>text</frontend_type>
-                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>                                                          
+                            <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -725,9 +725,9 @@ Backend sections for blog module
                             </depends>
                         </limit>
                         <category_name>
-                            <label>Show category parents name</label>                            
-                            <frontend_type>select</frontend_type>     
-                            <source_model>evozon_blog/adminhtml_system_config_source_post_category_block_showCategoryNames</source_model>                                                     
+                            <label>Show category parents name</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>evozon_blog/adminhtml_system_config_source_post_category_block_showCategoryNames</source_model>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -737,8 +737,8 @@ Backend sections for blog module
                             </depends>
                         </category_name>
                         <category_name_separator>
-                            <label>Category name separator</label>                            
-                            <frontend_type>text</frontend_type>                                                          
+                            <label>Category name separator</label>
+                            <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -747,33 +747,33 @@ Backend sections for blog module
                                 <enabled>1</enabled>
                             </depends>
                         </category_name_separator>
-                    </fields>                    
-                </catalog_categories> 
+                    </fields>
+                </catalog_categories>
                 <featured_posts_category translate="label comment" module="evozon_blog">
                     <label>Featured Posts on Category Page</label>
                     <sort_order>120</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
-                    <fields> 
+                    <show_in_store>1</show_in_store>
+                    <fields>
                         <enabled>
                             <label>Show block on category view page</label>
                             <comment>If you select "No", it won`t be rendered on any of the categories.</comment>
-                            <frontend_type>select</frontend_type> 
-                            <source_model>adminhtml/system_config_source_yesno</source_model>                                      
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                                             
+                            <show_in_store>1</show_in_store>
                         </enabled>
                         <limit>
                             <label>Number of posts to display</label>
                             <comment>
-                                Write a number to limit the related posts in the block. 
+                                Write a number to limit the related posts in the block.
                             </comment>
                             <frontend_type>text</frontend_type>
                             <frontend_model>evozon_blog/adminhtml_system_config_form_limit</frontend_model>
-                            <value>3</value>                                     
+                            <value>3</value>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -783,14 +783,14 @@ Backend sections for blog module
                                 <enabled>1</enabled>
                             </depends>
                         </limit>
-                    </fields>                    
+                    </fields>
                 </featured_posts_category>
                 <post_rss translate="label" module="evozon_blog">
                     <label>Posts RSS feed</label>
                     <sort_order>120</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>  
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <enabled>
                             <label>Enable</label>
@@ -821,8 +821,8 @@ Backend sections for blog module
                                 <enabled>1</enabled>
                             </depends>
                         </limit>
-                    </fields>                    
-                </post_rss>                
+                    </fields>
+                </post_rss>
             </groups>
         </evozon_blog_post>
         <evozon_blog_comment translate="label" module="evozon_blog">
@@ -887,6 +887,66 @@ Backend sections for blog module
                         </content_words_number>
                     </fields>
                 </general>
+                <notifications>
+                    <label>Notifications</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <comments_notification>
+                            <label>Enable comments notifications</label>
+                            <comment>Yes: On the blog comments section (frontend) will be displayed a checkbox under each comment, and the user can specify if he/she wants to receive an email if someone replies on comment.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </comments_notification>
+                        <send_email_to>
+                            <label>Send notification only to parent</label>
+                            <comment>
+                                <![CDATA[Yes: the notification will be sent only to the parent comment. <br /> No: the notification email will be sent to all level parents.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <comments_notification>1</comments_notification>
+                            </depends>
+                        </send_email_to>
+                        <email_template>
+                            <label>Template for comment notifications</label>
+                            <comment>Select default comment_notifications template</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <comments_notification>1</comments_notification>
+                            </depends>
+                        </email_template>
+                        <email_subject>
+                            <label>Email subject for comment notifications</label>
+                            <comment>Set the subject for the comment notifications email.</comment>
+                            <required>1</required>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <comments_notification>1</comments_notification>
+                            </depends>
+                        </email_subject>
+                    </fields>
+                </notifications>
                 <spam_service translate="label" module="evozon_blog">
                     <label>Spam Service</label>
                     <sort_order>40</sort_order>
@@ -942,7 +1002,7 @@ Backend sections for blog module
                         <akismet_api_key translate="label comment" module="evozon_blog">
                             <label>API Key</label>
                              <comment>
-                                <![CDATA[ 
+                                <![CDATA[
                                     Provided API Key. Visit <a href="https://akismet.com/" target="_blank">Akismet website</a> to create an account. For details about generating the key check this <a href="http://docs.akismet.com/getting-started/activate/" target="_blank">tutorial</a>.
                                 ]]>
                             </comment>
@@ -954,7 +1014,7 @@ Backend sections for blog module
                             <show_in_store>0</show_in_store>
                             <depends>
                                 <enabled>1</enabled>
-                                <type>evozon_blog/spam_service_akismet</type>
+                                <type>evozon_blog/service_spam_service_akismet</type>
                             </depends>
                         </akismet_api_key>
                     </fields>
@@ -1028,7 +1088,7 @@ Backend sections for blog module
                     </fields>
                 </customer_account_tab>
             </groups>
-        </evozon_blog_comment>          
+        </evozon_blog_comment>
         <evozon_blog_cron translate="label" module="evozon_blog">
             <label>Cron Configurations</label>
             <tab>evozon_blog</tab>
@@ -1270,7 +1330,7 @@ Backend sections for blog module
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </model>                         
+                        </model>
                         <maxlength translate="label" module="evozon_blog">
                             <label>Maximum Length</label>
                             <frontend_type>text</frontend_type>
@@ -1294,7 +1354,7 @@ Backend sections for blog module
                         <encoding translate="label" module="evozon_blog">
                             <label>Encoding</label>
                             <comment>
-                                <![CDATA[ 
+                                <![CDATA[
                                     If the inserted value will not be found in the <a href="http://php.net/manual/en/mbstring.supported-encodings.php" target="_blank">encodings list</a>, the default "UTF-8" type will be used.
                                 ]]>
                             </comment>
@@ -1305,7 +1365,7 @@ Backend sections for blog module
                             <show_in_store>1</show_in_store>
                             <validate>required-entry</validate>
                         </encoding>
-                    </fields>                
+                    </fields>
                 </tags>
                 <comments>
                     <label>Comments</label>
@@ -1332,7 +1392,7 @@ Backend sections for blog module
                             <show_in_store>1</show_in_store>
                             <validate>validate-greater-than-zero</validate>
                             <validate>required-entry</validate>
-                        </author_maxlength>                        
+                        </author_maxlength>
                         <subject translate="label comment" module="evozon_blog">
                             <label>Required Subject</label>
                             <comment>
@@ -1364,9 +1424,9 @@ Backend sections for blog module
                             <show_in_store>1</show_in_store>
                             <validate>validate-greater-than-zero</validate>
                             <validate>required-entry</validate>
-                        </content_maxlength>                     
-                    </fields>                
-                </comments>  
+                        </content_maxlength>
+                    </fields>
+                </comments>
             </groups>
         </evozon_blog_validation>
     </sections>

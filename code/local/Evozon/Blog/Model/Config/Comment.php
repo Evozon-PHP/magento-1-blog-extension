@@ -74,4 +74,34 @@ class Evozon_Blog_Model_Config_Comment
      * Comment configurations -> customer account -> enabled
      */
     const CUSTOMER_ACCOUNT_ENABLED = 'enabled';
+
+    /**
+     * Comment configuration -> notifications -> enable comments notifications
+     */
+    const XML_PATH_COMMENTS_NOTIFICATIONS = 'comments_notification';
+
+    /**
+     * Comment configuration -> notifications -> send notification only to parent
+     */
+    const XML_PATH_SEND_ONLY_TO_PARENT = 'send_email_to';
+
+    /**
+     * Email sender
+     */
+    const XML_PATH_EMAIL_SENDER = 'contacts/email/sender_email_identity';
+
+    /**
+     * Email template code
+     */
+    const EMAIL_TEMPLATE_CODE = 'comment_notifications';
+
+    /**
+     * Email template comment notifications
+     */
+    const EMAIL_TEMPLATE = 'email_template';
+
+    /**
+     * Email subject for comment notifications
+     */
+    const EMAIL_SUBJECT = 'email_subject';
 }

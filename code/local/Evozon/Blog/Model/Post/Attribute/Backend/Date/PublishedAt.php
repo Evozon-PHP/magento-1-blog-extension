@@ -19,7 +19,7 @@ class Evozon_Blog_Model_Post_Attribute_Backend_Date_PublishedAt extends Evozon_B
      */
     public function beforeSave($object)
     {
-        $publishedAt = $this->setPublishedDateByStatus($object);
+        $publishedAt = $this->getPublishedDateByStatus($object);
         $attributeCode = $this->getAttribute()->getAttributeCode();
         
         $object->setData($attributeCode, $publishedAt);
@@ -28,31 +28,32 @@ class Evozon_Blog_Model_Post_Attribute_Backend_Date_PublishedAt extends Evozon_B
     }
 
     /**
-     * Set the published date by status
+     * Get the published date by status
      *
      * @author Andreea Macicasan <andreea.macicasan@evozon.com>
      * @param Evozon_Blog_Model_Post $object
+     * @return string
      */
-    protected function setPublishedDateByStatus($object)
+    protected function getPublishedDateByStatus($object)
     {
         $status = $object->getStatus();
 
         if ($status == Evozon_Blog_Model_Adminhtml_Post_Status::BLOG_POST_STATUS_PUBLISHED) {
-            return $this->setPublishingDateToPublished($object);
+            return $this->getPublishingDateToPublished($object);
         }
 
         if ($status == Evozon_Blog_Model_Adminhtml_Post_Status::BLOG_POST_STATUS_PENDING) {
-            return $this->setPublishingDateToPending($object);
+            return $this->getPublishingDateToPending($object);
         }
     }
 
     /**
-     * Set the published date if the pending status was selected
+     * Get the published date if the pending status was selected
      *
      * @author Andreea Macicasan <andreea.macicasan@evozon.com>
      * @return string
      */
-    protected function setPublishingDateToPending($object)
+    protected function getPublishingDateToPending($object)
     {
         $scheduledDate = $object->getScheduledDate();
         $scheduleTime = $object->getScheduledTime();
@@ -84,11 +85,12 @@ class Evozon_Blog_Model_Post_Attribute_Backend_Date_PublishedAt extends Evozon_B
      * @author Andreea Macicasan <andreea.macicasan@evozon.com>
      * @return string
      */
-    protected function setPublishingDateToPublished($object)
+    protected function getPublishingDateToPublished($object)
     {
         // if the old status was published keep the old published date
         if ($object->getOrigData('status') == Evozon_Blog_Model_Adminhtml_Post_Status::BLOG_POST_STATUS_PUBLISHED) {
-            return $object->getOrigData('publish_date');
+            $zendDate = Mage::app()->getLocale()->utcDate(null, $object->getPublishDate(), true, $this->_getFormat($object->getPublishDate()));
+            return $zendDate->toString(Varien_Date::DATETIME_INTERNAL_FORMAT);
         }
 
         return now();

@@ -170,6 +170,8 @@ class Evozon_Blog_Model_Post extends Mage_Catalog_Model_Product
             $this->setUrlKey($this->getUrlModel()->formatUrlKey($this->getTitleForUrlKey()));
         }
 
+        $this->_setCreatedAtByPublishDate();
+
         return $this;
     }
 
@@ -889,4 +891,17 @@ class Evozon_Blog_Model_Post extends Mage_Catalog_Model_Product
         return Mage::getResourceModel('evozon_blog/post_relations_website')->hasRelationToPost((int) $this->getId(), $website);
     }
 
+    /**
+     * Update createdAt based on publish date
+     */
+    protected function _setCreatedAtByPublishDate() {
+        if ($this->getPublishDate()) {
+            $newPublishDate = new DateTime($this->getPublishDate());
+            $postCreatedAt =  new DateTime($this->getCreatedAt());
+
+            if ($newPublishDate < $postCreatedAt) {
+                $this->setCreatedAt($this->getPublishDate());
+            }
+        }
+    }
 }

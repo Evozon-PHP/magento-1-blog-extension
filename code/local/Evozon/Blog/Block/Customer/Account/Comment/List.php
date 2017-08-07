@@ -10,7 +10,7 @@
  */
 class Evozon_Blog_Block_Customer_Account_Comment_List extends Evozon_Blog_Block_Abstract
 {
-
+    const ENABLED = 1;
     /**
      * Comments collection
      *
@@ -85,7 +85,7 @@ class Evozon_Blog_Block_Customer_Account_Comment_List extends Evozon_Blog_Block_
         if (is_null($this->_commentsCollection)) {
             $commentsCollection = Mage::getModel('evozon_blog/comment')->getCollection();
             $commentsCollection->addFieldToSelect(array('post_id', 'subject', 'content', 'created_at',
-                'user_id', 'author', 'parent_id', 'admin_id', 'status'))
+                'user_id', 'author', 'parent_id', 'admin_id', 'status', 'notify_customer'))
                 ->addFieldToFilter('main_table.user_id', $this->getCustomer()->getId())
                 ->addFieldToFilter(
                     'main_table.status',
@@ -237,7 +237,7 @@ class Evozon_Blog_Block_Customer_Account_Comment_List extends Evozon_Blog_Block_
      */
     public function getConfigData($key = null)
     {
-        return $this->getConfigModel()->getCommentsCustomerAccountConfig($key);
+        return $this->getConfigModel()->getCommentsConfig($key);
     }
 
     /**
@@ -254,5 +254,39 @@ class Evozon_Blog_Block_Customer_Account_Comment_List extends Evozon_Blog_Block_
         }
 
         return false;
+    }
+
+    /**
+     * Show | Hide button for notification by email
+     *
+     * @return bool
+     */
+    public function displayNotificationButton()
+    {
+        return (bool)$this->getConfigData(Evozon_Blog_Model_Config_Comment::XML_PATH_COMMENTS_NOTIFICATIONS);
+    }
+
+    /**
+     * Defining which should be the new status of the notification
+     *
+     * @param $currentStatus
+     * @return int
+     */
+    public function getNotificationStatusToggle($currentStatus)
+    {
+        if ($currentStatus)
+        {
+            return 0;
+        }
+
+        return 1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotifyCustomerUrl()
+    {
+        return Mage::getUrl('blog/comment/notifyCustomer');
     }
 }

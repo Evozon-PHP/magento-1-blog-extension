@@ -155,4 +155,68 @@ class Evozon_Blog_CommentController extends Mage_Core_Controller_Front_Action
 
         return $response;
     }
+
+    /**
+     * Notify customer action
+     *
+     * @return bool
+     */
+    public function notifyCustomerAction()
+    {
+        if (!$this->getRequest()->isAjax()) {
+            $this->_forward('no-route');
+            return false;
+        }
+        $commentId = $this->getRequest()->getParam('commentId');
+        $notifyCustomer = $this->getRequest()->getParam('notifyCustomer');
+        $response = array();
+        $response['success'] = false;
+
+        $comment = Mage::getModel('evozon_blog/comment')->load($commentId);
+
+        if ($comment && $comment->getId()) {
+            try{
+                $comment->setNotifyCustomer($notifyCustomer);
+                $comment->save();
+                $response['success'] = true;
+            } catch (Exception $e){
+                $response['error'] = $e->getMessage();
+            }
+        } else {
+            $response['error'] = $this->__('Invalid comment');
+        }
+
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+    }
+    
+    /**
+     * Check by email if customer already exists
+     *
+     * @return bool
+     */
+    public function isCustomerAction()
+    {
+        $inputData = $this->getRequest()->getPost();
+        
+        if (!$this->getRequest()->isAjax()) {
+            $this->_forward('no-route');
+            return false;
+        }
+        
+        $url = Mage::getUrl('customer/account/login');
+        $response = array();
+        $response['is_customer'] = true;
+        $response['message'] = $this->__('This email address is already registered in our system. Please <a href="%s">login</a> if you want to leave a comment', $url);
+        $email = $inputData['email'];
+        
+        $customer = Mage::getModel('customer/customer')
+            ->setWebsiteId(Mage::app()->getWebsite()->getId())
+            ->loadByEmail($email);
+        
+        if (!$customer || !$customer->getId()) {
+            $response['is_customer'] = false;
+        }
+        
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+    }
 }

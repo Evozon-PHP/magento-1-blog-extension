@@ -1,7 +1,8 @@
 var Comment = Class.create();
 
 Comment.prototype = {
-    initialize: function () {},
+    initialize: function () {
+    },
     // show the form for adding a new comment
     showAddCommentForm: function (commentId) {
         if ($('post_comment_form-' + commentId)) {
@@ -14,22 +15,22 @@ Comment.prototype = {
 
             $('post_comment_reply-' + commentId).insert({'after': clone});
         }
-        
+
         //hiding or showing the reply links
-        
-        var clickedLink = $('post_comment_reply_link-'+ commentId);
+
+        var clickedLink = $('post_comment_reply_link-' + commentId);
         if (clickedLink.hasClassName('clicked')) {
             clickedLink.removeClassName('clicked');
             var showAll = true;
         } else {
             clickedLink.addClassName('clicked');
         }
-        
-        $$('.post_comment_reply_link').each(function(element) {
+
+        $$('.post_comment_reply_link').each(function (element) {
             if (showAll == true) {
                 element.show();
             } else {
-                if (element.readAttribute('id') != 'post_comment_reply_link-'+ commentId) {
+                if (element.readAttribute('id') != 'post_comment_reply_link-' + commentId) {
                     element.hide();
                 }
             }
@@ -38,8 +39,8 @@ Comment.prototype = {
     // add new comment
     addComment: function (object) {
         var currentCommentId = $(object).up(1).readAttribute('name'),
-                addCommentForm = $('post_comment_form' + (currentCommentId ? '-' + currentCommentId : '')),
-                validator = new Validation(addCommentForm);
+            addCommentForm = $('post_comment_form' + (currentCommentId ? '-' + currentCommentId : '')),
+            validator = new Validation(addCommentForm);
 
         $$('.post_comment_error_message', '.post_comment_info_message').each(function (element) {
             element.remove();
@@ -49,8 +50,8 @@ Comment.prototype = {
         if (validator.validate()) {
 
             // showing the reply links
-            $$('.post_comment_reply_link').each(function(element) {
-               element.show();
+            $$('.post_comment_reply_link').each(function (element) {
+                element.show();
             });
 
             // ajax call to add the comment
@@ -66,7 +67,10 @@ Comment.prototype = {
                         // verify if the response is a message
                         if (response.message) {
                             addCommentForm.reset();
-                            var infoMessage = new Element('p', {'class': 'post_comment_info_message', 'id': 'info-message-' + currentCommentId}).update(response.message);
+                            var infoMessage = new Element('p', {
+                                'class': 'post_comment_info_message',
+                                'id': 'info-message-' + currentCommentId
+                            }).update(response.message);
 
                             var replyDiv = $('post_comment_reply' + (currentCommentId ? '-' + currentCommentId : ''));
                             replyDiv.insert({'after': infoMessage});
@@ -82,20 +86,28 @@ Comment.prototype = {
                         if (response.error) {
                             var errorObject = response.error;
                             if (errorObject.form_key) {
-                                var errorMessage = new Element('p', {'class': 'post_comment_error_message', 'id': 'error-message-' + currentCommentId}).update(errorObject.form_key);
+                                var errorMessage = new Element('p', {
+                                    'class': 'post_comment_error_message',
+                                    'id': 'error-message-' + currentCommentId
+                                }).update(errorObject.form_key);
                                 addCommentForm.insert({'after': errorMessage});
                             } else {
                                 var prop;
                                 for (prop in errorObject) {
                                     var messageId = 'error-message-' + prop + '-' + currentCommentId;
                                     var data = errorObject[prop];
-                                    if (Array.isArray(data))
-                                    {
-                                        var errorMessage = new Element('p', {'class': 'post_comment_error_message', 'id': messageId}).update(data);
+                                    if (Array.isArray(data)) {
+                                        var errorMessage = new Element('p', {
+                                            'class': 'post_comment_error_message',
+                                            'id': messageId
+                                        }).update(data);
                                         $$('#post_comment_form' + (currentCommentId ? '-' + currentCommentId : '') + ' #' + prop).first().insert({'after': errorMessage});
                                     } else {
                                         $H(data).each(function (pair) {
-                                            var errorMessage = new Element('p', {'class': 'post_comment_error_message', 'id': messageId}).update(pair.value);
+                                            var errorMessage = new Element('p', {
+                                                'class': 'post_comment_error_message',
+                                                'id': messageId
+                                            }).update(pair.value);
                                             $$('#post_comment_form' + (currentCommentId ? '-' + currentCommentId : '') + ' #' + prop).first().insert({'after': errorMessage});
                                         });
                                     }
@@ -141,6 +153,37 @@ Comment.prototype = {
             }
         });
     },
+    checkIsCustomer: function (elem, url) {
+        var email = elem.value;
+        var commentForm = $('reply_button');
+        commentForm.disabled = true;
+        if (email) {
+            new Ajax.Request(url, {
+                method: 'POST',
+                parameters: {
+                    email: email
+                },
+                onSuccess: function (transport) {
+                    if (transport.responseText.isJSON()) {
+                        var response = transport.responseText.evalJSON();
+                        var isCustomerElem = $(elem).up('form').down('.is_customer');
+                        if (response.is_customer) {
+                            isCustomerElem.show();
+                            isCustomerElem.innerHTML = response.message;
+                        } else {
+                            isCustomerElem.hide();
+                            commentForm.disabled = false;
+                        }
+                    }
+                },
+                onFailure: function () {
+                    alert(Translator.translate('Something went wrong'));
+                    commentForm.disabled = false;
+                    $('is_customer').hide();
+                }
+            });
+        }
+    },
     // comment input validation
     validateLength: function (v, elm) {
         var reMax = new RegExp(/^maximum-length-[0-9]+$/);
@@ -157,15 +200,15 @@ Comment.prototype = {
     }
 };
 
-document.observe('dom:loaded', function() {
-    $$('h2.article-name a').each(function(element) {
+document.observe('dom:loaded', function () {
+    $$('h2.article-name a').each(function (element) {
         var parent = element.up();
         if (element.getHeight() > parent.getHeight()) {
             var child = parent.childElements('a');
             child[0].addClassName('shorter')
         }
     });
-    $$('.recent-post-name').each(function(element) {
+    $$('.recent-post-name').each(function (element) {
         var postTitle = element.childElements()[1] ? element.childElements()[1] : element.childElements()[0];
         if (postTitle.getHeight() > 19) {
             postTitle.addClassName('shorter')

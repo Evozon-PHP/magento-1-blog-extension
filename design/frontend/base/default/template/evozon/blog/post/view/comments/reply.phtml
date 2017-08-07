@@ -25,17 +25,24 @@ $required = (bool) $this->getConfig(Evozon_Blog_Model_Config_Validation::VALIDAT
         <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
             <label for="author"><?php echo $this->__('Name'); ?>* :</label>  
             <input id="author" type="text" name="author" class="input-text  required-entry validate-author-max-length maximum-length-<?php echo $authorMaxLength; ?>"/>
-            <label for="author_email"><?php echo $this->__('Email'); ?>* :</label>  
-            <input id="author_email" type="text" name="author_email" class="input-text required-entry"/>  
+            
+            <label for="author_email"><?php echo $this->__('Email'); ?>* :</label>
+            <input id="author_email" type="text" name="author_email" class="input-text required-entry" onblur="comment.checkIsCustomer(this,'<?php echo $this->getIsCustomerUrl()?>')" />
+            <div class="informative_message is_customer" id="is_customer" style="display:none"></div>
         <?php endif; ?>
-
+        
         <!--Display the subject input-->
         <label for="subject"><?php echo $this->__('Subject'); ?><?php if ($required):?>*<?php endif;?> :</label>  
         <input id="subject" type="text" name="subject" class="input-text <?php if ($required): echo "required-entry"; endif; ?> validate-subject-max-length maximum-length-<?php echo $subjectMaxLength; ?>"/>
 
         <!--Display the content input-->
         <label for="comment_body"><?php echo $this->__('Comment'); ?>* :</label>  
-        <textarea id="content" name="content" class="post_comment_body input-text required-entry validate-content-max-length maximum-length-<?php echo $contentMaxLength; ?>"></textarea>  
+        <textarea id="content" name="content" class="post_comment_body input-text required-entry validate-content-max-length maximum-length-<?php echo $contentMaxLength; ?>"></textarea>
+
+        <!--Display informative message about the number of characters allowed in comment section-->
+        <div class="informative_message">
+            <p><?php echo $this->__('The content should have maximum %d characters.', $contentMaxLength); ?></p>
+        </div>
 
         <input type="hidden" name="form_key" id="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>"/>
         <input type="hidden" name="parent_id" id="parent_id" value="0"/> 

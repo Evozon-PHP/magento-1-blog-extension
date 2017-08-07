@@ -84,8 +84,6 @@ class Evozon_Blog_Block_Adminhtml_Comment_Grid extends Mage_Adminhtml_Block_Widg
         $this->addColumn('post_title', array(
             'header' => $this->__('Post Title'),
             'index' => 'post_title',
-            'renderer' => 'Evozon_Blog_Block_Adminhtml_Comment_Grid_Post_Renderer',
-            'filter_condition_callback' => array($this, '_postFilter')
             )
         );
 
@@ -135,23 +133,13 @@ class Evozon_Blog_Block_Adminhtml_Comment_Grid extends Mage_Adminhtml_Block_Widg
             )
         );
 
-        // Add the posibility to take action for each row, showing a dropdown
         $this->addColumn('action', array(
             'header' => Mage::helper('evozon_blog')->__('Action'),
-            'type' => 'action',
-            'getter' => 'getId',
-            'actions' =>
-            array(
-                array(
-                    'caption' => Mage::helper('evozon_blog')->__('Edit'),
-                    'url' => array('base' => '*/*/edit'),
-                    'field' => 'id'
-                )
-            ),
-            'filter' => false,
-            'sortable' => false
-            )
-        );
+            'filter'    => false,
+            'sortable'  => true,
+            'type' => 'select',
+            'renderer' => 'Evozon_Blog_Block_Adminhtml_Comment_Grid_Post_Renderer',
+        ));
 
         return parent::_prepareColumns();
     }

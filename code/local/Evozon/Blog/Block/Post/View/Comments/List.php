@@ -258,7 +258,8 @@ class Evozon_Blog_Block_Post_View_Comments_List extends Evozon_Blog_Block_Post_A
         // the user has to be logged in to add a new comment
         if ((!Mage::getSingleton('customer/session')->isLoggedIn() && !(bool) $this->getConfigParam('allow_guest_comments'))) {
             $this->infoMessage = $this->__('You have to <a href="%s">log in</a> in order to leave a comment.', Mage::getUrl('customer/account/login'));
-            
+
+
             return self::EVOZON_BLOG_POST_LOGGED_IN_TO_ADD_COMMENTS;
         }
 

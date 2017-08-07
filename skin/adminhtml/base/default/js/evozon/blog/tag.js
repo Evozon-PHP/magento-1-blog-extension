@@ -13,14 +13,18 @@
 var Tag = Class.create();
 
 Tag.prototype = {
-    initialize: function (url, id) {
+    initialize: function (url, id, initialSelectedTags) {
         var selectedTagsIds = new Array();
 
         var xhr;
+        this.selectedTags = JSON.parse(initialSelectedTags);
+        var tagClass = this;
         new autoComplete({
             selector: 'input[name="selector-tag"]',
             minChars: 2,
             delay: 50,
+            cache: 0,
+
             source: function (term, response) {
                 try {
                     xhr.abort();
@@ -36,8 +40,12 @@ Tag.prototype = {
                     },
                     onSuccess: function (transport) {
                         var parsed = transport.responseText.evalJSON(true);
-                        var arr = Object.keys(parsed).map(function (k) {
-                            return parsed[k];
+                        var filteredItems = parsed.filter(function(item){
+                            return !(item[0] in tagClass.getSelectedTags())
+                        });
+
+                        var arr = Object.keys(filteredItems).map(function (k) {
+                            return filteredItems[k];
                         });
                         response(arr);
                     }
@@ -54,10 +62,20 @@ Tag.prototype = {
                 $('add-tag').dataset.tagId = item.getAttribute('data-tag-id');
                 $('add-tag').dataset.tagValue = item.getAttribute('data-tag-value');
                 $('add-tag').dataset.tagCount = item.getAttribute('data-tag-count');
-                
-                Tag.prototype.validateTagContext();
+
+                tagClass.validateTagContext();
             }
         });
+    },
+    setSelectedTags: function(selectedTags)
+    {
+        this.selectedTags = selectedTags;
+        Object.keys(selectedTags).toString();
+        $('selected-tags-ids').value = Object.keys(selectedTags).toString();
+    },
+    getSelectedTags: function()
+    {
+        return this.selectedTags;
     },
     addTagToList: function ()
     {
@@ -73,7 +91,13 @@ Tag.prototype = {
                 + '<a onclick="tag.removeTagFromList(' + id + ')" class="tag-remove">x</a></li>';
 
         this.emptyInput();
-        this.updateSelectedTagsIds('add', id);
+
+        var selectedTag = {
+            "id": id,
+            "name": value
+        };
+
+        this.updateSelectedTags('add', selectedTag);
         if ($('succes-msg').style.display != "none") {
             $('succes-msg').style.display = "none";
         }
@@ -89,20 +113,23 @@ Tag.prototype = {
     removeTagFromList: function (id)
     {
         $('selected-tag-' + id).remove();
-        this.updateSelectedTagsIds('remove', id);
+        var selectedTag = {
+            "id": id,
+        };
+        this.updateSelectedTags('remove', selectedTag);
     },
-    updateSelectedTagsIds: function (event, id)
+    updateSelectedTags: function (event, selectedTag)
     {
-        selectedTagsIds = $('selected-tags-ids').value.split(',');
-
+        var selectedTags = this.getSelectedTags();
         if (event === 'add') {
-            selectedTagsIds.push(id);
+            selectedTags[selectedTag.id] = {
+                "entity_id": selectedTag.id,
+                'name': selectedTag.name
+            };
         } else {
-            selectedTagsIds = selectedTagsIds.without(id);
+            delete selectedTags[selectedTag.id];
         }
-
-        $('selected-tags-ids').value = selectedTagsIds.toString();
-        console.log($('selected-tags-ids').value);
+        this.setSelectedTags(selectedTags);
     },
     resetSearchData: function ()
     {
@@ -140,15 +167,18 @@ Tag.prototype = {
     },
     isDuplicate: function ()
     {
-        selectedTagsIds = $('selected-tags-ids').value.split(',');
-
         var tagId = $('add-tag').dataset.tagId;
-        tagIndex = selectedTagsIds.indexOf(tagId);
-        if (tagIndex === -1) {
-            return false;
-        }
 
-        return true;
+        return (tagId in this.getSelectedTags());
+    },
+    isTagNameAddedOnPost: function(name) {
+        var selectedTags = this.getSelectedTags();
+        for (var tagId in selectedTags) {
+            if (selectedTags[tagId].name == name) {
+                return true;
+            }
+        }
+        return false;
     },
     showNewTagForm: function (storeId)
     {

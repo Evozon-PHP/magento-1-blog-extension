@@ -24,34 +24,64 @@ class Evozon_Blog_Model_Resource_Search_Catalog_Fulltext_Collection extends Mage
      * 
      * @author Dana Negrescu <dana.negrescu@evozon.com>
      * @overriden
-     * @param type $query
+     * @param string $query
+     * @return Evozon_Blog_Model_Resource_Search_Catalog_Fulltext_Collection
      */
     public function addSearchFilter($query)
     {
-        Mage::getSingleton('catalogsearch/fulltext')->prepareResult();
-        
+        parent::addSearchFilter($query);
+
         $queryId = $this->_getQuery()->getId();
         
         $productIds = $this->getProductIdsRelatedToPosts();
-        if (!empty($productIds)) {
+        if (!empty($productIds) && $queryId) {
             Mage::getResourceSingleton('evozon_blog/search_catalog_fulltext')->appendResult($queryId, $productIds);
         }
 
-        $this->getSelect()->joinInner(
-            array('search_result' => $this->getTable('catalogsearch/result')),
-            $this->getConnection()->quoteInto(
-                'search_result.product_id=e.entity_id AND search_result.query_id=?', $queryId
-            ),
-            array('relevance' => 'relevance')
-        );
-        
         return $this;
+    }
+
+    /**
+     * Get found products ids
+     * This method is used starting with Magento version 1.9.3
+     * It was overwritten in order to add the blog posts related products
+     * This method should not be used for Magento versions lower than 1.9.3 because it will generate fatal errors
+     *
+     * @return array
+     */
+    public function getFoundIds()
+    {
+        if (is_null($this->_foundData)) {
+            /** @var Mage_CatalogSearch_Model_Fulltext $preparedResult */
+            $preparedResult = Mage::getSingleton('catalogsearch/fulltext');
+            $preparedResult->prepareResult();
+            $this->_foundData = $preparedResult->getResource()->getFoundData();
+            $this->appendBlogRelatedProducts();
+        }
+        if (isset($this->_orders[self::RELEVANCE_ORDER_NAME])) {
+            $this->_resortFoundDataByRelevance();
+        }
+
+        return array_keys($this->_foundData);
+    }
+
+    /**
+     * Append the blog related products to collection
+     * This method is used starting with Magento version 1.9.3
+     * This method should not be used for Magento versions lower than 1.9.3 because it will generate fatal errors
+     */
+    protected function appendBlogRelatedProducts() {
+        $productIds = $this->getProductIdsRelatedToPosts();
+        foreach ($productIds as $productId) {
+            $this->_foundData[$productId] = 0;
+        }
     }
     
     /**
      * Set products ids received from the search layer
      * 
-     * @param type $productIds
+     * @param array $productIds
+     * @return Evozon_Blog_Model_Resource_Search_Catalog_Fulltext_Collection
      */
     public function setProductIdsRelatedToPosts($productIds)
     {
@@ -63,7 +93,7 @@ class Evozon_Blog_Model_Resource_Search_Catalog_Fulltext_Collection extends Mage
     /**
      * Getting the products ids
      * 
-     * @return type
+     * @return array
      */
     public function getProductIdsRelatedToPosts()
     {

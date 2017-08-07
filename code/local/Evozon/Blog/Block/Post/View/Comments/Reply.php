@@ -34,5 +34,10 @@ class Evozon_Blog_Block_Post_View_Comments_Reply extends Evozon_Blog_Block_Post_
     {
         return Mage::getSingleton('evozon_blog/config')->getCommentsValidationConfig($key);
     }
+    
+    public function getIsCustomerUrl()
+    {
+        return Mage::getUrl('blog/comment/isCustomer');
+    }
 
 }

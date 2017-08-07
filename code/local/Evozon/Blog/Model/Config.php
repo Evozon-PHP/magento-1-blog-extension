@@ -112,6 +112,11 @@ class Evozon_Blog_Model_Config
     const XML_PATH_BLOG_COMMENT_CUSTOMER_ACCOUNT_TAB = 'evozon_blog_comment/customer_account_tab';
 
     /**
+    * comments recent widget and block configuration
+    */
+    const XML_PATH_BLOG_COMMENT_NOTIFICATIONS = 'evozon_blog_comment/notifications';
+
+    /**
      * toolbar and pagination configuration
      */
     const XML_PATH_BLOG_GENERAL_TOOLBAR = 'evozon_blog_general/toolbar_pagination';
@@ -223,7 +228,8 @@ class Evozon_Blog_Model_Config
         $pathKeys = array(
             self::XML_PATH_BLOG_COMMENT_GENERAL,
             self::XML_PATH_BLOG_GENERAL_DATETIME,
-            self::XML_PATH_BLOG_COMMENT_RECENT_COMMENTS_WIDGET
+            self::XML_PATH_BLOG_COMMENT_RECENT_COMMENTS_WIDGET,
+            self::XML_PATH_BLOG_COMMENT_NOTIFICATIONS
         );
 
         return $this->_getConfigData($pathKeys, $key);

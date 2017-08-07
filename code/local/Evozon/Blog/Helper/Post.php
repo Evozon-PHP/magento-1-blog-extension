@@ -50,4 +50,5 @@ class Evozon_Blog_Helper_Post extends Evozon_Blog_Helper_Data
             ->setModel($rule)
             ->setForm($rule->getForm());
     }
+
 }

@@ -308,14 +308,26 @@ class Evozon_Blog_Block_Adminhtml_Post_Edit_Tab_Attributes extends Mage_Adminhtm
             $fieldset->addElement($createDate);
             $fieldset->addElement($updateDate);
 
-            $fieldset->addField('updated_at_time',
-                'label',
-                array(
+            $hasPublishDate = (bool) $this->getPost()->getPublishDate();
+            $publishDateFieldConfig = array(
                 'label' => Mage::helper('evozon_blog')->__('Publishing date'),
                 'title' => Mage::helper('evozon_blog')->__('Publishing date'),
-                'value' => ($this->getPost()->getPublishDate() ? $this->getPost()->getPublishDate() : '-'),
-                'readonly' => true
-            ));
+                'value' => ($this->getPost()->getPublishDate() ? $this->getPost()->getPublishDate() : '-')
+            );
+
+            if ($hasPublishDate) {
+                $publishDateFieldConfig = array_merge($publishDateFieldConfig, array(
+                    'name' => 'publish_date',
+                    'format' => Varien_Date::DATETIME_INTERNAL_FORMAT,
+                    'time' => true,
+                    'image' => $this->getSkinUrl('images/grid-cal.gif')
+                ));
+            }
+
+            $fieldset->addField('publish_date',
+                ($hasPublishDate) ? 'date' : 'label',
+                $publishDateFieldConfig
+            );
         }
 
         return $this;

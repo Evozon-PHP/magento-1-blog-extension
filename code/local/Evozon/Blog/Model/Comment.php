@@ -30,6 +30,9 @@ class Evozon_Blog_Model_Comment extends Evozon_Blog_Model_Abstract
      */
     protected $_eventPrefix = 'evozon_blog_comment';
 
+    /** @var  $_serviceNotification */
+    protected $_serviceNotification;
+
     /**
      * Constructor
      */
@@ -68,6 +71,19 @@ class Evozon_Blog_Model_Comment extends Evozon_Blog_Model_Abstract
         return $this;
     }
 
+    /**
+     * After save process comments and send email notifications if necessary
+     *
+     * @return $this
+     */
+    protected function _afterSave()
+    {
+        parent::_afterLoad();
+
+        $this->getServiceNotification()->process();
+        $this->getServiceSpamChecker()->process();
+        return $this;
+    }
 
     /**
      * Creates a collection of comments used to generate the threads for the user comments
@@ -214,5 +230,41 @@ class Evozon_Blog_Model_Comment extends Evozon_Blog_Model_Abstract
     {
         return Mage::getSingleton('evozon_blog/filter_config');
     }
-    
+
+    /**
+     * Get spam checker
+     *
+     * @return false|Mage_Core_Model_Abstract|mixed
+     */
+    public function getServiceSpamChecker()
+    {
+        if (!$this->_serviceSpamChecker) {
+            $this->_serviceSpamChecker = Mage::getModel('evozon_blog/service_spam_checker', $this);
+        }
+        return $this->_serviceSpamChecker;
+    }
+
+    /**
+     * Get service notifications
+     *
+     * @return false|Mage_Core_Model_Abstract|mixed
+     */
+    public function getServiceNotification()
+    {
+        if (!$this->_serviceNotification) {
+            $this->_serviceNotification = Mage::getModel('evozon_blog/service_comment_notification', $this);
+        }
+        return $this->_serviceNotification;
+    }
+
+    /**
+     * Get collection of comments who need to receive notification
+     *
+     * @param $receiverIds array
+     * @return Evozon_Blog_Model_Resource_Comment_Collection
+     */
+    public function getNotificationReceiversCollection($receiverIds)
+    {
+        return $this->getResourceCollection()->getNotificationReceivers($receiverIds);
+    }
 }

@@ -266,6 +266,23 @@ class Evozon_Blog_Model_Resource_Comment_Collection extends Mage_Core_Model_Reso
 
         return $this;
     }
+
+    /**
+     * Filter the notification receivers by customer_email
+     *
+     * @param $receiverIds array
+     * @return $this
+     */
+    public function getNotificationReceivers($receiverIds)
+    {
+        $this->addCustomerAndAdminJoin()
+            ->addFieldToFilter('id', array('in' => $receiverIds))
+            ->addFieldToFilter('notify_customer', array('eq' => 1));
+
+        $this->getSelect()->group('customer_email');
+
+        return $this;
+    }
     
     /**
      * Set the proper created at date for the back end

@@ -381,4 +381,25 @@ class Evozon_Blog_Model_Resource_Post extends Mage_Catalog_Model_Resource_Abstra
         
         return $adapter->fetchPairs($select);
     }
+    
+    /**
+     * Get unformated updated_at for frontend
+     * 
+     * @param int $postId
+     * @return int
+     */
+    public function getFullUpdatedAt($postId)
+    {
+        $adapter = $adapter = $this->_getReadAdapter();
+        $select = $adapter->select();
+        $select->from(array($this->getMainTable()), array('updated_at'));
+        $select->where('entity_id = ?', (int) $postId);
+        $result = $adapter->fetchCol($select);
+        
+        if (isset($result[0])) {
+            return $result[0];
+        }
+        
+        return false;
+    }
 }

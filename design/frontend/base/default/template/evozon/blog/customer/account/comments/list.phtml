@@ -15,6 +15,10 @@
 <?php
 $_helper = Mage::helper('evozon_blog');
 $_userComments = $this->getLoadedCommentsCollection();
+$buttonTexts =  array(
+    Mage::helper('evozon_blog')->__("Get Email Notification"),
+    Mage::helper('evozon_blog')->__("Cancel Email Notification")
+);
 ?>
 
 <div class="page-title">
@@ -60,7 +64,6 @@ $_userComments = $this->getLoadedCommentsCollection();
                             <?php if($_comment->getSubject()): ?>
                                 <div class="comment_subject"><b><?php echo $this->__("Subject:");?></b>
                                     <i> <?php echo  $this->escapeHtml($_comment->getSubject());?></i>
-
                                 </div>
                             <?php endif; ?>
 
@@ -71,7 +74,15 @@ $_userComments = $this->getLoadedCommentsCollection();
                             <div class="comment_content"><?php echo  $this->escapeHtml($_comment->getContent()); ?></div>
 
                             <div class="comment_actions">
-                                <a href="<?php echo $_comment->getCommentUrl() ?>" class="nobr"><?php echo $this->__('View Comment'); ?></a>
+                                <a href="<?php echo $_comment->getCommentUrl() ?>"><button class="button"><?php echo $this->__('View Comment'); ?></button></a>
+                                <?php if ($this->displayNotificationButton()) : ?>
+                                    <input class="button notify-customer-button" type="button" name="notify_customer"
+                                           data-id ="<?php echo $_comment->getId();?>"
+                                           data-notification-status = "<?php echo $_comment->getNotifyCustomer();?>"
+                                           data-set-notification-status = "<?php echo $this->getNotificationStatusToggle($_comment->getNotifyCustomer());?>"
+                                           value="<?php echo $buttonTexts[$_comment->getNotifyCustomer()]; ?>"
+                                           onclick="notifyCustomer(this)"/>
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -112,6 +123,35 @@ $_userComments = $this->getLoadedCommentsCollection();
         }
         function toggleParent(commentId) {
             $('parent-' + commentId,'hide_parent_button-' + commentId, 'parent_button-' + commentId).invoke('toggle');
+        }
+
+        function notifyCustomer(elem){
+            var url = '<?php echo $this->getNotifyCustomerUrl();?>';
+            var messages = <?php echo json_encode($buttonTexts, JSON_FORCE_OBJECT);?>;
+            new Ajax.Request(url, {
+                method: 'POST',
+                parameters: {
+                    commentId: $(elem).dataset.id,
+                    notifyCustomer: $(elem).dataset.setNotificationStatus
+                },
+                onSuccess: function (transport) {
+                    if (transport.responseText.isJSON()) {
+                        var response = transport.responseText.evalJSON();
+
+                        if (response.success){
+                            $(elem).setAttribute('value', messages[$(elem).dataset.setNotificationStatus]);
+                            var status = $(elem).dataset.notificationStatus;
+                            $(elem).dataset.notificationStatus = $(elem).dataset.setNotificationStatus;
+                            $(elem).dataset.setNotificationStatus = status;
+                        }
+
+                        if (response.error)
+                        {
+                            alert(Translator.translate('Something went wrong'));
+                        }
+                    }
+                }
+            });
         }
     </script>
 <?php else: ?>

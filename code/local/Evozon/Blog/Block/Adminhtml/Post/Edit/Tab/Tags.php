@@ -52,13 +52,26 @@ class Evozon_Blog_Block_Adminhtml_Post_Edit_Tab_Tags extends Mage_Adminhtml_Bloc
     /**
      * Set the hidden input with the already existing selected tags ids
      * This hidden input keeps selected tags that will be saved afterwards
-     * 
+     *
      * @author Dana Negrescu <dana.negrescu@evozon.com>
      * @return string
      */
     public function getSelectedTagsIds()
     {
         return implode(',', $this->_getSelectedTags());
+    }
+
+    /**
+     * Generate the post selected tags as JSON
+     *
+     * @return string
+     */
+    public function getSelectedTagsJson()
+    {
+        $selectedTags = $this->getSelectedTags()->load()
+            ->toArray(array('entity_id', 'name'));
+
+        return Mage::helper('core')->jsonEncode($selectedTags);
     }
 
     /**
@@ -71,14 +84,10 @@ class Evozon_Blog_Block_Adminhtml_Post_Edit_Tab_Tags extends Mage_Adminhtml_Bloc
     {
         $selectedTags = $this->_getSelectedTags();
 
-        if (empty($selectedTags)) {
-            return array();
-        }
-
         $tagsCollection = Mage::getModel('evozon_blog/tag')
             ->getCollection()
             ->setStoreId($this->getPost()->getStoreId())
-            ->addAttributeToSelect(array('name', 'count'))
+            ->addAttributeToSelect(array('name', 'count'), 'inner')
             ->addAttributeToFilter('entity_id', array('in' => $selectedTags));
 
         return $tagsCollection;

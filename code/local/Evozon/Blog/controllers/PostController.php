@@ -8,6 +8,7 @@
  * @copyright  Copyright (c) 2015 Evozon (http://www.evozon.com)
  * @author     Andreea Macicasan <andreea.macicasan@evozon.com>
  * @author     Dana Negrescu <dana.negrescu@evozon.com>
+ * @author     Murgocea Victorita <victorita.murgocea@evozon.com>
  */
 require_once 'Evozon/Blog/controllers/LayoutController.php';
 class Evozon_Blog_PostController extends  Evozon_Blog_LayoutController
@@ -95,7 +96,50 @@ class Evozon_Blog_PostController extends  Evozon_Blog_LayoutController
         if ($root = $this->getLayout()->getBlock('root')) {
             $root->addBodyClass('blog-post blog-post' . $post->getId());
         }
-        
+
+        $this->renderLayout();
+    }
+
+    /**
+     * Preview action
+     * 
+     * @return void
+     */
+    public function previewAction()
+    {
+        $postId = $this->getRequest()->getParam('id', 0);
+        $previewKey = $this->getRequest()->getParam('previewKey', 0);
+
+        $post = Mage::getModel('evozon_blog/post')
+            ->setStoreId(Mage::app()->getStore()->getId())
+            ->load($postId);
+
+        try {
+            if (!$post || !$post->getId()) {
+                Mage::throwException('Invalid post id');
+            }
+            $validateModel = Mage::getModel(
+                'evozon_blog/post_preview_validate',
+                $postId
+            );
+            $validateModel->validatePreviewKeyWithException($previewKey);
+        } catch (Exception $exc) {
+            Mage::logException($exc);
+            return $this->_forward('no-route');
+        }
+
+        Mage::register('blog_post', $post);
+
+        if ($post->getCustomUseDefaultSettings()) {
+            $this->loadLayout();
+        } else {
+            $this->getPostLayout($post->getDesignSettings(), $post->getId());
+        }
+
+        if ($root = $this->getLayout()->getBlock('root')) {
+            $root->addBodyClass('blog-post blog-post' . $post->getId());
+        }
+
         $this->renderLayout();
     }
 

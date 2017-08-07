@@ -14,7 +14,7 @@
     <modules>
         <Evozon_Blog>
             <name>Evozon Blog Extension</name>
-            <version>1.1.2</version>
+            <version>1.2.2</version>
             <descr>
                 <en_US>
                     <![CDATA[Evozon Blog Extension is here to help you transform any category in a blog, by displaying multi-store EAV post entities with blog-like features (archive, tags, restrictions, user-friendly SEO, etc)]]>
@@ -28,7 +28,7 @@
             </ourserviceslink>
         </Evozon_Blog>
     </modules>
-    
+
     <global>
         <blocks>
             <evozon_blog>
@@ -45,14 +45,22 @@
                 </rewrite>
             </enterprise_search>
         </blocks>
-        
+        <template>
+            <email>
+                <comment_notifications>
+                    <label>Comment notifications</label>
+                    <file>comment_notifications.html</file>
+                    <type>html</type>
+                </comment_notifications>
+            </email>
+        </template>
         <helpers>
             <evozon_blog>
                 <class>Evozon_Blog_Helper</class>
             </evozon_blog>
         </helpers>
-        
-        <models>            
+
+        <models>
             <evozon_blog>
                 <class>Evozon_Blog_Model</class>
                 <resourceModel>evozon_blog_resource</resourceModel>
@@ -60,7 +68,7 @@
             <evozon_blog_resource>
                 <class>Evozon_Blog_Model_Resource</class>
                 <entities>
-                    <!-- EAV entities -->                    
+                    <!-- EAV entities -->
                     <post>
                         <table>evozon_blog_post_entity</table>
                     </post>
@@ -70,7 +78,7 @@
                     <eav_attribute>
                         <table>evozon_blog_eav_attribute</table>
                     </eav_attribute>
-                    
+
                     <!-- additional tables to websites, categories, products, tags and other posts-->
                     <post_tag>
                         <table>evozon_blog_post_tags</table>
@@ -93,17 +101,17 @@
                     <post_image_value>
                         <table>evozon_blog_post_image_value</table>
                     </post_image_value>
-                                   
+
                     <!-- comments -->
                     <comment>
                         <table>evozon_blog_comments</table>
                     </comment>
-                    
+
                     <!-- main table for post status cron (contains posts with pending status) -->
                     <scheduler>
                         <table>evozon_blog_schedule_data</table>
                     </scheduler>
-                    
+
                     <!-- main table for search fulltext -->
                     <search_fulltext>
                         <table>evozon_blog_search_fulltext</table>
@@ -113,7 +121,7 @@
                     <restriction>
                         <table>evozon_blog_post_restriction</table>
                     </restriction>
-                    
+
                 </entities>
             </evozon_blog_resource>
             <catalogsearch>
@@ -122,14 +130,14 @@
                 </rewrite>
             </catalogsearch>
         </models>
-        
+
         <resources>
             <evozon_blog_setup>
                 <setup>
                     <module>Evozon_Blog</module>
                     <class>Evozon_Blog_Model_Resource_Setup</class>
                 </setup>
-            </evozon_blog_setup>                       
+            </evozon_blog_setup>
         </resources>
         <evozon_blog>
             <post>
@@ -149,28 +157,28 @@
             </indexer>
         </index>
     </global>
-        
-    <admin>         
+
+    <admin>
         <routers>
             <adminhtml>
-                <args>                   
+                <args>
                     <modules>
                         <Evozon_Blog after="Mage_Adminhtml">Evozon_Blog_Adminhtml</Evozon_Blog>
                     </modules>
                 </args>
             </adminhtml>
-        </routers>                
+        </routers>
     </admin>
-         
-    <adminhtml>        
+
+    <adminhtml>
         <layout>
             <updates>
-                <evozon_blog>                   
+                <evozon_blog>
                     <file>evozon/blog/blog.xml</file>
                 </evozon_blog>
             </updates>
         </layout>
-        
+
         <translate>
             <modules>
                 <Evozon_Blog>
@@ -179,8 +187,8 @@
                     </files>
                 </Evozon_Blog>
             </modules>
-        </translate>   
-        
+        </translate>
+
         <events>
             <widget_widget_instance_save_before>
                 <observers>
@@ -190,7 +198,7 @@
                     </evozon_blog_widget_widget_instance_save_before_observer>
                 </observers>
             </widget_widget_instance_save_before>
-            
+
             <!--save the relation between product and blog post-->
             <catalog_product_save_after>
                 <observers>
@@ -200,7 +208,7 @@
                     </evozon_blog_product>
                 </observers>
             </catalog_product_save_after>
-            
+
             <!-- add new tab in category edit with articles link -->
             <adminhtml_catalog_category_tabs>
                 <observers>
@@ -211,7 +219,7 @@
                     </evozon_blog_category_articles>
                 </observers>
             </adminhtml_catalog_category_tabs>
-            
+
             <!-- save posts-catalog category relations at category save -->
             <catalog_category_save_after>
                 <observers>
@@ -222,7 +230,7 @@
                     </evozon_post_category_relation_save>
                 </observers>
             </catalog_category_save_after>
-            
+
             <!-- locking catalog category attributes responsible for the blog features -->
             <adminhtml_catalog_category_edit_prepare_form>
                 <observers>
@@ -232,7 +240,7 @@
                     </evozon_post_catalog_lock_attributes>
                 </observers>
             </adminhtml_catalog_category_edit_prepare_form>
-            
+
             <admin_system_config_changed_section_evozon_blog_comment>
                 <observers>
                     <evozon_blog_comment_verify_spam_checker_key>
@@ -242,28 +250,28 @@
                     </evozon_blog_comment_verify_spam_checker_key>
                 </observers>
             </admin_system_config_changed_section_evozon_blog_comment>
-        </events> 
-  
+        </events>
+
         <acl>
             <resources>
                 <all>
                     <title>Allow Everything</title>
                 </all>
                 <admin>
-                    <children>                        
+                    <children>
                         <system>
                             <children>
                                 <config>
                                     <children>
                                         <evozon_blog_general>
                                             <title>General Configuration</title>
-                                        </evozon_blog_general>  
+                                        </evozon_blog_general>
                                         <evozon_blog_post>
                                             <title>Post Configuration</title>
-                                        </evozon_blog_post> 
+                                        </evozon_blog_post>
                                         <evozon_blog_comment>
                                             <title>Comment Configuration</title>
-                                        </evozon_blog_comment>   
+                                        </evozon_blog_comment>
                                         <evozon_blog_cron>
                                             <title>Cron Configuration</title>
                                         </evozon_blog_cron>
@@ -282,11 +290,11 @@
             </resources>
         </acl>
     </adminhtml>
-    
+
     <frontend>
         <layout>
             <updates>
-                <evozon_blog>                   
+                <evozon_blog>
                     <file>evozon/blog/blog.xml</file>
                 </evozon_blog>
             </updates>
@@ -314,8 +322,8 @@
                 </args>
             </evozon_blog>
         </routers>
-        
-        <events>            
+
+        <events>
             <!-- Event observers for changing the theme based on the device -->
             <controller_action_layout_load_before>
                 <observers>
@@ -323,46 +331,35 @@
                         <class>evozon_blog/observer</class>
                         <method>onControllerActionLayoutLoadBefore</method>
                     </evozon_category_change_layout>
-                    
+
                     <!--Adding a block with related articles to the product view page-->
                     <evozon_blog_related_posts_on_product_page>
                         <type>model</type>
                         <class>evozon_blog/catalog_observer</class>
                         <method>insertBlock</method>
                     </evozon_blog_related_posts_on_product_page>
-                    
+
                     <!--Adding the specific xml nodes for the post single page view-->
                     <evozon_post_view_gallery_style>
                         <class>evozon_blog/post_observer</class>
                         <method>onControllerActionLayoutGetPostLayout</method>
                     </evozon_post_view_gallery_style>
                 </observers>
-            </controller_action_layout_load_before>   
-            
-            <!-- Event observer for checking if submitted comment is SPAM-->
-            <evozon_blog_comment_save_before>
-                <observers>
-                    <evozon_blog_comment_spam_check_observer>
-                        <type>singleton</type>
-                        <class>evozon_blog/comment_observer</class>
-                        <method>spamCheckService</method>
-                    </evozon_blog_comment_spam_check_observer>   
-                </observers>
-            </evozon_blog_comment_save_before>
+            </controller_action_layout_load_before>
         </events>
     </frontend>
-    
+
     <default>
         <evozon_blog_general>
             <seo>
                 <route>blog</route>
-                <title>Evozon Blog</title>     
-                <keywords>blog, evozon, articles, posts</keywords> 
-                <description>blog description</description>          
+                <title>Evozon Blog</title>
+                <keywords>blog, evozon, articles, posts</keywords>
+                <description>blog description</description>
             </seo>
             <layout>
                 <default>three_columns</default>
-                <post_view>two_columns_left</post_view>                
+                <post_view>two_columns_left</post_view>
             </layout>
             <datetime>
                 <default_datetime>D, d M Y</default_datetime>
@@ -371,7 +368,7 @@
                 <page_var_name>page</page_var_name>
                 <filter_var_name>show</filter_var_name>
             </toolbar_pagination>
-        </evozon_blog_general>        
+        </evozon_blog_general>
         <evozon_blog_comment>
             <general>
                 <allowed_reply_level>10</allowed_reply_level>
@@ -380,6 +377,11 @@
                 <content_words_number>20</content_words_number>
                 <allow_guest_comments>1</allow_guest_comments>
             </general>
+            <notifications>
+                <comments_notification>0</comments_notification>
+                <email_template>comment_notifications</email_template>
+                <email_subject><![CDATA[ You have a new reply on your comment ]]></email_subject>
+            </notifications>
             <spam_service>
                 <enabled>0</enabled>
             </spam_service>
@@ -404,7 +406,7 @@
                 <disable_widget>0</disable_widget>
                 <template>0</template>
                 <posts_in_widget>3</posts_in_widget>
-                <display_date>0</display_date>                
+                <display_date>0</display_date>
                 <image_style>1</image_style>
                 <content_length>20</content_length>
                 <display_comments>0</display_comments>
@@ -426,7 +428,7 @@
                 <header>Posts filtered by tag: '%s'</header>
                 <url_segment>tag</url_segment>
                 <order>0</order>
-                <limit>10</limit>              
+                <limit>10</limit>
             </tags>
             <catalog>
                 <enabled>1</enabled>
@@ -435,7 +437,7 @@
             <products>
                 <enabled>1</enabled>
                 <limit>6</limit>
-            </products>            
+            </products>
             <archive>
                 <enabled>1</enabled>
                 <header>Archive from %s</header>
@@ -502,7 +504,7 @@
                 <content_maxlength>1500</content_maxlength>
             </comments>
         </evozon_blog_validation>
-               
+
         <web>
             <routers>
                 <evozon_blog_tag>
@@ -512,7 +514,7 @@
                 <evozon_blog_archive>
                     <area>frontend</area>
                     <class>Evozon_Blog_Controller_ArchiveRouter</class>
-                </evozon_blog_archive>               
+                </evozon_blog_archive>
             </routers>
         </web>
 
@@ -524,7 +526,7 @@
             </blog>
         </rewrite_matchers>
     </default>
-    
+
     <crontab>
         <jobs>
             <evozon_spam_flush>

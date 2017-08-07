@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Blog Post view
  *
@@ -142,4 +141,5 @@ class Evozon_Blog_Block_Post_View extends Evozon_Blog_Block_Post_Abstract
     {
         return (bool) $this->getConfigModel()->getPostProductsConfig(Evozon_Blog_Model_Config_Post::RELATED_PRODUCTS_POST_PAGE_ENABLED);
     }
+    
 }

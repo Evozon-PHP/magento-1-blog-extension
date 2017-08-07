@@ -20,7 +20,7 @@ class Evozon_Blog_Model_Adminhtml_System_Config_Source_Comment_SpamServices
      */
     public function toOptionArray()
     {        
-        $spamChecker = new Evozon_Blog_Model_Spam_Config();
+        $spamChecker = new Evozon_Blog_Model_Service_Spam_Config();
         $adapters = $spamChecker->getDataByServiceAndItemName('crawler', 'services');
         
         $spamCheckersArray = array();
