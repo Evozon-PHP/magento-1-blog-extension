@@ -105,13 +105,19 @@ class Evozon_Blog_Model_Resource_Indexer_UrlRewrite_Data_Source extends Evozon_B
                 $select->where('e.entity_id IN (?)', $postIds);
             }
             
+            if (stristr($attrCode, 'date')) {
+                $expr = new Zend_Db_Expr("IF (joins.{$attrCode} IS NULL, joins.{$attrCode}_default, joins.{$attrCode} ) AS {$attrCode}");
+            } else {
+                $expr = new Zend_Db_Expr("IF (joins.{$attrCode} IS NULL OR joins.{$attrCode} = '', joins.{$attrCode}_default, joins.{$attrCode} ) AS {$attrCode}");
+            }
+            
             $selectSql = $adapter->select()
                 ->from(
                     array('joins' => $select),
                     array(
                         'entity_id' => 'joins.entity_id',
                         'store_id' => "joins.{$attrCode}_store",
-                        new Zend_Db_Expr("IF (joins.{$attrCode} IS NULL OR joins.{$attrCode} = '', joins.{$attrCode}_default, joins.{$attrCode} ) AS {$attrCode}")
+                        $expr
                     )
                 );
 

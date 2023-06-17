@@ -81,11 +81,13 @@ class Evozon_Blog_Block_Adminhtml_Post_Helper_Form_Gallery_Content extends Mage_
     }
 
     /**
+     * Upload URL for AJAX image upload. Remove addSessionParam() as it's not needed and breaks uploading.
+     *
      * @return mixed
      */
     private function _getMediaUploadUrl()
     {
-        return Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('*/blog_media/upload');
+        return Mage::getModel('adminhtml/url')->getUrl('*/blog_media/upload');
     }
 
 
